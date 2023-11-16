@@ -1,0 +1,301 @@
+body:has(.Sign) {
+    background: url('../../images/signUpBg.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* font-family: 'Roboto', sans-serif; */
+    font-family: 'Poppins', sans-serif;
+    font-family: 'Varela Round', sans-serif;
+}
+
+
+/* Whole Sign Page */
+.Sign {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.Sign .logo img {
+    width: 20%;
+    filter: drop-shadow(0px 7px 29px 0px var(--theme));
+    display: flex;
+    margin: auto;
+}
+
+
+/* Form */
+
+.Sign .SignForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background: var(--theme);
+}
+
+.Sign .SignForm h2 {
+    text-align: center;
+    color: var(--text);
+    letter-spacing: 5px;
+    font-weight: 900px;
+}
+
+.Sign .SignForm form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-around;
+}
+
+
+/* Input fields */
+.Sign .SignForm form .InputField {
+    display: flex;
+    flex-direction: column
+}
+
+.Sign .SignForm form .InputField .InputError {
+    margin-bottom: 10px;
+    text-align: center;
+    background: transparent;
+    border-radius: 20px;
+    padding: 5px;
+    border: 3px solid var(--text);
+    color: var(--bg);
+    transition: 0.5s ease-in-out;
+    width: 300px;
+    max-width: 420px;
+    padding: 12px;
+}
+
+.Sign .SignForm form .InputField .InputError.password {
+    text-align: left;
+}
+
+.Sign .SignForm form .InputField .PasswordStrength:has(.Plus) {
+    color: mediumaquamarine;
+}
+
+.Sign .SignForm form .InputField .PasswordStrength:has(.Minus) {
+    color: var(--text);
+}
+
+
+.Sign .SignForm form .input {
+
+    width: 300px;
+    max-width: 420px;
+    padding: 12px;
+    border-radius: 15px;
+    border: 3px solid lightgrey;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0px 0px 20px -18px;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 10px;
+    background: var(--bg);
+    position: relative;
+    font-weight: 700;
+
+}
+
+/* Matric Number */
+.Sign .SignForm form .input.matric {
+    text-transform: uppercase;
+}
+
+.Sign .SignForm form .input::placeholder {
+    font-family: 'FontAwesome', sans-serif;
+}
+
+.Sign .SignForm form .input.valid {
+
+    border: 3px solid mediumaquamarine;
+    box-shadow: 0px 0px 20px -17px;
+    color: mediumseagreen;
+
+}
+
+.Sign .SignForm form .input.invalid {
+    border: 3px solid var(--text);
+    box-shadow: 0px 0px 20px -17px;
+    color: var(--text);
+}
+
+.Sign .SignForm form .input:active {
+    transform: scale(0.95);
+}
+
+.Sign .SignForm form .input:placeholder-shown {
+    border: 3px solid lightgrey;
+    text-transform: none;
+
+
+}
+
+
+/* Password Container and toggle password */
+
+.Sign .SignForm form .PasswordContainer {
+    display: flex;
+    position: relative;
+}
+
+.Sign .SignForm form .PasswordContainer .TogglePass {
+    position: absolute;
+    margin: 4% 0px 0px 90%;
+    color: var(--theme);
+    font-size: 1.3em;
+    cursor: pointer;
+}
+
+
+
+/* Terms and Condition */
+
+.Sign .SignForm form .TermsContainer {
+    display: flex;
+    gap: 0.5em;
+    padding: 5px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.Sign .SignForm form .TermsContainer span {
+    color: var(--bg)
+}
+
+
+.Sign .SignForm form .TermsContainer .CheckBox {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--text);
+    border-radius: 5px;
+    background-color: transparent;
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.Sign .SignForm form .TermsContainer .CheckBox:before {
+    content: "";
+    background-color: var(--text);
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+.Sign .SignForm form .TermsContainer .CheckBox:checked:before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.Sign .SignForm form .TermsContainer .CheckboxLabel {
+    font-size: 0.9em;
+    color: var(--bg);
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+/* Button */
+
+.Sign .SignForm form>button {
+    width: 50%;
+    margin: auto;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    font-size: 1.2em;
+    transition: 0.5s ease all;
+    background: var(--text);
+    color: var(--bg);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-bottom: 10px;
+}
+
+
+.Sign .SignForm form>button:hover {
+    transform: translateY(5px);
+    background: var(--text2);
+    letter-spacing: 1px;
+    box-shadow: none;
+}
+
+
+
+.SignIn {
+    display: flex;
+    /* background: red; */
+    justify-content: space-evenly;
+}
+
+.SignIn p {
+    color: var(--bg)
+}
+
+
+.SignIn>.SignButton {
+    /* width: 20%; */
+    border-radius: 10px;
+    margin: auto 0 auto 0;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    transition: 0.5s ease all;
+    background: var(--text2);
+    color: var(--bg);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-decoration: none;
+}
+
+
+/* Ipad View */
+
+
+@media screen and (max-width: 1400px) {
+    body {
+        background: url('../../images/signUpBg.svg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .Sign .logo img {
+        width: 30%;
+    }
+
+}
+
+
+
+/* Phone View */
+@media screen and (max-width: 768px) {
+    body {
+        background: url('../../images/signUpBgVr.svg');
+        background-repeat: no-repeat;
+        /* background-size: cover; */
+    }
+
+    .Sign .logo img {
+        width: 70%;
+    }
+
+}
