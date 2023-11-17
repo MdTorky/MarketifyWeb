@@ -8,12 +8,14 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import 'animate.css';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [matric, setMatric] = useState('');
+    const [passport, setPassport] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState({});
@@ -26,8 +28,9 @@ const SignUp = () => {
     const fullNameRegex = /^[a-zA-Z\s'-]{2,}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^(?:\+60|60)(?:(1[0-9])|(?:3[2-9]|4[2-9]|5[4-9]|6[2-9]|7[3-9]|8[2-9]|9[2-9]))\d{7,8}$/;
-    const matricRegex = /^[A-Za-z][2][0-4][A-Za-z]{2}\d{4}$/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    // const passportRegex = /^[A-Za-z][2][0-4][A-Za-z]{2}\d{4}$/;
+    const passportRegex = /^[a-zA-Z0-9]+$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
 
     const handleChange = (errorText, regex, setter, field) => (e) => {
         const newInput = e.target.value;
@@ -50,7 +53,7 @@ const SignUp = () => {
             name: !fullNameRegex.test(name) ? 'Please enter a valid Full name!' : null,
             email: !emailRegex.test(email) ? 'Please enter a valid Email!' : null,
             phone: !phoneRegex.test(phone) ? 'Please enter a valid Phone Number! (+60 11-111 1111)' : null,
-            matric: !matricRegex.test(matric) ? 'Please enter a valid Matric Number' : null,
+            passport: !passportRegex.test(passport) ? 'Please enter a valid Passport Number' : null,
             password: !passwordRegex.test(password) ? (
                 <>
                     - It has to be at least 8 characters long
@@ -82,12 +85,25 @@ const SignUp = () => {
                 },
             });
 
+
             return;
         }
 
         // Perform further actions for a valid submission
-        alert('Form submitted successfully!');
+        else {
+            toast.success('Account Created Successfully', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
     };
+
 
     return (
         <div className="Sign">
@@ -99,7 +115,7 @@ const SignUp = () => {
                 <form action="" onSubmit={handleSubmit}>
                     <div className="InputField">
                         <input
-                            placeholder="&#xF007; &nbsp; Full Name"
+                            placeholder=" &#xF007; &nbsp; Full Name"
                             type="text"
                             className={`input ${fullNameRegex.test(name) ? 'valid' : 'invalid'}`}
                             onChange={handleChange('Please enter a valid Full name!', fullNameRegex, setName, 'name')}
@@ -108,7 +124,7 @@ const SignUp = () => {
                     </div>
                     <div className="InputField">
                         <input
-                            placeholder="&#xf0e0; &nbsp; Email"
+                            placeholder=" &#xf0e0; &nbsp; Email"
                             type="email"
                             className={`input ${emailRegex.test(email) ? 'valid' : 'invalid'}`}
                             onChange={handleChange('Please enter a valid Email!', emailRegex, setEmail, 'email')}
@@ -117,7 +133,7 @@ const SignUp = () => {
                     </div>
                     <div className="InputField">
                         <input
-                            placeholder="&#xf095; &nbsp; Phone Number"
+                            placeholder=" &#xf095; &nbsp; Phone Number"
                             type="number"
                             className={`input ${phoneRegex.test(phone) ? 'valid' : 'invalid'}`}
                             onChange={handleChange('Please enter a valid Phone Number! (+60 11-111 1111)', phoneRegex, setPhone, 'phone')}
@@ -126,17 +142,17 @@ const SignUp = () => {
                     </div>
                     <div className="InputField">
                         <input
-                            placeholder="&#xf2c1; &nbsp; Matric Number"
+                            placeholder=" &#xf0ac; &nbsp; Passport Number"
                             type="text"
-                            className={`input ${matricRegex.test(matric) ? 'valid' : 'invalid'} matric`}
-                            onChange={handleChange('Please enter a valid Matric Number', matricRegex, setMatric, 'matric')}
+                            className={`input ${passportRegex.test(passport) ? 'valid' : 'invalid'} passport`}
+                            onChange={handleChange('Please enter a valid Passport Number', passportRegex, setPassport, 'passport')}
                         />
-                        {errors.matric && <span className="InputError">{errors.matric}</span>}
+                        {errors.passport && <span className="InputError">{errors.passport}</span>}
                     </div>
                     <div className="InputField">
                         <div className="PasswordContainer">
                             <input
-                                placeholder="&#xf023; &nbsp; Password"
+                                placeholder=" &#xf023; &nbsp; Password"
                                 type={showPassword ? 'text' : 'password'}
                                 className={`input ${passwordRegex.test(password) ? 'valid' : 'invalid'}`}
                                 onChange={handleChange(
@@ -169,7 +185,7 @@ const SignUp = () => {
 
                     <div className="SignIn">
                         <p>Have an Account?</p>
-                        <Link to="/hello" className="SignButton">
+                        <Link to="/SignIn" className="SignButton">
                             Sign In
                         </Link>
                     </div>

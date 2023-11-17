@@ -34,7 +34,12 @@ body:has(.Sign) {
     padding: 20px;
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    background: var(--theme);
+    /* background: var(--theme); */
+    backdrop-filter: blur(10px) saturate(0%);
+    -webkit-backdrop-filter: blur(10px) saturate(0%);
+    background-color: rgba(60, 72, 107, 0.78);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
 }
 
 .Sign .SignForm h2 {
@@ -228,7 +233,7 @@ body:has(.Sign) {
     background: var(--text);
     color: var(--bg);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 
@@ -241,32 +246,66 @@ body:has(.Sign) {
 
 
 
-.SignIn {
+.Sign .SignForm .SignIn {
     display: flex;
-    /* background: red; */
     justify-content: space-evenly;
 }
 
-.SignIn p {
+.Sign .SignForm .SignIn p {
     color: var(--bg)
 }
 
 
-.SignIn>.SignButton {
-    /* width: 20%; */
-    border-radius: 10px;
-    margin: auto 0 auto 0;
+.Sign .SignForm .SignIn>.SignButton {
+    width: 30%;
+    border-radius: 20px;
+    margin: auto 0;
     padding: 10px;
     cursor: pointer;
     border: none;
     text-align: center;
     transition: 0.5s ease all;
-    background: var(--text2);
+    background: var(--theme2);
     color: var(--bg);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     text-decoration: none;
 }
 
+.Sign .SignForm .SignIn>.SignButton:hover {
+    transform: translateY(2px);
+    background: white;
+    color: var(--theme2);
+    font-weight: 900;
+    /* letter-spacing: 1px; */
+    box-shadow: none;
+}
+
+.ForgotPassword {
+
+    margin: auto 0;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+
+.ForgotPassword .ForgotPasswordLink {
+    width: 100%;
+    border-radius: 20px;
+    padding: 5px;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    transition: 0.5s ease all;
+    color: var(--bg);
+    text-decoration: none;
+}
+
+.ForgotPassword .ForgotPasswordLink:hover {
+    letter-spacing: 1px;
+    transform: scale(1.2);
+    color: var(--text)
+}
 
 /* Ipad View */
 
