@@ -1,0 +1,140 @@
+.NavBar {
+    display: flex;
+    background: var(--theme);
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    width: fit-content;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    align-items: center;
+    margin: auto;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    position: fixed;
+    z-index: 999;
+    right: 0;
+    left: 0;
+    /* position: fixed;
+    top: 0;
+    z-index: 1;
+    left: 50%;
+    right: 50%; */
+}
+
+.NavBar img {
+    width: 20%;
+}
+
+
+.NavBar .items {
+    display: flex;
+    padding: 10px;
+    width: 50%;
+    /* gap: 0.5em; */
+    justify-content: space-around;
+}
+
+
+.NavBar .items .link {
+    text-decoration: none;
+    color: var(--bg);
+    font-size: 1.2em;
+    padding: 5px;
+    font-weight: 900;
+    transition: 0.5s ease;
+}
+
+.NavBar .items .link.active {
+    color: var(--theme);
+    background: var(--bg);
+    border-radius: 10px;
+}
+
+
+.NavBar .items .link:hover {
+    color: var(--theme);
+    background: var(--bg);
+    border-radius: 10px;
+}
+
+.NavBar .items .link.user {
+    padding: 5px 10px;
+
+}
+
+.NavBar .items .link:hover.user {
+    border-radius: 30px;
+}
+
+
+.NavBar .phoneBar {
+    display: none;
+}
+
+
+
+
+
+@media only screen and (max-width: 768px) {
+    .NavBar {
+        flex-direction: row;
+        width: 80%;
+        right: 0;
+        left: 0;
+    }
+
+    .NavBar .items {
+        display: none;
+        flex-direction: column;
+        width: 75%;
+        text-align: center;
+        align-items: center;
+        position: absolute;
+        top: 50px;
+        background: var(--theme);
+        border-radius: 0 0 30px 30px;
+        padding: 10px;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        animation: fadeInOut 0.5s ease-in-out;
+        gap: 10px;
+        /* Add fade-in and fade-out animation */
+    }
+
+    @keyframes fadeInOut {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .NavBar .items.open {
+        display: flex;
+        opacity: 1;
+    }
+
+    .NavBar .items.closed {
+        display: none;
+        opacity: 0;
+    }
+
+    .NavBar .phoneBar {
+        display: block;
+        cursor: pointer;
+        color: var(--bg);
+        font-size: 1.2em;
+    }
+
+    .NavBar .phoneBar .faBars,
+    .NavBar .phoneBar .faMinus {
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .NavBar .items .link {
+        font-size: 1em;
+        /* padding: 2px; */
+    }
+}

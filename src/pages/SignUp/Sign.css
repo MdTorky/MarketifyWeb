@@ -311,7 +311,7 @@ body:has(.Sign) {
 
 
 @media screen and (max-width: 1400px) {
-    body {
+    body:has(.Sign) {
         background: url('../../images/signUpBg.svg');
         background-repeat: no-repeat;
         background-size: cover;
@@ -327,7 +327,7 @@ body:has(.Sign) {
 
 /* Phone View */
 @media screen and (max-width: 768px) {
-    body {
+    body:has(.Sign) {
         background: url('../../images/signUpBgVr.svg');
         background-repeat: no-repeat;
         /* background-size: cover; */

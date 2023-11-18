@@ -23,7 +23,7 @@ const ForgotPassword = () => {
                 <form action="" >
                     <div className="InputField">
                         <input
-                            placeholder=" &#xf0e0; &nbsp; Email"
+                            placeholder=" &#xf0e0; &nbsp; Enter your Email"
                             type="email"
                             className={`input ${emailRegex.test(email) ? 'valid' : 'invalid'}`}
                             // onChange={handleChange('Please enter a valid Full name!', fullNameRegex, setName, 'name')}
