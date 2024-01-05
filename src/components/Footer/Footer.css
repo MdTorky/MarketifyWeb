@@ -1,0 +1,145 @@
+.Footer {
+    background: var(--theme);
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    width: 80%;
+    margin: auto;
+    border-radius: 30px 30px 0 0
+}
+
+.FooterItems {
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.Footers {
+    color: var(--bg);
+    display: flex;
+    flex-direction: column;
+}
+
+.Footers img {
+    width: 80%;
+}
+
+.Footers h4 {
+    font-size: 1.5em;
+    border-bottom: 1px solid var(--bg);
+    margin-bottom: 20px;
+    width: 30px;
+}
+
+.Footers .FooterLinks {
+    color: var(--bg);
+    text-decoration: none;
+    transition: all 0.5s
+}
+
+.Footers .FooterLinks:hover {
+    color: var(--text);
+    transform: translateX(-5px);
+}
+
+
+
+.FooterColumn {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    justify-content: center;
+    /* background: var(--theme2); */
+}
+
+.FooterSocial {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.socialMedia {
+    color: var(--bg);
+    font-size: 2.3em;
+    cursor: pointer;
+    transition: all 0.5s
+}
+
+.socialMedia:hover {
+    color: var(--text);
+    transform: scale(1.2);
+}
+
+.FooterSocial h4 {
+    font-size: 1.5em;
+    color: var(--bg);
+    margin-right: 100px;
+    /* width: 20%; */
+}
+
+.FooterMedia {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+}
+
+
+
+
+
+
+
+
+@media screen and (max-width: 768px) {
+
+
+    .Footer {
+        width: 100%;
+
+    }
+
+    .FooterItems {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .Footers img {
+        width: 80%;
+        margin: auto;
+    }
+
+    .FooterColumn {
+        width: 100%;
+    }
+
+    .FooterSocial {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        gap: 20px;
+    }
+
+    .FooterSocial h4 {
+        margin-right: 0;
+        margin-left: 20px;
+        width: 100%;
+        border-bottom: 1px solid var(--bg);
+        margin-bottom: 20px;
+        width: 30px;
+        white-space: nowrap;
+    }
+
+
+
+    .FooterMedia {
+        gap: 30px;
+        margin: auto;
+        justify-content: center;
+        width: 100%;
+    }
+
+}

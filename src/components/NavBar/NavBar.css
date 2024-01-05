@@ -71,6 +71,68 @@
 }
 
 
+/* Products Dropdown */
+.NavBar .items .dropdown {
+    position: relative;
+    display: inline-block;
+    margin-top: 5px;
+    text-align: center;
+
+}
+
+.NavBar .items .dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: var(--theme);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 10px;
+    /* border: 2px var(--text) */
+    /* text-align: center; */
+
+}
+
+.NavBar .items .dropdown:hover .dropdownContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.NavBar .items .dropdownContent .link {
+    padding: 10px;
+    text-decoration: none;
+    color: var(--bg);
+    font-size: 1.2em;
+    font-weight: 900;
+    transition: 0.5s ease;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.NavBar .items .dropdownContent .link:hover {
+    color: var(--theme);
+    background: var(--bg);
+    border-radius: 0;
+}
+
+.NavBar .items .dropdownContent .link:first-child:hover {
+    border-radius: 10px 10px 0 0;
+}
+
+.NavBar .items .dropdownContent .link:last-child:hover {
+    border-radius: 0 0 10px 10px;
+}
+
+.NavBar .items .dropdownContent .country-name {
+    font-size: 0.8em
+}
+
+
+
+
+
 
 
 
@@ -78,8 +140,8 @@
     .NavBar {
         flex-direction: row;
         width: 80%;
-        right: 0;
-        left: 0;
+        right: 0%;
+        left: 0%;
     }
 
     .NavBar .items {
@@ -89,7 +151,7 @@
         text-align: center;
         align-items: center;
         position: absolute;
-        top: 50px;
+        top: 62px;
         background: var(--theme);
         border-radius: 0 0 30px 30px;
         padding: 10px;
@@ -98,6 +160,8 @@
         transition: opacity 0.5s ease-in-out;
         animation: fadeInOut 0.5s ease-in-out;
         gap: 10px;
+        /* left: 0%; */
+        right: 13%;
         /* Add fade-in and fade-out animation */
     }
 

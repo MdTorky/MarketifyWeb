@@ -14,8 +14,28 @@
   --text: #F45050;
   --text2: #db3030;
   --bg: #DBECF3;
+  --bg2: #b6deee;
 }
 
+
+
+
+
+/* ScrollBar */
+*::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 20px
+}
+
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 20px
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--text);
+  border-radius: 20px
+}
 
 body {
   background: var(--bg);

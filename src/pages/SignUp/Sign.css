@@ -47,6 +47,11 @@ body:has(.Sign) {
     color: var(--text);
     letter-spacing: 5px;
     font-weight: 900px;
+    /* background: var(--bg);
+    width: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px auto; */
 }
 
 .Sign .SignForm form {
