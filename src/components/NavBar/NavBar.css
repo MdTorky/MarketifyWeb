@@ -111,6 +111,24 @@
     text-align: center;
 }
 
+.NavBar .items .dropdownContent .link.active {
+    color: var(--theme);
+    background: var(--bg);
+    border-radius: 0;
+}
+
+.NavBar .items .dropdownContent .link:first-child.active {
+    color: var(--theme);
+    background: var(--bg);
+    border-radius: 10px 10px 0 0;
+}
+
+.NavBar .items .dropdownContent .link:last-child.active {
+    color: var(--theme);
+    background: var(--bg);
+    border-radius: 0 0 10px 10px;
+}
+
 .NavBar .items .dropdownContent .link:hover {
     color: var(--theme);
     background: var(--bg);

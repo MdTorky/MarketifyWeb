@@ -23,7 +23,7 @@ const NavBar = ({ children }) => {
                     <div className="dropdown">
                         <Link className='link'>Products</Link>
                         <div className="dropdownContent">
-                            <Link to="/browse" className='link'>Browse</Link>
+                            <Link to="/browse" className={`link ${location.pathname === '/browse' ? 'active' : ''} `}>Browse</Link>
                             <Link to="/page2" className='link'>Purchased</Link>
                             <Link to="/page3" className='link'>My Products</Link>
                         </div>

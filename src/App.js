@@ -9,6 +9,7 @@ import NavBarLayout from './layouts/NavbarLayout'
 import NavBar from './components/NavBar/NavBar';
 import Footer from './components/Footer/Footer';
 import Browse from './pages/Products/Browse';
+import Product from './pages/Products/Product';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
           <Route path="/" element={<NavBar><Footer><Home /></Footer></NavBar>} />
           <Route path="/browse" element={<NavBar><Footer><Browse /></Footer></NavBar>} />
+          <Route path="/product/:productId" element={<NavBar><Footer><Product /></Footer></NavBar>} />
         </Routes>
         <ToastContainer />
         {/* <Footer /> */}
