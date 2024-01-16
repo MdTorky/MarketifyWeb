@@ -11,6 +11,7 @@
     display: flex;
     overflow: hidden;
     flex-direction: column;
+    margin-bottom: 70px;
 }
 
 .Browse h2 {
@@ -442,7 +443,7 @@
 
 
 
-
+/* Single Product */
 
 
 .Product {
@@ -579,16 +580,13 @@
 
     display: flex;
     gap: 10px;
-    /* background: red; */
     width: 80%;
 }
 
 .ProductPopLeft img {
     width: 20%;
     background: var(--bg);
-    /* padding: 1px; */
     border-radius: 10px;
-    /* margin-right: 10px; */
 }
 
 .ProductPopText {
@@ -615,20 +613,288 @@
     font-size: 1.3em;
 }
 
-.ProductPopButton {
+/* .ProductPopButton, .ChatPopButton {
     text-decoration: none;
+    border: none;
     background: var(--text);
     padding: 10px;
+    font-size: 15px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: var(--bg);
     border-radius: 20px;
     font-weight: 900;
     transition: 0.5s all ease;
     white-space: nowrap;
+    cursor: pointer;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+
+.ChatPopButton {
+    background: var(--theme);
+}
+
+.ChatPopButton:hover {
+    background: var(--theme2);
+    transform: translateY(2px);
+    box-shadow: none
 }
 
 .ProductPopButton:hover {
     background: var(--text2);
     transform: translateY(2px);
     box-shadow: none
+} */
+
+
+.PopButton {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    cursor: pointer;
+    /* box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px; */
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border: none;
+    border-radius: 30px;
+    color: var(--bg);
+    background: linear-gradient(to right, var(--theme), var(--theme2));
+
+}
+
+.ProductBuyButton {
+    background: linear-gradient(to right, var(--text), var(--text2));
+}
+
+.ProductToolTip {
+    position: absolute;
+    top: 0;
+    font-size: 14px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.ProductToolTip::before {
+    position: absolute;
+    content: "";
+    height: 8px;
+    width: 8px;
+    bottom: -3px;
+    left: 50%;
+    transform: translate(-50%) rotate(45deg);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.PopButton:hover {
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    transform: translateY(3px);
+    background: linear-gradient(to right, var(--text2), var(--text));
+    color: var(--bg);
+}
+
+.ProductBuyButton:hover {
+    background: linear-gradient(to right, var(--theme), var(--theme2));
+
+}
+
+.PopButton:hover .ProductToolTip {
+    top: -45px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    white-space: nowrap;
+}
+
+.PopButton:hover span,
+.PopButton:hover .ProductToolTip {
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+
+}
+
+.PopButton:hover .ProductToolTip,
+.PopButton:hover .ProductToolTip::before {
+    background: var(--text);
+    color: var(--bg);
+    white-space: nowrap;
+
+}
+
+.PopButton:hover .ProductTip,
+.PopButton:hover .ProductTip::before {
+    background: var(--theme);
+}
+
+
+
+/* button click effect*/
+/* .ChatPopButtons button:active {
+    transform: translate(2px, 10px);
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Purchased Products */
+
+.PurchasedFilter {
+    display: flex;
+    flex-direction: row;
+    margin: 20px 0 0 40px;
+    gap: 10px;
+}
+
+.PurchasedFilter .FilterButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 900;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.PurchasedFilter .FilterButton.active {
+    border-bottom: 2px solid var(--theme);
+    opacity: 1;
+
+}
+
+.PurchasedTitles {
+    display: flex;
+    width: 80%;
+    /* gap: 90px; */
+    /* justify-content: space-evenly; */
+    align-items: center;
+    background: var(--theme);
+    margin: 10px auto;
+    color: var(--bg);
+    border-radius: 20px;
+    padding: 5px 0;
+    position: relative;
+
+}
+
+.PurchasedTitles td, .PurchasedTitles th {
+    width: 150px;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+    font-weight: 100;
+
+}
+
+.PurchasedTitles tr td {
+    width: 100px;
+    font-weight: 900;
+    position: relative;
+
+}
+
+.PurchasedItems {
+    padding: 10px 0;
+}
+
+.ProductColumn {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.PurchasedItems .ProductInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.PurchasedItems .ProductInfo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}
+
+.ReviewButton {
+    font-size: 2em;
+    width: 150px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--bg)
+}
+
+
+.statusButton {
+    position: relative;
+}
+
+.StatusPaid {
+    color: #00BF63;
+    text-transform: uppercase;
+}
+
+.StatusNotPaid {
+    color: var(--text);
+    text-transform: uppercase;
+
+
+}
+
+.PayButton {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg);
+    border-radius: 10px;
+    padding: 5px 10px;
+    /* width: fit-content; */
+    text-decoration: none;
+    background: var(--text);
+    left: 0;
+    right: 0;
+    /* margin: auto; */
+    top: 30px;
+    transition: 0.7s;
+}
+
+.PayButton:hover {
+    transform: scale(0.8);
+}
+
+
+.PurchasedChatButton {
+    position: absolute;
+    right: 0;
+    top: 30px;
+    background: none;
+    box-shadow: none;
 }

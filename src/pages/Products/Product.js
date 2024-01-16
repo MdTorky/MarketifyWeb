@@ -1,12 +1,23 @@
 import './Products.css'
+import React, { useState } from 'react';
 import logo from '../../images/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faStar, faCommentDots, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 import productCard from '../../components/ProductCard/ProductCard';
-
+import Chat from '../../components/Chat/Chat';
 import { Link, useLocation } from 'react-router-dom';
 
 const Product = () => {
+
+    const [isChatOpen, setChatOpen] = useState(false);
+    const openChat = () => {
+        setChatOpen(true);
+    };
+
+    const closeChat = () => {
+        setChatOpen(false);
+    };
+
     return (
         <div className="Product">
             <div className="ProductTop">
@@ -56,9 +67,20 @@ const Product = () => {
                 </div>
                 <div className="ProductPopRight">
                     <p className="ProductPrice">43RM</p>
-                    <Link to="/" className="ProductPopButton">Buy Now</Link>
+                    <button className="PopButton" onClick={openChat}>
+                        <span className="ProductToolTip" >Chat Now</span>
+                        <span><FontAwesomeIcon icon={faCommentDots} /></span>
+                    </button>
+                    {/* <button className="ChatPopButton"><FontAwesomeIcon icon={faCommentDots} /></button> */}
+
+                    <Link className="PopButton ProductBuyButton" to="/">
+                        <span className="ProductToolTip ProductTip" >Buy Now</span>
+                        <span><FontAwesomeIcon icon={faMoneyBill} /></span>
+                    </Link>
+                    {/* <Link to="/" className="ProductPopButton"><FontAwesomeIcon icon={faMoneyBill} /></Link> */}
                 </div>
             </div>
+            {isChatOpen && <Chat onClose={closeChat} />}
         </div>
     );
 }

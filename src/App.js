@@ -10,6 +10,7 @@ import NavBar from './components/NavBar/NavBar';
 import Footer from './components/Footer/Footer';
 import Browse from './pages/Products/Browse';
 import Product from './pages/Products/Product';
+import Purchased from './pages/Products/Purchased';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<NavBar><Footer><Home /></Footer></NavBar>} />
           <Route path="/browse" element={<NavBar><Footer><Browse /></Footer></NavBar>} />
           <Route path="/product/:productId" element={<NavBar><Footer><Product /></Footer></NavBar>} />
+          <Route path="/purchased" element={<NavBar><Footer><Purchased /></Footer></NavBar>} />
         </Routes>
         <ToastContainer />
         {/* <Footer /> */}

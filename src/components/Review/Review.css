@@ -1,0 +1,86 @@
+/* ReviewPopup.css */
+.ReviewPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 5px solid var(--theme);
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    padding: 20px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s, transform 0.3s;
+    visibility: hidden;
+    /* Initial visibility set to hidden */
+}
+
+.ReviewPopup.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0);
+    visibility: visible;
+}
+
+.PopupHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.PopupHeader h2 {
+    margin: 0;
+}
+
+.PopupHeader button {
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 1.5em;
+}
+
+.PopupHeader button:hover {
+    color: var(--theme);
+}
+
+.RatingContainer {
+    margin-bottom: 20px;
+}
+
+.Star {
+    font-size: 2em;
+    color: #ddd;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.Star.selected {
+    color: var(--text);
+}
+
+.ReviewPopup textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.ReviewPopup button {
+    background-color: var(--theme);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.ReviewPopup button:hover {
+    background-color: #333;
+}
