@@ -898,3 +898,18 @@
     background: none;
     box-shadow: none;
 }
+
+
+.PurchasedChatButton:hover {
+    background: none;
+    box-shadow: none;
+    transform: scale(1.3)
+}
+
+.PurchasedChatButton:hover .ProductToolTip,
+.PurchasedChatButton:hover .ProductToolTip::before {
+    background: var(--bg);
+    color: var(--theme);
+    white-space: nowrap;
+
+}

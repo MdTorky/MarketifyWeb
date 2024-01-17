@@ -11,6 +11,7 @@ import Footer from './components/Footer/Footer';
 import Browse from './pages/Products/Browse';
 import Product from './pages/Products/Product';
 import Purchased from './pages/Products/Purchased';
+import Payment from './pages/Payment/Payment';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/browse" element={<NavBar><Footer><Browse /></Footer></NavBar>} />
           <Route path="/product/:productId" element={<NavBar><Footer><Product /></Footer></NavBar>} />
           <Route path="/purchased" element={<NavBar><Footer><Purchased /></Footer></NavBar>} />
+          <Route path="/payment" element={<NavBar><Footer><Payment /></Footer></NavBar>} />
         </Routes>
         <ToastContainer />
         {/* <Footer /> */}

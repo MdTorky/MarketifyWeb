@@ -61,7 +61,7 @@ const Purchased = () => {
                     <td>21 Jan</td>
                     <td className={`statusButton ${status ? "StatusPaid" : "StatusNotPaid"}`}>{`${status ? "Paid" : "Not Paid"}`}
 
-                        {!status && <Link to="/" className='PayButton'>Pay</Link>}</td>
+                        {!status && <Link to="/payment" className='PayButton'>Pay</Link>}</td>
 
                     <td>Cash</td>
                     <button className="PopButton PurchasedChatButton" onClick={openChat}>
