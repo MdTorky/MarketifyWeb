@@ -1,8 +1,9 @@
 // ReviewPopup.js
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faArrowLeftLong, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import './Review.css';
+import profile from '../../images/Profile.jpg'
 
 const ReviewPopup = ({ onClose, onSubmit, showReviewPopup }) => {
     const [rating, setRating] = useState(0);
@@ -39,29 +40,33 @@ const ReviewPopup = ({ onClose, onSubmit, showReviewPopup }) => {
     return (
         <form className={`ReviewPopup ${showReviewPopup ? 'show' : ''}`}>
             <div className="PopupHeader">
-                <h3>Write a Review</h3>
                 <button onClick={onClose}>
-                    <FontAwesomeIcon icon={faTimes} />
+                    <FontAwesomeIcon icon={faArrowLeftLong} />
                 </button>
+                <h3>Rate <span className="HeaderName">Ali</span></h3>
+                <img src={profile} alt="" />
             </div>
             <div className="RatingContainer">
-                Rate
-                {[1, 2, 3, 4, 5].map((value) => (
-                    <FontAwesomeIcon
-                        key={value}
-                        icon={faStar}
-                        className={`Star ${value <= rating ? 'selected' : ''}`}
-                        onClick={() => handleRatingClick(value)}
-                    />
-                ))}
+                <p>Rate</p>
+                <>
+                    {[1, 2, 3, 4, 5].map((value) => (
+                        <FontAwesomeIcon
+                            key={value}
+                            icon={faStar}
+                            className={`Star ${value <= rating ? 'selected' : ''}`}
+                            onClick={() => handleRatingClick(value)}
+                        />
+                    ))}
+                </>
             </div>
+            <p className="WriteAReview">Write a Review</p>
             <textarea
-                placeholder="Write your review..."
+                // placeholder="Write your review..."
                 value={review}
                 onChange={handleReviewChange}
             />
-            {!isReviewValid && <p className="error-message">Review cannot be empty</p>}
-            <button onClick={handleSubmit}>Submit</button>
+            {!isReviewValid && <p className="ReviewError"><FontAwesomeIcon icon={faTriangleExclamation} /> Review cannot be empty</p>}
+            <button onClick={handleSubmit} className='ReviewSubmit'>Submit</button>
         </form>
     );
 

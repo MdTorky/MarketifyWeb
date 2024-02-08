@@ -39,7 +39,7 @@
     color: var(--bg);
     font-size: 1.2em;
     padding: 5px;
-    font-weight: 900;
+    font-weight: 700;
     transition: 0.5s ease;
 }
 
@@ -103,7 +103,7 @@
     text-decoration: none;
     color: var(--bg);
     font-size: 1.2em;
-    font-weight: 900;
+    font-weight: 700;
     transition: 0.5s ease;
     gap: 10px;
     display: flex;

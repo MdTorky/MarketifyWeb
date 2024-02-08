@@ -5,14 +5,29 @@
 }
 
 .Browse {
-    padding: 20px;
+    /* padding: 20px; */
     font-family: 'Poppins', sans-serif;
-    /* margin-bottom: 900px; */
+    margin-bottom: 5%;
     display: flex;
     overflow: hidden;
     flex-direction: column;
+
+}
+
+
+.PurchasedProducts {
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: -100px;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.SoldProducts {
     margin-bottom: 70px;
 }
+
 
 .Browse h2 {
     margin: 0;
@@ -141,126 +156,6 @@
 
 
 
-
-/* Product Card */
-
-.ProductCard {
-    --accent-color: var(--text);
-    position: relative;
-    width: 240px;
-    height: fit-content;
-    background: white;
-    border-radius: 1rem;
-    padding: 0.3rem;
-    /* box-shadow: rgba(100, 100, 111, 0.2) 0px 50px 30px -20px; */
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    transition: all 0.5s ease-in-out;
-    text-decoration: none;
-}
-
-.ProductCard .ProductImg {
-    position: relative;
-    width: 100%;
-    height: 130px;
-    border-radius: 0.7rem;
-    border-top-right-radius: 4rem;
-    margin-bottom: 1rem;
-}
-
-.ProductCard .ProductImg img {
-    width: 100%;
-    height: 100%;
-    -o-object-fit: cover;
-    object-fit: cover;
-    border-radius: inherit;
-    position: absolute;
-}
-
-.ProductCard .ProductImg .svg {
-    height: 100%;
-    width: 100%;
-    border-radius: inherit;
-}
-
-.ProductCard .ProductImg .ProductPrice {
-    position: absolute;
-    right: 0.7rem;
-    bottom: -1rem;
-    background: white;
-    color: var(--accent-color);
-    font-weight: 900;
-    font-size: 0.9rem;
-    padding: 0.5rem;
-    border-radius: 1rem 1rem 2rem 2rem;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 0px 15px 0px;
-}
-
-.ProductCard .ProductContent {
-    padding: 0px 0.8rem;
-    margin-bottom: 1rem;
-}
-
-.ProductCard .ProductContent .ProductTitle {
-    font-weight: 900;
-    color: var(--text);
-}
-
-.ProductCard .ProductContent .ProductDesc {
-    font-weight: 700;
-    color: #666666;
-    font-size: 0.7rem;
-    margin-bottom: 1rem;
-}
-
-
-.SellerRatings {
-    color: #a8a8a8;
-    font-size: 0.6rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.SellerRatings svg {
-    height: 12px;
-}
-
-.SellerRatings .Rating {
-    color: rgb(235, 204, 26)
-}
-
-
-.ProductCard .ProductButton {
-    display: flex;
-    gap: 0.3rem;
-}
-
-.ProductCard .ProductButton .button {
-    border-radius: 1.4rem 1.4rem 0.7rem 0.7rem;
-    border: none;
-    padding: 0.5rem 0;
-    background: var(--accent-color);
-    color: white;
-    font-weight: 900;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-}
-
-.ProductCard .ProductButton .button:hover {
-    background: var(--text2);
-}
-
-.ProductCard .ProductButton .BuyButton {
-    flex: auto;
-}
-
-
-.ProductCard:hover {
-    transform: scale(1.03);
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
 
 
 
@@ -609,8 +504,9 @@
 }
 
 .ProductPopRight .ProductPrice {
-    font-weight: 900;
+    font-weight: 700;
     font-size: 1.3em;
+    color: var(--text)
 }
 
 /* .ProductPopButton, .ChatPopButton {
@@ -755,7 +651,243 @@
 
 
 
+/* Purchase Form */
+.PurchaseFormPopup {
+    position: absolute;
+    flex-direction: column;
+    display: flex;
+    background: white;
+    bottom: 300px;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 20px;
+    justify-content: space-around;
+    backdrop-filter: blur(4px) saturate(180%);
+    -webkit-backdrop-filter: blur(8px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.79);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    z-index: 0;
+}
 
+
+.PurchaseFormPopup h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1.4em;
+    color: var(--text)
+}
+
+.Form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    /* justify-content: space-around; */
+    width: 100%;
+    position: relative;
+
+}
+
+.Form .InputRow {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+}
+
+/* Input fields */
+.Form .InputField {
+    display: flex;
+    width: 100%;
+    position: relative;
+}
+
+.Form .InputLabelField {
+    display: flex;
+    width: 100%;
+    position: relative;
+    white-space: nowrap;
+
+}
+
+.Form .InputField.WholeWidth {
+    width: 100% !important;
+}
+
+.Form .LabelInput {
+    position: absolute;
+    z-index: 99;
+    top: 15px;
+    left: 16px;
+    font-size: 0.9em;
+    cursor: text;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+
+.Form .InputField .InputError {
+    margin-bottom: 10px;
+    text-align: center;
+    background: transparent;
+    border-radius: 20px;
+    padding: 5px;
+    border: 3px solid var(--text);
+    color: var(--bg);
+    transition: 0.5s ease-in-out;
+    width: 300px;
+    max-width: 420px;
+    padding: 12px;
+}
+
+
+.Form .LabelInputImg {
+    cursor: pointer;
+    margin: 0;
+    font-size: 0.9em;
+    color: var(--hover);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+
+}
+
+.Form .input, .Form select, .Form .LabelInputImg {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+    border-radius: 15px;
+    border: 3px solid lightgrey;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0px 0px 20px -18px;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 10px;
+    background: white;
+    position: relative;
+    font-weight: 700;
+
+}
+
+.Form select option:checked {
+    background-color: var(--theme);
+    color: var(--bg);
+    font-weight: 700;
+}
+
+select:focus {
+    border: 3px solid mediumaquamarine;
+    color: var(--hover)
+}
+
+/* Matric Number */
+
+.Form .input::placeholder {
+    font-family: 'FontAwesome', sans-serif;
+}
+
+.Form .input.valid, .Form .LabelInputImg.valid {
+
+    border: 3px solid mediumaquamarine;
+    box-shadow: 0px 0px 20px -17px;
+    color: mediumseagreen;
+
+}
+
+.Form .input.invalid, .Form .LabelInputImg.invalid {
+    border: 3px solid var(--text);
+    box-shadow: 0px 0px 20px -17px;
+    color: var(--text);
+}
+
+.Form .input:active {
+    transform: scale(0.95);
+}
+
+.Form .input:placeholder-shown {
+    border: 3px solid lightgrey;
+    text-transform: none;
+}
+
+
+.ClosePurchaseForm {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background: var(--text);
+}
+
+.ClosePurchaseForm:hover {
+    transform: scale(1.2);
+}
+
+
+.Form button.XImgButton {
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    box-shadow: none;
+    cursor: pointer;
+    display: flex;
+}
+
+.Form .Submit {
+    background: var(--text);
+    border: 0;
+    border-radius: 10px;
+    color: var(--bg);
+    width: fit-content;
+    padding: 10px;
+    margin: auto;
+    cursor: pointer;
+    transition: 0.5s all ease;
+    font-size: 1em;
+}
+
+
+.Form .Submit:hover {
+    border-radius: 20px;
+    letter-spacing: 1.2px;
+}
+
+.multiselect {
+    width: 100%;
+}
+
+.selectBox {
+    position: relative;
+
+}
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+#checkboxes {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+#checkboxes label {
+    display: block;
+
+}
+
+#checkboxes label:hover {
+    background-color: #1e90ff;
+}
 
 
 
@@ -765,6 +897,60 @@
 
 
 /* Purchased Products */
+
+
+.SoldTable {
+    width: 100%;
+    display: flex;
+    /* flex-direction: ; */
+    box-sizing: border-box;
+    justify-content: center;
+    position: relative;
+
+}
+
+.SoldTable table {
+    width: 100%;
+    /* padding: -100px; */
+    /* margin-right: -100px; */
+    /* width: min-content; */
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
+
+
+.TotalPrice {
+    background: var(--theme);
+    padding: 10px;
+    border-radius: 20px;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: space-between;
+    height: 150px;
+    /* margin-left: -170px; */
+    margin-top: 10px;
+    position: absolute;
+    right: 4%;
+}
+
+.TotalPrice p {
+    margin: 0;
+    color: var(--bg);
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.TotalPrice .Total {
+    background: var(--bg);
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+
+}
 
 .PurchasedFilter {
     display: flex;
@@ -795,13 +981,13 @@
     /* gap: 90px; */
     /* justify-content: space-evenly; */
     align-items: center;
-    background: var(--theme);
+    background: var(--text);
     margin: 10px auto;
     color: var(--bg);
     border-radius: 20px;
     padding: 5px 0;
     position: relative;
-
+    /* font-weight: 700; */
 }
 
 .PurchasedTitles td, .PurchasedTitles th {
@@ -809,7 +995,7 @@
     justify-content: center;
     margin: auto;
     text-align: center;
-    font-weight: 100;
+    /* font-weight: 800; */
 
 }
 
@@ -822,6 +1008,8 @@
 
 .PurchasedItems {
     padding: 10px 0;
+    background: var(--theme);
+
 }
 
 .ProductColumn {
@@ -848,24 +1036,30 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--bg)
+    color: var(--bg);
+    transition: 0.5s all;
 }
 
+.ReviewButton:hover {
+    color: gold
+}
 
 .statusButton {
     position: relative;
 }
 
+
+
 .StatusPaid {
     color: #00BF63;
     text-transform: uppercase;
+    font-weight: 700;
 }
 
 .StatusNotPaid {
     color: var(--text);
     text-transform: uppercase;
-
-
+    font-weight: 700;
 }
 
 .PayButton {
@@ -884,6 +1078,14 @@
     /* margin: auto; */
     top: 30px;
     transition: 0.7s;
+}
+
+.PayButton.ConfirmButton {
+    background: #00BF63;
+    font-size: 0.9em;
+    width: fit-content;
+    left: 25%;
+
 }
 
 .PayButton:hover {
@@ -912,4 +1114,50 @@
     color: var(--theme);
     white-space: nowrap;
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* My Products */
+
+.MyProducts {
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    /* margin-bottom: 900px; */
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    margin-bottom: 70px;
+}
+
+.MyProducts h2 {
+    margin: 0;
+    color: var(--text);
+    text-transform: uppercase;
+    font-weight: 800;
+    margin: 200px 0 0 30px;
+    font-size: 3em;
+}
+
+.MyProductsCards {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin: auto;
+    justify-content: center;
 }

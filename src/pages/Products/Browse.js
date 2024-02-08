@@ -50,19 +50,22 @@ const Browse = () => {
                     </div>
                 </div>
                 <div className="RightSide">
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+
                 </div>
             </div>
         </div>

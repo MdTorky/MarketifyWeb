@@ -1,0 +1,130 @@
+/* Product Card */
+
+.ProductCard {
+    --accent-color: var(--text);
+    position: relative;
+    width: 240px;
+    height: fit-content;
+    background: white;
+    border-radius: 1rem;
+    padding: 0.3rem;
+    /* box-shadow: rgba(100, 100, 111, 0.2) 0px 50px 30px -20px; */
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: all 0.5s ease-in-out;
+    text-decoration: none;
+}
+
+.ProductCard .ProductImg {
+    position: relative;
+    width: 100%;
+    height: 130px;
+    border-radius: 0.7rem;
+    border-top-right-radius: 4rem;
+    margin-bottom: 1rem;
+}
+
+.ProductCard .ProductImg img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border-radius: inherit;
+    position: absolute;
+}
+
+.ProductCard .ProductImg .svg {
+    height: 100%;
+    width: 100%;
+    border-radius: inherit;
+}
+
+.ProductCard .ProductImg .ProductPrice {
+    position: absolute;
+    right: 0.7rem;
+    bottom: -1rem;
+    background: white;
+    color: var(--accent-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    border-radius: 1rem 1rem 2rem 2rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 0px 15px 0px;
+}
+
+.ProductCard .ProductContent {
+    padding: 0px 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.ProductCard .ProductContent .ProductTitle {
+    font-weight: 700;
+    color: var(--text);
+}
+
+.ProductCard .ProductContent .ProductDesc {
+    font-weight: 700;
+    color: #666666;
+    font-size: 0.7rem;
+    margin-bottom: 1rem;
+}
+
+
+.SellerRatings {
+    color: #a8a8a8;
+    font-size: 0.6rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.SellerRatings svg {
+    height: 12px;
+}
+
+.SellerRatings .Rating {
+    color: rgb(235, 204, 26)
+}
+
+
+.ProductCard .ProductButton {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.ProductCard .ProductButton .button {
+    border-radius: 1.4rem 1.4rem 0.7rem 0.7rem;
+    border: none;
+    padding: 0.5rem 0;
+    background: var(--accent-color);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    display: flex;
+    justify-content: center;
+}
+
+.ProductCard .ProductButton .button.EditButton {
+    background: var(--theme);
+
+}
+
+.ProductCard .ProductButton .button.EditButton:hover {
+    background: var(--theme2);
+}
+
+.ProductCard .ProductButton .button:hover {
+    background: var(--text2);
+}
+
+.ProductCard .ProductButton .BuyButton {
+    flex: auto;
+}
+
+
+.ProductCard:hover {
+    transform: scale(1.03);
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

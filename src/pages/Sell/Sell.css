@@ -1,0 +1,78 @@
+.Sell {
+    /* padding: 20px; */
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 10%;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+
+}
+
+
+.SellFormContainer {
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: -100px;
+    display: flex;
+    flex-direction: column;
+    margin: 200px auto 0 auto;
+    background: var(--theme);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    border-radius: 20px;
+
+}
+
+.SellButtons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    background: var(--bg);
+    /* padding: 10px 20px; */
+    border-radius: 30px;
+    width: fit-content;
+    margin: auto;
+}
+
+.SellButton {
+    font-size: 1.3em;
+    text-decoration: none;
+    color: var(--text);
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 5px 20px;
+}
+
+.SellButton.active {
+    color: var(--bg);
+    /* background: var(--text); */
+    background: linear-gradient(90deg, rgba(244, 80, 80, 1) 0%, rgba(219, 48, 48, 1) 100%);
+    border-radius: 30px;
+}
+
+
+.SellFormContainer h2 {
+    margin: 0;
+    text-align: center;
+    color: var(--bg);
+    margin: 20px 0;
+}
+
+
+.Form .SubmitButton {
+    /* position: absolute; */
+    background: transparent;
+    border: 5px solid var(--text);
+    color: white;
+    padding: 5px 20px;
+    font-size: 0.9em;
+    /* width: fit-content; */
+    border-radius: 10px;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.SubmitButton:hover {
+    background-color: var(--text);
+    letter-spacing: 1.2px;
+    color: whitesmoke;
+}

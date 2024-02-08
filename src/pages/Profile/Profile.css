@@ -1,0 +1,166 @@
+.Profile {
+    /* padding: 20px; */
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 5%;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+
+}
+
+
+
+
+.ProfileBack {
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    margin: 200px 0 0 30px;
+    justify-content: space-evenly;
+}
+
+.ProfileLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.ProfileImgContainer {
+    /* width: 200px; */
+    position: relative;
+    /* height: 100%; */
+}
+
+.ProfileImgContainer img {
+    width: 300px;
+    height: 400px;
+    filter: brightness(70%);
+    border-radius: 10px 10px 0 0;
+}
+
+.ProfileImgText {
+    position: absolute;
+    display: flex;
+    bottom: 0;
+    padding: 20px;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.ProfileImgText h2 {
+    background: var(--theme);
+    padding: 5px;
+    color: var(--bg);
+    font-size: 1.2em;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    text-transform: uppercase;
+}
+
+.EditButton {
+    color: var(--text);
+    font-size: 2.3em;
+    padding: 0;
+    text-shadow: 0px 3px 6px rgba(0, 0, 0, 1);
+    transition: 0.5s all ease;
+}
+
+.EditButton:hover {
+    color: var(--bg);
+    transform: scale(1.2)
+}
+
+.ProfileInfo {
+    background: var(--theme);
+    margin-top: -10px;
+    padding: 15px;
+    border-radius: 0 0 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 150px;
+
+}
+
+.ProfileInfoField {
+    display: flex;
+    justify-content: space-between;
+    color: var(--bg);
+    align-items: center
+}
+
+.ProfileInfoField p:first-child {
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-transform: uppercase;
+}
+
+.ProfileInfoAddress {
+    font-size: 0.8em
+}
+
+
+
+
+
+
+
+
+.ProfileRight {
+    /* background: var(--theme); */
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    padding: 10px;
+    gap: 20px;
+}
+
+
+.ProfileRight h1 {
+    color: var(--text);
+    text-transform: uppercase
+}
+
+.ReviewCard {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+
+}
+
+
+
+.ReviewCardLeft {
+    display: flex;
+    flex-direction: column;
+    /* box-sizing: border-bosx; */
+    /* white-space: wrap; */
+    width: 100px;
+    gap: 5px;
+    align-items: center;
+
+}
+
+.ReviewCard .ReviewCardLeft img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ReviewCardLeft p {
+    text-align: center;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+    /* margin-left: -10px; */
+}
+
+.ReviewCardRight .SellerRatings {
+    justify-content: flex-end !important;
+}

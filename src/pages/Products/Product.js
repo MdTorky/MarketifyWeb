@@ -2,14 +2,17 @@ import './Products.css'
 import React, { useState } from 'react';
 import logo from '../../images/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faStar, faCommentDots, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faStar, faCommentDots, faMoneyBill, faEnvelope, faPhone, faAddressBook, faLocation, faLocationPin, faLocationDot, faClose } from '@fortawesome/free-solid-svg-icons';
 import productCard from '../../components/ProductCard/ProductCard';
 import Chat from '../../components/Chat/Chat';
 import { Link, useLocation } from 'react-router-dom';
+import PurchaseForm from '../../components/PurhcaseForm/PurchaseForm';
 
 const Product = () => {
 
     const [isChatOpen, setChatOpen] = useState(false);
+    const [isPurchaseFormOpen, setPurchaseFormOpen] = useState(false);
+
     const openChat = () => {
         setChatOpen(true);
     };
@@ -17,6 +20,18 @@ const Product = () => {
     const closeChat = () => {
         setChatOpen(false);
     };
+
+    const openPurchaseForm = () => {
+        setPurchaseFormOpen(true);
+    };
+
+    const closePurchaseForm = () => {
+        setPurchaseFormOpen(false);
+    };
+
+
+
+
 
     return (
         <div className="Product">
@@ -48,14 +63,15 @@ const Product = () => {
             <div className="ProductRight">
                 <p className="ProductRecommendationTitle">Recommendation</p>
                 <div className="ProductRecommendation">
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
-                    {productCard()}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
+                    {productCard({ edit: false })}
                 </div>
             </div>
+
 
             <div className="ProductPop">
                 <div className="ProductPopLeft">
@@ -73,14 +89,20 @@ const Product = () => {
                     </button>
                     {/* <button className="ChatPopButton"><FontAwesomeIcon icon={faCommentDots} /></button> */}
 
-                    <Link className="PopButton ProductBuyButton" to="/">
+                    <Link className="PopButton ProductBuyButton" onClick={openPurchaseForm}>
                         <span className="ProductToolTip ProductTip" >Buy Now</span>
                         <span><FontAwesomeIcon icon={faMoneyBill} /></span>
                     </Link>
+
+
                     {/* <Link to="/" className="ProductPopButton"><FontAwesomeIcon icon={faMoneyBill} /></Link> */}
                 </div>
             </div>
             {isChatOpen && <Chat onClose={closeChat} />}
+            {isPurchaseFormOpen && (
+
+                <PurchaseForm closePurchaseForm={closePurchaseForm} />
+            )}
         </div>
     );
 }

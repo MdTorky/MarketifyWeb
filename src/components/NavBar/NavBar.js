@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faBell, faBars, faMinus, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
 import ReactCountryFlag from "react-country-flag"
+import { Icon } from '@iconify-icon/react';
+
 const NavBar = ({ children }) => {
 
     const location = useLocation();
@@ -25,10 +27,10 @@ const NavBar = ({ children }) => {
                         <div className="dropdownContent">
                             <Link to="/browse" className={`link ${location.pathname === '/browse' ? 'active' : ''} `}>Browse</Link>
                             <Link to="/purchased" className={`link ${location.pathname === '/purchased' ? 'active' : ''} `}>Purchased</Link>
-                            <Link to="/page3" className='link'>My Products</Link>
+                            <Link to="/myProducts" className={`link ${location.pathname === '/myProducts' ? 'active' : ''} `}>My Products</Link>
                         </div>
                     </div>
-                    <Link to="/" className='link'>Sell</Link>
+                    <Link to="/sell" className='link'>Sell</Link>
                     <div className="dropdown">
                         <Link className="link user"><FontAwesomeIcon icon={faGlobe} /></Link>
                         <div className="dropdownContent">
@@ -51,7 +53,8 @@ const NavBar = ({ children }) => {
                     </div>
 
                     <Link to="/" className='link user'><FontAwesomeIcon icon={faBell} /></Link>
-                    <Link to="/" className='link user'><FontAwesomeIcon icon={faUser} /></Link>
+                    <Link to="/profile/3124124" className='link user'><FontAwesomeIcon icon={faUser} /></Link>
+                    {/* <Link to="/profile/3124124" className='link user'><Icon icon="line-md:account" /></Link> */}
                 </div>
             </div>
             {children}

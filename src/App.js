@@ -12,6 +12,10 @@ import Browse from './pages/Products/Browse';
 import Product from './pages/Products/Product';
 import Purchased from './pages/Products/Purchased';
 import Payment from './pages/Payment/Payment';
+import MyProducts from './pages/Products/MyProducts';
+import Sell from './pages/Sell/Sell';
+import Donate from './pages/Sell/Donate';
+import Profile from './pages/Profile/Profile';
 
 function App() {
   return (
@@ -25,7 +29,11 @@ function App() {
           <Route path="/browse" element={<NavBar><Footer><Browse /></Footer></NavBar>} />
           <Route path="/product/:productId" element={<NavBar><Footer><Product /></Footer></NavBar>} />
           <Route path="/purchased" element={<NavBar><Footer><Purchased /></Footer></NavBar>} />
+          <Route path="/myProducts" element={<NavBar><Footer><MyProducts /></Footer></NavBar>} />
           <Route path="/payment" element={<NavBar><Footer><Payment /></Footer></NavBar>} />
+          <Route path="/sell" element={<NavBar><Footer><Sell /></Footer></NavBar>} />
+          <Route path="/donate" element={<NavBar><Footer><Donate /></Footer></NavBar>} />
+          <Route path="/profile/:id" element={<NavBar><Footer><Profile /></Footer></NavBar>} />
         </Routes>
         <ToastContainer />
         {/* <Footer /> */}

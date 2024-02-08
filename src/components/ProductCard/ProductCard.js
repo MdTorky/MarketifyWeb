@@ -1,11 +1,41 @@
 // import './Products.css'
 import logo from '../../images/logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faStar, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from 'react-router-dom';
+import './ProductCard.css'
+import PurchaseForm from '../PurhcaseForm/PurchaseForm';
+import { useState } from "react"
+const ProductCard = ({ edit }) => {
 
 
-const ProductCard = () => {
+    const [isPurchaseFormOpen, setPurchaseFormOpen] = useState(false);
+
+
+
+    const handleTrashButtonClick = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        // Check if the click was on the trash button, if so, prevent navigation
+        // Add logic for deleting the product or any other action
+        // ...
+        window.location.href = '/';
+        // Optionally, you can redirect to another page after handling the trash button click
+        // window.location.href = "/some-other-page";
+    };
+
+    const openPurchaseForm = (event) => {
+        event.preventDefault();
+        setPurchaseFormOpen(true);
+    };
+
+    const closePurchaseForm = () => {
+        setPurchaseFormOpen(false);
+    };
+
+
+
     return (
         <Link to="/product/2" className="ProductCard">
 
@@ -92,12 +122,31 @@ const ProductCard = () => {
                 </div>
             </div>
 
-            <div class="ProductButton">
-                <button class="BuyButton button">Buy Now</button>
-            </div>
+            {edit ? (
 
-        </Link>
+                <div className="ProductButton">
+                    <button className="BuyButton button" onClick={handleTrashButtonClick}>
+                        <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                    <Link className="BuyButton button EditButton" to="/"><FontAwesomeIcon icon={faPenToSquare} /></Link>
+                </div>
+            ) : (
+                // <div className="ProductButton">
+                //     <button className="BuyButton button" onClick={openPurchaseForm}>Buy Now</button>
+                // </div>
+
+                <></>
+            )
+            }
+            {/* {
+                isPurchaseFormOpen && (
+                    <PurchaseForm closePurchaseForm={closePurchaseForm} />
+                )
+            } */}
+        </Link >
+
     )
+
 
 }
 

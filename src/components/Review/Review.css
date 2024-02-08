@@ -15,6 +15,8 @@
     transform: translateY(-20px);
     transition: opacity 0.3s, transform 0.3s;
     visibility: hidden;
+    /* font-family: 'Poppins', sans-serif; */
+
     /* Initial visibility set to hidden */
 }
 
@@ -29,11 +31,20 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    /* background: red; */
 }
 
-.PopupHeader h2 {
-    margin: 0;
+.HeaderName {
+    color: var(--text);
 }
+
+.PopupHeader h3 {
+    margin: 0 auto;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
 
 .PopupHeader button {
     background: none;
@@ -47,8 +58,31 @@
     color: var(--theme);
 }
 
+.PopupHeader img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
 .RatingContainer {
     margin-bottom: 20px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    /* Make sure stars are in a row */
+    /* direction: ltr; */
+    align-items: center;
+    /* justify-content: space-between; */
+    /* gap: 20px; */
+}
+
+.RatingContainer p {
+    margin-right: 20px;
+    font-weight: 600;
+    color: var(--theme);
 }
 
 .Star {
@@ -56,31 +90,70 @@
     color: #ddd;
     margin: 0 5px;
     cursor: pointer;
+    transition: color 0.3s ease;
+    direction: ltr;
+}
+
+.Star:hover {
+    color: var(--text);
+    /* Change to the desired color */
 }
 
 .Star.selected {
     color: var(--text);
 }
 
+.WriteAReview {
+    color: var(--theme);
+    font-weight: 600;
+
+}
+
 .ReviewPopup textarea {
     width: 100%;
-    height: 100px;
+    height: 150px;
     margin-bottom: 20px;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: 1px solid var(--theme);
+    border-radius: 10px;
+    /* background: var(--theme); */
 }
 
 .ReviewPopup button {
-    background-color: var(--theme);
-    color: white;
-    padding: 10px 20px;
+    /* background-color: var(--theme); */
+    color: var(--text);
+    padding: 5px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1em;
+    transition: 0.5s ease;
+
+
+}
+
+.ReviewPopup .ReviewSubmit {
+    background: var(--text);
+    border: 5px solid var(--theme);
+    color: white;
+    position: absolute;
+    padding: 5px 20px;
+
+    top: 95%;
+    /* left: 0; */
+    right: 100px;
+    width: 40%;
+    border-radius: 20px;
 }
 
 .ReviewPopup button:hover {
-    background-color: #333;
+    background-color: var(--text2);
+    letter-spacing: 1.2px;
+    color: whitesmoke
+}
+
+.ReviewError {
+    color: var(--text);
+    font-weight: 700;
+    margin-bottom: 10px;
 }
