@@ -51,7 +51,7 @@ const Profile = () => {
                             <p>+210312489212</p>
                         </div>
                         <div className="ProfileInfoField">
-                            <p><Icon icon="mdi:passport" /> Passport: </p>
+                            <p><Icon icon="mdi:passport" /> Passsport: </p>
                             <p>A20323443</p>
                         </div>
                         <div className="ProfileInfoField">
