@@ -5,6 +5,7 @@
     align-items: center;
     margin: auto;
     margin-top: 160px;
+    /* gap: 10px; */
     /* background: red; */
 }
 
@@ -57,7 +58,7 @@
 }
 
 /*hover effect*/
-button:hover {
+.SearchBox button:hover {
     color: #fff;
     background-color: #1A1A1A;
     box-shadow: rgba(0, 0, 0, 0.5) 0 10px 20px;
@@ -65,7 +66,7 @@ button:hover {
 }
 
 /*button pressing effect*/
-button:active {
+.SearchBox button:active {
     box-shadow: none;
     transform: translateY(0);
 }
@@ -116,4 +117,141 @@ button:active {
 .InfoCardText h3 {
     color: var(--text);
     font-weight: 900;
+}
+
+
+.AdminBottomRow {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.AdminBottomRow table {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.AdminBottomRow table tr {
+    display: flex;
+    justify-content: space-between;
+    /* flex-wrap: wrap; */
+    width: 60%;
+    padding: 15px 10px;
+    text-align: center;
+    margin: 10px auto;
+    color: var(--bg);
+    position: relative;
+    border-radius: 5px;
+}
+
+.AdminBottomRow table tr.TableHeading {
+    background: var(--text);
+    border-radius: 10px 10px 0 0;
+    color: var(--bg);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+
+}
+
+.AdminBottomRow table tr th {
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: center;
+    width: 100px;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+
+}
+
+
+.AdminBottomRow table tr.TableData {
+    text-align: center;
+    background: var(--theme);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.AdminBottomRow table tr td {
+    text-align: center;
+    width: 100px;
+    font-weight: 600;
+    position: relative;
+}
+
+.AdminBottomRow table tr.TableData:last-child {
+    border-radius: 0 0 10px 10px;
+}
+
+.StatusGreen {
+    color: #00BF63;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+}
+
+.StatusRed {
+    color: var(--text);
+    font-weight: 900 !important;
+    text-transform: uppercase;
+}
+
+.StatusButton {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    cursor: pointer;
+    background: var(--bg);
+    border: 3px solid var(--theme);
+    padding: 5px;
+    border-radius: 20px;
+    transition: 0.5s all ease;
+    font-weight: 800;
+    color: var(--theme);
+
+}
+
+.StatusButton:hover {
+    background: var(--theme);
+    color: var(--bg);
+    /* box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px; */
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    transform: scale(1.08);
+
+}
+
+.TableButton {
+    background: var(--text);
+    border: none;
+    padding: 5px 20px;
+    color: var(--bg);
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 800;
+    text-transform: uppercase !important;
+    transition: 0.5s all ease;
+}
+
+.TableButton:hover {
+    transform: scale(1.2);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+
+}
+
+.DeleteButton {
+    position: absolute;
+    left: 0;
+    bottom: 30%;
+    cursor: pointer;
+    background: none;
+    font-size: 1.4em;
+    border: none;
+    color: var(--bg);
+    transition: 0.5s all ease;
+}
+
+.DeleteButton:hover {
+    color: var(--text)
 }
