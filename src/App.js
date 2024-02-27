@@ -17,6 +17,10 @@ import Sell from './pages/Sell/Sell';
 import Donate from './pages/Sell/Donate';
 import Profile from './pages/Profile/Profile';
 
+import AdminNavBar from './components/NavBar/AdminNavBar';
+import ManageAccounts from './pages/Admin/ManageAccounts'
+import ManageProducts from './pages/Admin/ManageProducts'
+
 function App() {
   return (
     <div className="App">
@@ -34,6 +38,13 @@ function App() {
           <Route path="/sell" element={<NavBar><Footer><Sell /></Footer></NavBar>} />
           <Route path="/donate" element={<NavBar><Footer><Donate /></Footer></NavBar>} />
           <Route path="/profile/:id" element={<NavBar><Footer><Profile /></Footer></NavBar>} />
+
+
+
+
+          <Route path="/adminManageAccounts" element={<AdminNavBar><ManageAccounts /></AdminNavBar>} />
+          <Route path="/adminManageProducts" element={<AdminNavBar><ManageProducts /></AdminNavBar>} />
+          {/* <Route path="/adminManageAccounts" element={<AdminNavBar><ManageAccounts /></AdminNavBar>} /> */}
         </Routes>
         <ToastContainer />
         {/* <Footer /> */}

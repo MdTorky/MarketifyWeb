@@ -1,0 +1,119 @@
+.Admin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 160px;
+    /* background: red; */
+}
+
+.Admin h2 {
+    text-transform: uppercase;
+    color: var(--text);
+    font-size: 2em
+}
+
+.AdminTopRow {
+    display: flex;
+    margin-top: 10px;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+.SearchBox {
+    display: flex;
+    width: 500px;
+    /* max-width: 930px; */
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: var(--text);
+    border-radius: 20px;
+    position: relative;
+    color: var(--bg);
+    height: fit-content;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+
+.searchButton {
+    color: white;
+    position: absolute;
+    right: 8px;
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    background: var(--gradient-2, linear-gradient(90deg, var(--theme) 0%, var(--theme2)));
+    border: 0;
+    display: inline-block;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    cursor: pointer;
+    font-size: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*hover effect*/
+button:hover {
+    color: #fff;
+    background-color: #1A1A1A;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 10px 20px;
+    transform: translateY(-3px);
+}
+
+/*button pressing effect*/
+button:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.searchInput {
+    border: none;
+    background: none;
+    outline: none;
+    color: white;
+    font-size: 15px;
+    width: 96%;
+    padding: 24px 46px 24px 26px;
+}
+
+.searchInput::placeholder {
+    color: var(--bg);
+    opacity: 0.7;
+    /* Firefox */
+}
+
+
+
+.InfoCard {
+    background: var(--text);
+    /* padding: 10px; */
+    display: flex;
+    border-radius: 20px;
+    align-items: center;
+    padding: 15px 20px;
+    gap: 20px;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+
+.InfoCard .InfoCardIcon {
+    color: var(--bg);
+    font-size: 2em
+}
+
+.InfoCardText {
+    text-align: center;
+    padding: 5px;
+    background: var(--bg);
+    border-radius: 15px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+}
+
+.InfoCardText h3 {
+    color: var(--text);
+    font-weight: 900;
+}

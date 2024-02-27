@@ -4,7 +4,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { Icon } from '@iconify-icon/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCommentDots, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react'
 const Profile = () => {
+
+    const [fine, setFine] = useState(true)
 
     const ReviewCard = () => {
         return (
@@ -51,7 +54,7 @@ const Profile = () => {
                             <p>+210312489212</p>
                         </div>
                         <div className="ProfileInfoField">
-                            <p><Icon icon="mdi:passport" /> Passsport: </p>
+                            <p><Icon icon="mdi:passport" /> Passport: </p>
                             <p>A20323443</p>
                         </div>
                         <div className="ProfileInfoField">
@@ -67,6 +70,10 @@ const Profile = () => {
                     {ReviewCard()}
 
                 </div>
+
+                {fine && (
+                    <button className='PayFineButton'><Icon icon="fa6-regular:money-bill-1" /> Pay Fine: 12 RM</button>
+                )}
             </div>
         </div>
     );

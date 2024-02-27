@@ -17,6 +17,7 @@
     display: flex;
     margin: 200px 0 0 30px;
     justify-content: space-evenly;
+    position: relative;
 }
 
 .ProfileLeft {
@@ -79,8 +80,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 150px;
-
+    height: 170px;
+    gap: 10px;
 }
 
 .ProfileInfoField {
@@ -163,4 +164,29 @@
 
 .ReviewCardRight .SellerRatings {
     justify-content: flex-end !important;
+}
+
+
+.PayFineButton {
+    position: absolute;
+    right: 10%;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 4px solid var(--text);
+    background: none;
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: 0.5s all ease-in-out;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.PayFineButton:hover {
+    color: var(--bg);
+    background: var(--text);
+    box-shadow: none;
+    transform: scale(0.9);
 }
