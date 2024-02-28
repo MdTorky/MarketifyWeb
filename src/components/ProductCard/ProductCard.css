@@ -103,23 +103,27 @@
     transition: 0.3s ease-in-out;
     display: flex;
     justify-content: center;
+    /* font: 0.7em; */
 }
 
-.ProductCard .ProductButton .button.EditButton {
+.ProductCard .ProductButton .BuyButton.EditButton {
     background: var(--theme);
 
 }
 
-.ProductCard .ProductButton .button.EditButton:hover {
+.ProductCard .ProductButton .BuyButton.EditButton:hover {
     background: var(--theme2);
+    transform: none;
 }
 
-.ProductCard .ProductButton .button:hover {
+.ProductCard .ProductButton .BuyButton:hover {
     background: var(--text2);
 }
 
 .ProductCard .ProductButton .BuyButton {
     flex: auto;
+    height: fit-content;
+    font-size: 0.8em;
 }
 
 

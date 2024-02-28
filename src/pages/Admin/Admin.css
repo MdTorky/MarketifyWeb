@@ -185,6 +185,30 @@
     border-radius: 0 0 10px 10px;
 }
 
+.StatusBoxGreen {
+    background: #00BF63;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    padding: 1px 5px;
+    border-radius: 5px;
+}
+
+.StatusBoxRed {
+    background: var(--text);
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    padding: 1px 5px;
+    border-radius: 5px;
+}
+
+.StatusBoxYellow {
+    background: goldenrod;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    padding: 1px 5px;
+    border-radius: 5px;
+}
+
 .StatusGreen {
     color: #00BF63;
     font-weight: 900 !important;
@@ -254,4 +278,22 @@
 
 .DeleteButton:hover {
     color: var(--text)
+}
+
+.PurchaseDate {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 70%;
+    font-size: 0.8em;
+    font-weight: 800;
+    letter-spacing: 3px;
+    background: var(--bg);
+    border: 3px solid var(--theme);
+    padding: 5px 20px;
+    border-radius: 10px;
+    transition: 0.5s all ease;
+    color: var(--theme);
+    width: fit-content;
+    margin: auto;
 }

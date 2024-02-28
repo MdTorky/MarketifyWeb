@@ -20,6 +20,8 @@ import Profile from './pages/Profile/Profile';
 import AdminNavBar from './components/NavBar/AdminNavBar';
 import ManageAccounts from './pages/Admin/ManageAccounts'
 import ManageProducts from './pages/Admin/ManageProducts'
+import ManageSoldProducts from './pages/Admin/ManageSoldProducts';
+import ManageReports from './pages/Admin/ManageReports';
 
 function App() {
   return (
@@ -44,6 +46,8 @@ function App() {
 
           <Route path="/adminManageAccounts" element={<AdminNavBar><ManageAccounts /></AdminNavBar>} />
           <Route path="/adminManageProducts" element={<AdminNavBar><ManageProducts /></AdminNavBar>} />
+          <Route path="/adminManageSoldProducts" element={<AdminNavBar><ManageSoldProducts /></AdminNavBar>} />
+          <Route path="/adminManageReports" element={<AdminNavBar><ManageReports /></AdminNavBar>} />
           {/* <Route path="/adminManageAccounts" element={<AdminNavBar><ManageAccounts /></AdminNavBar>} /> */}
         </Routes>
         <ToastContainer />

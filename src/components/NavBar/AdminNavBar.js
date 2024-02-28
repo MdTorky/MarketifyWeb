@@ -17,10 +17,10 @@ const AdminNavBar = ({ children }) => {
             setActiveButton('adminManageAccounts');
         } else if (pathname.includes('/adminManageProducts')) {
             setActiveButton('adminManageProducts');
-        } else if (pathname.includes('manage-sold-products')) {
-            setActiveButton('manage-sold-products');
-        } else if (pathname.includes('manage-reports')) {
-            setActiveButton('manage-reports');
+        } else if (pathname.includes('adminManageSoldProducts')) {
+            setActiveButton('adminManageSoldProducts');
+        } else if (pathname.includes('adminManageReports')) {
+            setActiveButton('adminManageReports');
         } else {
             setActiveButton('');
         }
@@ -40,8 +40,8 @@ const AdminNavBar = ({ children }) => {
                     {/* Add 'active' class to the active button */}
                     <Link to='/adminManageAccounts' className={`NavButton ${activeButton === 'adminManageAccounts' ? 'active' : ''}`}><Icon icon="material-symbols:manage-accounts-rounded" /><span>Manage Accounts</span></Link>
                     <Link to="/adminManageProducts" className={`NavButton ${activeButton === 'adminManageProducts' ? 'active' : 'notActive'}`}><Icon icon="fluent-mdl2:product-variant" /><span>Manage Products</span></Link>
-                    <Link className={`NavButton ${activeButton === 'manage-sold-products' ? 'active' : 'notActive'}`}><Icon icon="mdi:package-variant-closed-check" /><span>Manage Sold Products</span></Link>
-                    <Link className={`NavButton ${activeButton === 'manage-reports' ? 'active' : 'notActive'}`}><Icon icon="fluent-mdl2:report-warning" /><span>Manage Reports</span></Link>
+                    <Link to="/adminManageSoldProducts" className={`NavButton ${activeButton === 'adminManageSoldProducts' ? 'active' : 'notActive'}`}><Icon icon="mdi:package-variant-closed-check" /><span>Manage Sold Products</span></Link>
+                    <Link to="/adminManageReports" className={`NavButton ${activeButton === 'adminManageReports' ? 'active' : 'notActive'}`}><Icon icon="fluent-mdl2:report-warning" /><span>Manage Reports</span></Link>
                     <div className="NavContentHover"></div>
                 </div>
             </div>

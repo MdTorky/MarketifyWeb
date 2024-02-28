@@ -1,11 +1,22 @@
+import Fine from '../../components/Fine/Fine';
 import './Admin.css'
 import { Icon } from '@iconify-icon/react';
+import React, { useState } from 'react';
 
 const ManageAccounts = () => {
 
+    const [isFineFormOpen, setFineFormOpen] = useState(false);
 
 
-    const TableData = (status, fine) => {
+    const openFineForm = () => {
+        setFineFormOpen(true);
+    };
+
+    const CloseFineForm = () => {
+        setFineFormOpen(false);
+    };
+
+    const TableData = (status, fine, proof) => {
         return (
             <tr className="TableData">
                 <td><button className="DeleteButton"><Icon icon="mdi:delete-circle" /></button>1</td>
@@ -13,13 +24,17 @@ const ManageAccounts = () => {
                 <td>Data</td>
                 <td>Data</td>
                 <td>Data</td>
+                <td className="StatusGreen">
+                    A12123124
+                    {proof && <button className="StatusButton">View Proof</button>}
+                </td>
                 <td>Data</td>
                 <td className={`${status ? "StatusGreen" : 'StatusRed'}`}>
                     {status ? "Active" : "Inactive"}
                     <button className="StatusButton">{!status ? "Activate" : "Deactivate"}</button>
                 </td>
 
-                <td>{fine ? fine + " RM" : <button className='TableButton'>Add</button>}</td>
+                <td>{fine ? fine + " RM" : <button className='TableButton' onClick={openFineForm}>Add</button>}</td>
             </tr>
         )
     }
@@ -52,15 +67,20 @@ const ManageAccounts = () => {
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone No</th>
+                        <th>Passport</th>
                         <th>Address</th>
                         <th>Status</th>
                         <th>Fine</th>
                     </tr>
-                    {TableData(true, 12)}
-                    {TableData(false, null)}
+                    {TableData(true, 12, true)}
+                    {TableData(false, null, false)}
 
                 </table>
             </div>
+            {isFineFormOpen && (
+
+                <Fine CloseFineForm={CloseFineForm} />
+            )}
         </div>
     );
 }

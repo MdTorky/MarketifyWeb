@@ -1,8 +1,11 @@
 /* ReviewPopup.css */
 .ReviewPopup {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 30%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: fit-content;
     transform: translate(-50%, -50%);
     background-color: white;
     border: 5px solid var(--theme);
@@ -12,18 +15,23 @@
     padding: 20px;
     text-align: center;
     opacity: 0;
-    transform: translateY(-20px);
-    transition: opacity 0.3s, transform 0.3s;
+    /* transform: translateY(-20px); */
+    /* transition: opacity 0.3s, transform 0.3s; */
     visibility: hidden;
     /* font-family: 'Poppins', sans-serif; */
 
     /* Initial visibility set to hidden */
+    animation: ScaleCenter 1s ease 0s 1 normal forwards;
+
 }
+
+
 
 .ReviewPopup.show {
     opacity: 1;
-    transform: translate(-50%, -50%) translateY(0);
+    /* transform: translate(-50%, -50%) translateY(0); */
     visibility: visible;
+
 }
 
 .PopupHeader {
