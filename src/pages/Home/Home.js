@@ -11,7 +11,7 @@ const Home = () => {
                 <div className="HeroText">
                     <h3>BUY - SELL - BENEFIT</h3>
                     <h1 className="anim">Shop With US</h1>
-                    <Link to="/SignUp" className="HeroButton">Shop Now</Link>
+                    <Link to="/browse" className="HeroButton">Shop Now</Link>
                 </div>
                 <div className="HeroImg">
                     <img src={img1} alt="" />

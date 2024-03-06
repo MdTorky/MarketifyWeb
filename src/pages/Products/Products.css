@@ -41,8 +41,8 @@
 
 .Browse .AllBrowse {
     display: flex;
-    gap: 50px;
-    /* justify-content: space-between; */
+    gap: 200px;
+    /* justify-content: space-around; */
 }
 
 .Browse .AllBrowse .LeftSide {
@@ -142,6 +142,7 @@
 
 .Browse .RightSide {
     display: flex;
+    /* margin-left: 90px; */
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;

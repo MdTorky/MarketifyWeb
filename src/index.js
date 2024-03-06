@@ -2,11 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-
+import { ItemsContextProvider } from './context/ItemContext';
+import { LanguageProvider } from './context/languageContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <LanguageProvider>
+      <ItemsContextProvider>
+        <App />
+      </ItemsContextProvider>
+    </LanguageProvider>
   </React.StrictMode>
 );
 

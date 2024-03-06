@@ -22,22 +22,35 @@ import ManageAccounts from './pages/Admin/ManageAccounts'
 import ManageProducts from './pages/Admin/ManageProducts'
 import ManageSoldProducts from './pages/Admin/ManageSoldProducts';
 import ManageReports from './pages/Admin/ManageReports';
+import { useLanguage } from './context/languageContext';
+import languageData from './language.json';
+
+
 
 function App() {
+
+  const api = process.env.REACT_APP_API_KEY;
+  // const api = "http://localhost:4000";
+
+
+  const { isRTL, language } = useLanguage();
+  const languageText = languageData[language];
+
+
   return (
-    <div className="App">
+    <div className={`App ${isRTL ? 'rtl' : ''}`}>
       <BrowserRouter>
         <Routes>
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/SignIn" element={<SignIn />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
           <Route path="/" element={<NavBar><Footer><Home /></Footer></NavBar>} />
-          <Route path="/browse" element={<NavBar><Footer><Browse /></Footer></NavBar>} />
-          <Route path="/product/:productId" element={<NavBar><Footer><Product /></Footer></NavBar>} />
+          <Route path="/browse" element={<NavBar><Footer><Browse api={api} languageText={languageText} /></Footer></NavBar>} />
+          <Route path="/product/:id" element={<NavBar><Footer><Product /></Footer></NavBar>} />
           <Route path="/purchased" element={<NavBar><Footer><Purchased /></Footer></NavBar>} />
           <Route path="/myProducts" element={<NavBar><Footer><MyProducts /></Footer></NavBar>} />
           <Route path="/payment" element={<NavBar><Footer><Payment /></Footer></NavBar>} />
-          <Route path="/sell" element={<NavBar><Footer><Sell /></Footer></NavBar>} />
+          <Route path="/sell" element={<NavBar><Footer><Sell api={api} /></Footer></NavBar>} />
           <Route path="/donate" element={<NavBar><Footer><Donate /></Footer></NavBar>} />
           <Route path="/profile/:id" element={<NavBar><Footer><Profile /></Footer></NavBar>} />
 

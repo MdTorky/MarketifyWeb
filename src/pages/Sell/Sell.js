@@ -1,24 +1,33 @@
 import "./Sell.css"
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCommentDots, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from '@iconify-icon/react';
-const Sell = () => {
-    const [productName, setProductName] = useState("")
-    const [productPrice, setProductPrice] = useState("")
-    const [productCondition, setProductCondition] = useState("")
-    const [productDescription, setProductDescription] = useState("")
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import Loader from "../../components/Loader/Loader";
+import { useItemsContext } from '../../hooks/useItemsContext'
+
+
+
+
+const Sell = ({ api }) => {
+    const { products = [], dispatch } = useItemsContext()
+    const [pTitle, setProductName] = useState("")
+    const [pPrice, setProductPrice] = useState("")
+    const [pCondition, setProductCondition] = useState("")
+    const [pDescription, setProductDescription] = useState("")
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [expandedCategories, setExpandedCategories] = useState(false);
-
-    const [productImg, setProductImg] = useState(null)
 
     const [selectedImageText, setSelectedImageText] = useState(null);
     const [img, setImg] = useState(null);
 
-
-
+    const [error, setError] = useState(null);
+    const [submitting, setSubmitting] = useState(false)
+    const navigate = useNavigate();
 
 
 
@@ -46,7 +55,7 @@ const Sell = () => {
 
     const checkbox = ({ type }) => {
         return (
-            <label htmlFor={type}>
+            <div className="CategoryInput" >
                 <input
                     type="checkbox"
                     id={type}
@@ -54,8 +63,11 @@ const Sell = () => {
                     checked={selectedCategories.includes(type)}
                     onChange={() => handleCheckboxChange(type)}
                 />
-                {" " + type}
-            </label>
+
+                <label htmlFor={type}>{" " + type}</label>
+
+
+            </div>
         )
     }
 
@@ -74,135 +86,245 @@ const Sell = () => {
         }
     };
 
-    const handleRemoveImage = () => {
+    const handleRemoveImage = (e) => {
+        e.preventDefault();
         setImg(null);
         setSelectedImageText(null);
     }
 
 
+
+    const uploadFile = async (type, file) => {
+        const data = new FormData();
+        data.append("file", file);
+        data.append("upload_preset", type === 'image' ? 'images_preset' : '');
+
+        try {
+            let cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+            // console.log('Cloud Name:', process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
+            let resourceType = type === 'image' ? 'image' : 'video';
+            let api = `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`;
+
+            const res = await axios.post(api, data);
+            const { secure_url } = res.data;
+            console.log(secure_url);
+            return secure_url;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+
+
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setSubmitting(true)
+
+        const imgUrl = await uploadFile('image', img);
+
+        const item = {
+            pTitle,
+            pDescription,
+            pPrice,
+            pCondition,
+            pCategory: selectedCategories,
+            pImage: imgUrl,
+            userID: "UserID",
+            pType: "Sell"
+        }
+
+        const response = await fetch(`${api}/api/products`, {
+            method: "POST",
+            body: JSON.stringify(item),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const json = await response.json()
+
+        if (!response.ok) {
+            setError(json.error);
+        } else {
+            setError(null);
+            dispatch({
+                type: 'CREATE_FORM',
+                collection: "products",
+                payload: json
+            });
+            toast.success("Added Successfully", {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                style: {
+                    // fontFamily: language === 'ar' ?
+                    //     'Noto Kufi Arabic, sans-serif' :
+                    //     'Poppins, sans-serif',
+                },
+            });
+            setSubmitting(false);
+            navigate("/")
+
+
+        }
+
+    }
+
+
+
+
     return (
         <div className="Sell">
-            <div className="SellFormContainer">
-                <div className="SellButtons">
-                    <Link to="/sell" className="SellButton active">Sell</Link>
-                    <Link to="/donate" className="SellButton">Donate</Link>
+            {submitting ? (
+                <div className="Loader">
+                    <Loader />
+                    <p className="LoaderText">Submitting</p>
                 </div>
-                <h2>Sell Form</h2>
-                <form className='Form'>
-                    <div className="InputField ">
-                        <div className="InputLabelField">
-                            <input
-                                type="text"
-                                className={`input ${(productName) ? 'valid' : ''}`}
-                                onChange={(e) => { setProductName(e.target.value) }}
-                                required
-                                id="name"
-                                name="name"
-                            />
-                            {!productName && <label for="name" className={`LabelInput ${(productName) ? 'valid' : ''}`}><Icon icon="fluent-mdl2:product" />Product Name</label>}
-                        </div>
+            ) : (
+                <div className="SellFormContainer">
+                    <div className="SellButtons">
+                        <Link to="/sell" className="SellButton active">Sell</Link>
+                        <Link to="/donate" className="SellButton">Donate</Link>
                     </div>
-
-                    <div className="InputField">
-                        <div className="InputLabelField">
-                            <input
-                                type="number"
-                                className={`input ${(productPrice) ? 'valid' : ''}`}
-                                onChange={(e) => { setProductPrice(e.target.value) }}
-
-                                required
-                                id="price"
-                                name="price"
-                            />
-                            {!productPrice && <label for="price" className={`LabelInput ${(productPrice) ? 'valid' : ''}`}> <Icon icon="solar:tag-price-bold" /> Product Price</label>}
+                    <h2>Sell Form</h2>
+                    <form className='Form' onSubmit={handleSubmit}>
+                        <div className="InputField ">
+                            <div className="InputLabelField">
+                                <input
+                                    type="text"
+                                    className={`input ${(pTitle) ? 'valid' : ''}`}
+                                    onChange={(e) => { setProductName(e.target.value) }}
+                                    required
+                                    id="name"
+                                    name="name"
+                                />
+                                {!pTitle && <label for="name" className={`LabelInput ${(pTitle) ? 'valid' : ''}`}><Icon icon="fluent-mdl2:product" />Product Name</label>}
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="InputRow">
                         <div className="InputField">
-                            <select
-                                className={`input ${(productCondition) ? 'valid' : ''}`}
-                                name="productCondition"
-                                required
-                                onChange={(e) => { setProductCondition(e.target.value) }}
+                            <div className="InputLabelField">
+                                <input
+                                    type="number"
+                                    className={`input ${(pPrice) ? 'valid' : ''}`}
+                                    onChange={(e) => { setProductPrice(e.target.value) }}
 
-
-                            >
-                                <option value="" disabled selected hidden>Condition</option>
-                                <option value="Brand New">Brand New</option>
-                                <option value="New">New</option>
-                                <option value="Used">Used</option>
-                            </select>
+                                    required
+                                    id="price"
+                                    name="price"
+                                />
+                                {!pPrice && <label for="price" className={`LabelInput ${(pPrice) ? 'valid' : ''}`}> <Icon icon="solar:tag-price-bold" /> Product Price</label>}
+                            </div>
                         </div>
-                        <div className="InputField">
-                            <div class="multiselect">
-                                <div class="selectBox" onClick={() => showCheckboxes('categories')}>
-                                    <select>
-                                        <option>Categories</option>
-                                    </select>
-                                    <div class="overSelect"></div>
-                                </div>
-                                <div id="categoriesCheckboxes" style={{ display: expandedCategories ? 'flex' : 'none', flexDirection: 'column', color: "white" }}>
-                                    {generateCheckboxes([
-                                        { type: "Technology" },
-                                        { type: "d" },
-                                        { type: "Technology" },
-                                        { type: "Technology" },
-                                        { type: "Technology" },
-                                        { type: "Technology" },
-                                        { type: "Technology" },
-                                        { type: "Technology" },
-                                        { type: "Technology" },
-                                        { type: "Technology" },
-                                        { type: "Technology" },
-                                        { type: "Technology" },
-                                        { type: "Technology" },
-                                        { type: "Technology" },
-                                        { type: "Technology" },
 
-                                    ])}
+                        <div className="InputRow">
+                            <div className="InputField">
+                                <select
+                                    className={`input ${(pCondition) ? 'valid' : ''}`}
+                                    name="productCondition"
+                                    required
+                                    onChange={(e) => { setProductCondition(e.target.value) }}
+
+
+                                >
+                                    <option value="" disabled selected hidden>Condition</option>
+                                    <option value="Brand New">Brand New</option>
+                                    <option value="New">New</option>
+                                    <option value="Used">Used</option>
+                                </select>
+                            </div>
+                            <div className="InputField">
+                                <div class="multiselect">
+                                    <div class="selectBox" onClick={() => showCheckboxes('categories')}>
+                                        <select>
+                                            <option>Categories</option>
+                                        </select>
+                                        <div class="overSelect"></div>
+                                    </div>
+                                    <div id="categoriesCheckboxes" style={{ display: expandedCategories ? 'flex' : 'none', flexDirection: 'column', color: "white" }}>
+                                        {generateCheckboxes([
+                                            { type: "Men's Clothing" },
+                                            { type: "Women's Clothing" },
+                                            { type: "Men's Shoes" },
+                                            { type: "Women's Shoes" },
+                                            { type: "Men's Bags" },
+                                            { type: "Women's Bags" },
+
+                                            { type: "Food & Beverages" },
+                                            { type: "Groceries" },
+
+                                            { type: "Mobile" },
+                                            { type: "Computer" },
+                                            { type: "Cameras / Drones" },
+                                            { type: "Home Appliances" },
+                                            { type: "Gaming Consoles" },
+
+                                            { type: "Healthcare" },
+                                            { type: "Pharmaceuticals" },
+
+
+
+                                            { type: "Furniture" },
+                                            { type: "Automotive" },
+
+                                            { type: "Books" },
+                                            { type: "Games & Hobbies" },
+                                            { type: "Sports & Outdoor" },
+
+                                            { type: "Tickets" },
+
+                                        ])}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="InputField">
-                        <div className="InputLabelField">
-                            <textarea
-                                rows="3"
-                                className={`input ${(productDescription) ? 'valid' : ''}`}
-                                columns="20"
-                                required
-                                onChange={(e) => { setProductDescription(e.target.value) }}
-                                id="productDescription"
-                                name='productDescription'
+                        <div className="InputField">
+                            <div className="InputLabelField">
+                                <textarea
+                                    rows="3"
+                                    className={`input ${(pDescription) ? 'valid' : ''}`}
+                                    columns="20"
+                                    required
+                                    onChange={(e) => { setProductDescription(e.target.value) }}
+                                    id="productDescription"
+                                    name='productDescription'
 
-                            />
-                            {!productDescription && <label for="productDescription" className={`LabelInput ${(productDescription) ? 'valid' : ''}`}><Icon icon="material-symbols:description" /> Description</label>}
+                                />
+                                {!pDescription && <label for="productDescription" className={`LabelInput ${(pDescription) ? 'valid' : ''}`}><Icon icon="material-symbols:description" /> Description</label>}
+                            </div>
                         </div>
-                    </div>
-                    <div className="InputField">
+                        <div className="InputField">
 
-                        <label for="img" className={`LabelInputImg ${(img) ? 'valid' : ''}`}>
-                            <div style={{ gap: "8px", display: "flex", alignItems: "center" }}><Icon icon="line-md:image" />{selectedImageText || "Image"}</div>
-                            {(img)
-                                ? <button className="XImgButton" onClick={handleRemoveImage}>
-                                    <Icon icon="line-md:close-circle" />
-                                </button>
-                                : <Icon icon="line-md:upload-loop" />}
-                        </label>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            id="img"
-                            className={`input ${(img) ? 'valid' : ''}`}
-                            style={{ display: 'none' }}
-                            onChange={handleImgChange}
-                        />
-                    </div>
-                    <button className='SubmitButton'>Submit</button>
+                            <label for="img" className={`LabelInputImg ${(img) ? 'valid' : ''}`}>
+                                <div style={{ gap: "8px", display: "flex", alignItems: "center" }}><Icon icon="line-md:image" />{selectedImageText || "Image"}</div>
+                                {(img)
+                                    ? <button className="XImgButton" onClick={handleRemoveImage}>
+                                        <Icon icon="line-md:close-circle" />
+                                    </button>
+                                    : <Icon icon="line-md:upload-loop" />}
+                            </label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                id="img"
+                                className={`input ${(img) ? 'valid' : ''}`}
+                                style={{ display: 'none' }}
+                                onChange={handleImgChange}
+                            />
+                        </div>
+                        <button className='SubmitButton'>Submit</button>
 
-                </form>
-            </div>
+                    </form>
+                    {error && <div className="ErrorMessage"><Icon icon="ooui:error" />{error}</div>}
+
+                </div>
+            )}
         </div>
     );
 }

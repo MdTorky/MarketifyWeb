@@ -6,14 +6,19 @@ import { faUser, faBell, faBars, faMinus, faGlobe } from '@fortawesome/free-soli
 import React, { useState } from 'react';
 import ReactCountryFlag from "react-country-flag"
 import { Icon } from '@iconify-icon/react';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useLanguage } from '../../context/languageContext';
+
 
 const NavBar = ({ children }) => {
 
     const location = useLocation();
+    const { language } = useLanguage();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const { isRTL } = useLanguage();
     return (
         <>
-            <div className='NavBar'>
+            <div className={`NavBar ${isRTL ? 'rtl' : ''}`}>
                 <div className="logo">
                     <Link to="/"><img src={logo} alt="" /></Link>
                 </div>
@@ -33,23 +38,7 @@ const NavBar = ({ children }) => {
                     <Link to="/sell" className='link'>Sell</Link>
                     <div className="dropdown">
                         <Link className="link user"><FontAwesomeIcon icon={faGlobe} /></Link>
-                        <div className="dropdownContent">
-                            <Link to="/page1" className='link'>  <ReactCountryFlag countryCode="GB" svg
-                                style={{
-                                    fontSize: '1.3em',
-                                }} />
-                                <span className="country-name">English</span></Link>
-
-
-                            <Link to="/page2" className='link'>  <ReactCountryFlag countryCode="PS" svg style={{
-                                fontSize: '1.3em',
-                            }} />
-                                <span className="country-name">Arabic</span></Link>
-                            <Link to="/page3" className='link'>  <ReactCountryFlag countryCode="MY" svg style={{
-                                fontSize: '1.3em',
-                            }} />  <span className="country-name">Malay</span></Link>
-
-                        </div>
+                        <LanguageSwitcher />
                     </div>
 
                     <Link to="/" className='link user'><FontAwesomeIcon icon={faBell} /></Link>

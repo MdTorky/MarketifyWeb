@@ -6,7 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import './ProductCard.css'
 import PurchaseForm from '../PurhcaseForm/PurchaseForm';
 import { useState } from "react"
-const ProductCard = ({ edit }) => {
+const ProductCard = ({ edit, product }) => {
 
 
     const [isPurchaseFormOpen, setPurchaseFormOpen] = useState(false);
@@ -37,10 +37,12 @@ const ProductCard = ({ edit }) => {
 
 
     return (
-        <Link to="/product/2" className="ProductCard">
+        <Link to={`/product/${product._id}`} className="ProductCard">
 
             <div className="ProductImg">
-                <img src={logo} alt="" />
+                {/* <img src={logo} alt="" /> */}
+                <img src={product.pImage} alt="" />
+
                 <svg viewBox="0 0 1921 1081" xmlns="http://www.w3.org/2000/svg" className="svg">
                     <defs>
                         <radialGradient gradientUnits="objectBoundingBox" gradientTransform="translate(0.219) scale(0.563 1)" r="1.204" cy="0.5" cx="0.5" id="radial-gradient">
@@ -53,7 +55,7 @@ const ProductCard = ({ edit }) => {
                     </g>
                 </svg>
 
-                <div className="ProductPrice">$49.9</div>
+                <div className="ProductPrice">{product.pPrice} RM</div>
             </div>
             {/* <label className="favorite">
                 <input checked="" type="checkbox" />
@@ -63,8 +65,8 @@ const ProductCard = ({ edit }) => {
             </label> */}
 
             <div className="ProductContent">
-                <div className="ProductTitle">ADIDAS</div>
-                <div className="ProductDesc">Classic oversized hoodie</div>
+                <div className="ProductTitle">{product.pTitle}</div>
+                <div className="ProductDesc">{product.pDescription}</div>
                 {/* <div class="color-size-container">
                     <div class="colors">
                         Color

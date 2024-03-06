@@ -5,11 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faStar, faCommentDots, faMoneyBill, faEnvelope, faPhone, faAddressBook, faLocation, faLocationPin, faLocationDot, faClose } from '@fortawesome/free-solid-svg-icons';
 import productCard from '../../components/ProductCard/ProductCard';
 import Chat from '../../components/Chat/Chat';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import PurchaseForm from '../../components/PurhcaseForm/PurchaseForm';
 
 const Product = () => {
-
+    const { id } = useParams();
     const [isChatOpen, setChatOpen] = useState(false);
     const [isPurchaseFormOpen, setPurchaseFormOpen] = useState(false);
 

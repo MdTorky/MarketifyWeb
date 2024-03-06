@@ -19,6 +19,7 @@
     background: var(--theme);
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     border-radius: 20px;
+    width: 25%;
 
 }
 
@@ -52,9 +53,18 @@
 
 .SellFormContainer h2 {
     margin: 0;
+    /* display: flex; */
+    /* justify-content: center; */
     text-align: center;
     color: var(--bg);
-    margin: 20px 0;
+    margin: 20px auto;
+    font-size: 1.5em;
+    font-weight: 800;
+    color: var(--theme);
+    background: var(--bg);
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 10px;
 }
 
 
@@ -75,4 +85,83 @@
     background-color: var(--text);
     letter-spacing: 1.2px;
     color: whitesmoke;
+}
+
+
+/* input[type="checkbox"] {
+    display: grid;
+    place-content: center;
+}
+
+
+input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--text);
+}
+
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
+} */
+
+
+
+.CategoryInput input[type="checkbox"] {
+    display: none;
+}
+
+.CategoryInput input[type="checkbox"]+label {
+    display: flex;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 20px;
+    align-items: center;
+    /* margin-top: 3px; */
+    /* font: 14px/20px; */
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.CategoryInput input[type="checkbox"]:hover+label:hover {
+    color: var(--text);
+}
+
+.CategoryInput input[type="checkbox"]:hover+label:before {
+    background: var(--text);
+    box-shadow: inset 0px 0px 0px 2px #f7f2f2;
+}
+
+.CategoryInput input[type="checkbox"]+label:last-child {
+    margin-bottom: 0;
+}
+
+.CategoryInput input[type="checkbox"]+label:before {
+    content: "";
+    display: block;
+    width: 1em;
+    height: 1em;
+    border: 1px solid #343a3f;
+    border-radius: 0.2em;
+    position: absolute;
+    left: 0;
+    /* top: 0; */
+    -webkit-transition: all 0.2s, background 0.2s ease-in-out;
+    transition: all 0.2s, background 0.2s ease-in-out;
+    background: #f3f3f3;
+}
+
+.CategoryInput input[type="checkbox"]:checked+label:before {
+    width: 0.9em;
+    height: 0.9em;
+    border-radius: 0.2em;
+    border: 2px solid #fff;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    background: var(--text);
+    box-shadow: 0 0 0 1px #000;
 }
