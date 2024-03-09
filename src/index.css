@@ -9,6 +9,12 @@
 
 
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lemonada:wght@300&display=swap');
+
+/* font-family: 'Noto Kufi Arabic', sans-serif; */
+
 :root {
   --theme: #3C486B;
   --theme2: #2e3240;
@@ -45,8 +51,9 @@ body {
 }
 
 
-.rtl {
+.arabic {
   direction: rtl;
+  font-family: 'Noto Kufi Arabic', sans-serif !important;
 }
 
 .ErrorMessage {

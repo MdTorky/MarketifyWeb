@@ -13,7 +13,7 @@ import { useItemsContext } from '../../hooks/useItemsContext'
 
 
 
-const Sell = ({ api }) => {
+const Sell = ({ api, languageText }) => {
     const { products = [], dispatch } = useItemsContext()
     const [pTitle, setProductName] = useState("")
     const [pPrice, setProductPrice] = useState("")
@@ -184,15 +184,15 @@ const Sell = ({ api }) => {
             {submitting ? (
                 <div className="Loader">
                     <Loader />
-                    <p className="LoaderText">Submitting</p>
+                    <p className="LoaderText">{languageText.Submitting}</p>
                 </div>
             ) : (
                 <div className="SellFormContainer">
                     <div className="SellButtons">
-                        <Link to="/sell" className="SellButton active">Sell</Link>
-                        <Link to="/donate" className="SellButton">Donate</Link>
+                        <Link to="/sell" className="SellButton active">{languageText.Sell}</Link>
+                        <Link to="/donate" className="SellButton">{languageText.Donate}</Link>
                     </div>
-                    <h2>Sell Form</h2>
+                    <h2>{languageText.SellForm}</h2>
                     <form className='Form' onSubmit={handleSubmit}>
                         <div className="InputField ">
                             <div className="InputLabelField">
@@ -204,7 +204,7 @@ const Sell = ({ api }) => {
                                     id="name"
                                     name="name"
                                 />
-                                {!pTitle && <label for="name" className={`LabelInput ${(pTitle) ? 'valid' : ''}`}><Icon icon="fluent-mdl2:product" />Product Name</label>}
+                                {!pTitle && <label for="name" className={`LabelInput ${(pTitle) ? 'valid' : ''}`}><Icon icon="fluent-mdl2:product" />{languageText.ProductName}</label>}
                             </div>
                         </div>
 
@@ -219,7 +219,7 @@ const Sell = ({ api }) => {
                                     id="price"
                                     name="price"
                                 />
-                                {!pPrice && <label for="price" className={`LabelInput ${(pPrice) ? 'valid' : ''}`}> <Icon icon="solar:tag-price-bold" /> Product Price</label>}
+                                {!pPrice && <label for="price" className={`LabelInput ${(pPrice) ? 'valid' : ''}`}> <Icon icon="solar:tag-price-bold" /> {languageText.ProductPrice}</label>}
                             </div>
                         </div>
 
@@ -233,17 +233,17 @@ const Sell = ({ api }) => {
 
 
                                 >
-                                    <option value="" disabled selected hidden>Condition</option>
-                                    <option value="Brand New">Brand New</option>
-                                    <option value="New">New</option>
-                                    <option value="Used">Used</option>
+                                    <option value="" disabled selected hidden>{languageText.Condition}</option>
+                                    <option value="Brand New">{languageText.BrandNew}</option>
+                                    <option value="New">{languageText.New}</option>
+                                    <option value="Used">{languageText.Used}</option>
                                 </select>
                             </div>
                             <div className="InputField">
                                 <div class="multiselect">
                                     <div class="selectBox" onClick={() => showCheckboxes('categories')}>
                                         <select>
-                                            <option>Categories</option>
+                                            <option>{languageText.Categories}</option>
                                         </select>
                                         <div class="overSelect"></div>
                                     </div>
@@ -264,20 +264,18 @@ const Sell = ({ api }) => {
                                             { type: "Cameras / Drones" },
                                             { type: "Home Appliances" },
                                             { type: "Gaming Consoles" },
+                                            { type: "Other Technology" },
 
                                             { type: "Healthcare" },
                                             { type: "Pharmaceuticals" },
 
-
-
                                             { type: "Furniture" },
                                             { type: "Automotive" },
+                                            { type: "Tickets" },
 
                                             { type: "Books" },
                                             { type: "Games & Hobbies" },
                                             { type: "Sports & Outdoor" },
-
-                                            { type: "Tickets" },
 
                                         ])}
                                     </div>
@@ -296,13 +294,13 @@ const Sell = ({ api }) => {
                                     name='productDescription'
 
                                 />
-                                {!pDescription && <label for="productDescription" className={`LabelInput ${(pDescription) ? 'valid' : ''}`}><Icon icon="material-symbols:description" /> Description</label>}
+                                {!pDescription && <label for="productDescription" className={`LabelInput ${(pDescription) ? 'valid' : ''}`}><Icon icon="material-symbols:description" /> {languageText.ProductDescription}</label>}
                             </div>
                         </div>
                         <div className="InputField">
 
                             <label for="img" className={`LabelInputImg ${(img) ? 'valid' : ''}`}>
-                                <div style={{ gap: "8px", display: "flex", alignItems: "center" }}><Icon icon="line-md:image" />{selectedImageText || "Image"}</div>
+                                <div style={{ gap: "8px", display: "flex", alignItems: "center" }}><Icon icon="line-md:image" />{selectedImageText || languageText.ProductImage}</div>
                                 {(img)
                                     ? <button className="XImgButton" onClick={handleRemoveImage}>
                                         <Icon icon="line-md:close-circle" />
@@ -318,7 +316,7 @@ const Sell = ({ api }) => {
                                 onChange={handleImgChange}
                             />
                         </div>
-                        <button className='SubmitButton'>Submit</button>
+                        <button className='SubmitButton'>{languageText.Submit}</button>
 
                     </form>
                     {error && <div className="ErrorMessage"><Icon icon="ooui:error" />{error}</div>}

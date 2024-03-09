@@ -12,17 +12,10 @@ const ProductCard = ({ edit, product }) => {
     const [isPurchaseFormOpen, setPurchaseFormOpen] = useState(false);
 
 
-
     const handleTrashButtonClick = (event) => {
         event.preventDefault();
         event.stopPropagation();
-
-        // Check if the click was on the trash button, if so, prevent navigation
-        // Add logic for deleting the product or any other action
-        // ...
         window.location.href = '/';
-        // Optionally, you can redirect to another page after handling the trash button click
-        // window.location.href = "/some-other-page";
     };
 
     const openPurchaseForm = (event) => {
@@ -38,7 +31,6 @@ const ProductCard = ({ edit, product }) => {
 
     return (
         <Link to={`/product/${product._id}`} className="ProductCard">
-
             <div className="ProductImg">
                 {/* <img src={logo} alt="" /> */}
                 <img src={product.pImage} alt="" />

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCommentDots, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 import { Icon } from '@iconify-icon/react';
 
-const Donate = () => {
+const Donate = ({ languageText }) => {
 
 
 
@@ -90,10 +90,10 @@ const Donate = () => {
         <div className="Sell">
             <div className="SellFormContainer">
                 <div className="SellButtons">
-                    <Link to="/sell" className="SellButton ">Sell</Link>
-                    <Link to="/donate" className="SellButton active">Donate</Link>
+                    <Link to="/sell" className="SellButton ">{languageText.Sell}</Link>
+                    <Link to="/donate" className="SellButton active">{languageText.Donate}</Link>
                 </div>
-                <h2>Donate Form</h2>
+                <h2>{languageText.DonateForm}</h2>
                 <form className='Form'>
                     <div className="InputField ">
                         <div className="InputLabelField">
@@ -105,7 +105,7 @@ const Donate = () => {
                                 id="name"
                                 name="name"
                             />
-                            {!productName && <label for="name" className={`LabelInput ${(productName) ? 'valid' : ''}`}><Icon icon="fluent-mdl2:product" />Product Name</label>}
+                            {!productName && <label for="name" className={`LabelInput ${(productName) ? 'valid' : ''}`}><Icon icon="fluent-mdl2:product" />{languageText.ProductName}</label>}
                         </div>
                     </div>
 
@@ -119,17 +119,17 @@ const Donate = () => {
 
 
                             >
-                                <option value="" disabled selected hidden>Condition</option>
-                                <option value="Brand New">Brand New</option>
-                                <option value="New">New</option>
-                                <option value="Used">Used</option>
+                                <option value="" disabled selected hidden>{languageText.Condition}</option>
+                                <option value="Brand New">{languageText.BrandNew}</option>
+                                <option value="New">{languageText.New}</option>
+                                <option value="Used">{languageText.Used}</option>
                             </select>
                         </div>
                         <div className="InputField">
                             <div class="multiselect">
                                 <div class="selectBox" onClick={() => showCheckboxes('categories')}>
                                     <select>
-                                        <option>Categories</option>
+                                        <option>{languageText.Categories}</option>
                                     </select>
                                     <div class="overSelect"></div>
                                 </div>
@@ -168,13 +168,13 @@ const Donate = () => {
                                 name='productDescription'
 
                             />
-                            {!productDescription && <label for="productDescription" className={`LabelInput ${(productDescription) ? 'valid' : ''}`}><Icon icon="material-symbols:description" /> Description</label>}
+                            {!productDescription && <label for="productDescription" className={`LabelInput ${(productDescription) ? 'valid' : ''}`}><Icon icon="material-symbols:description" /> {languageText.ProductDescription}</label>}
                         </div>
                     </div>
                     <div className="InputField">
 
                         <label for="img" className={`LabelInputImg ${(img) ? 'valid' : ''}`}>
-                            <div style={{ gap: "8px", display: "flex", alignItems: "center" }}><Icon icon="line-md:image" />{selectedImageText || "Image"}</div>
+                            <div style={{ gap: "8px", display: "flex", alignItems: "center" }}><Icon icon="line-md:image" />{selectedImageText || languageText.ProductImage}</div>
                             {(img)
                                 ? <button className="XImgButton" onClick={handleRemoveImage}>
                                     <Icon icon="line-md:close-circle" />
@@ -190,7 +190,7 @@ const Donate = () => {
                             onChange={handleImgChange}
                         />
                     </div>
-                    <button className='SubmitButton'>Submit</button>
+                    <button className='SubmitButton'>{languageText.Submit}</button>
 
                 </form>
             </div>

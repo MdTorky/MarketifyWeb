@@ -1,17 +1,21 @@
 .Loader {
     overflow: hidden;
     flex-direction: column;
-    margin: 200px auto 5% auto;
+    margin: 200px auto 10% auto;
     padding: 20px;
     text-align: center;
+    height: 100%;
+
 
 }
 
 .LoaderText {
     margin-top: 10px;
+    /* margin-bottom: 70px; */
     font-weight: 800;
     text-transform: uppercase;
-    color: var(--text)
+    color: var(--text);
+    overflow: hidden;
 }
 
 .dots-container {

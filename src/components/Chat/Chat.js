@@ -5,7 +5,7 @@ import { faTimes, faPaperPlane, faPlay } from '@fortawesome/free-solid-svg-icons
 import './Chat.css';
 import profile from '../../images/Profile.jpg'
 
-const Chat = ({ onClose }) => {
+const Chat = ({ onClose, languageText }) => {
 
 
     const getCurrentTime = () => {
@@ -60,12 +60,12 @@ const Chat = ({ onClose }) => {
             <form className="ChatInput" onSubmit={(e) => { e.preventDefault(); handleSendMessage(); }}>
                 <input
                     type="text"
-                    placeholder="Type Something"
+                    placeholder={languageText.TypeSomething}
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
                 />
                 <button type="submit" className="PopButton ChatButton">
-                    <span className="ProductToolTip ChatTip">Send</span>
+                    <span className="ProductToolTip ChatTip">{languageText.Send}</span>
                     <span><FontAwesomeIcon icon={faPaperPlane} /></span>
                 </button>
             </form>

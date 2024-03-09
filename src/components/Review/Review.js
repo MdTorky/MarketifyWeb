@@ -5,7 +5,7 @@ import { faStar, faArrowLeftLong, faTriangleExclamation } from '@fortawesome/fre
 import './Review.css';
 import profile from '../../images/Profile.jpg'
 
-const ReviewPopup = ({ onClose, onSubmit, showReviewPopup }) => {
+const ReviewPopup = ({ onClose, onSubmit, showReviewPopup, languageText }) => {
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState('');
     const [isReviewValid, setIsReviewValid] = useState(true);
@@ -27,9 +27,9 @@ const ReviewPopup = ({ onClose, onSubmit, showReviewPopup }) => {
         };
     }, []);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (isReviewValid) {
-            onSubmit({ rating, review });
+            await onSubmit({ rating, review });
             onClose();
         } else {
             // Show an error message or handle invalid review state
@@ -43,11 +43,11 @@ const ReviewPopup = ({ onClose, onSubmit, showReviewPopup }) => {
                 <button onClick={onClose}>
                     <FontAwesomeIcon icon={faArrowLeftLong} />
                 </button>
-                <h3>Rate <span className="HeaderName">Ali</span></h3>
+                <h3>{languageText.Rate} <span className="HeaderName">Ali</span></h3>
                 <img src={profile} alt="" />
             </div>
             <div className="RatingContainer">
-                <p>Rate</p>
+                <p>{languageText.Rate}</p>
                 <>
                     {[1, 2, 3, 4, 5].map((value) => (
                         <FontAwesomeIcon
@@ -59,14 +59,15 @@ const ReviewPopup = ({ onClose, onSubmit, showReviewPopup }) => {
                     ))}
                 </>
             </div>
-            <p className="WriteAReview">Write a Review</p>
+            <p className="WriteAReview">{languageText.WriteAReview}</p>
             <textarea
                 // placeholder="Write your review..."
                 value={review}
                 onChange={handleReviewChange}
+                required
             />
-            {!isReviewValid && <p className="ReviewError"><FontAwesomeIcon icon={faTriangleExclamation} /> Review cannot be empty</p>}
-            <button onClick={handleSubmit} className='ReviewSubmit'>Submit</button>
+            {isReviewValid && <p className="ReviewError"><FontAwesomeIcon icon={faTriangleExclamation} /> {languageText.ReviewEmpty}</p>}
+            <button onClick={handleSubmit} className='ReviewSubmit'>{languageText.Submit}</button>
         </form>
     );
 

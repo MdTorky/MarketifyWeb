@@ -345,16 +345,25 @@
 .Product {
     display: flex;
     justify-content: space-around;
-    /* background: red; */
+    margin-bottom: 5%;
 }
+
+.ProductBackground {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    /* background: red; */
+
+}
+
 
 .ProductTop {
     display: flex;
     /* justify-content: space-between; */
-    width: 80%;
+    /* width: 80%; */
     gap: 30px;
     align-items: center;
-    /* background: red; */
+    /* background: blue; */
 
 }
 
@@ -369,6 +378,9 @@
 
 .ProductLeft .ProductImg img {
     width: 400px;
+    border-radius: 20px;
+    border: 3px double var(--theme);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 .ProductLeft .ProductName {
@@ -936,6 +948,7 @@ select:focus {
     margin-top: 10px;
     position: absolute;
     right: 4%;
+    z-index: -1;
 }
 
 .TotalPrice p {

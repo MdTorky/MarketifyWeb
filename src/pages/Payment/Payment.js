@@ -2,7 +2,7 @@ import './Payment.css'
 import Visa from '../../images/visa.png'
 import Chip from '../../images/chip.png'
 import { useEffect } from 'react'
-const Payment = () => {
+const Payment = ({ languageText }) => {
 
 
 
@@ -48,8 +48,8 @@ const Payment = () => {
                     <div class="VisaCardBoxNo">################</div>
                     <div class="VisaCardDetails">
                         <div class="VisaCardBox">
-                            <span>Card Holder</span>
-                            <div class="CardName">Full Name</div>
+                            <span>{languageText.CardHolder}</span>
+                            <div class="CardName">{languageText.FullName}</div>
                         </div>
                         <div class="VisaCardBox">
                             <span>Expires</span>
@@ -74,22 +74,22 @@ const Payment = () => {
 
             <form action="" method="post">
                 <div class="PaymentInput">
-                    <span>Card Number</span>
-                    <input type="text" maxlength="16" class="card-number-input" required />
+                    <span>{languageText.CardNumber}</span>
+                    <input type="number" maxlength="16" class="card-number-input" required />
                 </div>
                 <div class="PaymentInput">
-                    <span>Card Holder Name</span>
+                    <span>{languageText.CardHolderName}</span>
                     <input type="text" class="card-holder-input" required />
                 </div>
                 <div class="PaymentInput">
-                    <span>Card Holder Email</span>
+                    <span>{languageText.CardHolderEmail}</span>
                     <input type="text" class="card-holder-input" required />
                 </div>
                 <div class="flexbox">
                     <div class="PaymentInput">
-                        <span>Expiration mm</span>
+                        <span>{languageText.Expiration} mm</span>
                         <select name="" id="" class="month-input">
-                            <option value="month" selected disabled>month</option>
+                            <option value="month" selected disabled>{languageText.Month}</option>
                             <option value="01">01</option>
                             <option value="02">02</option>
                             <option value="03">03</option>
@@ -105,9 +105,9 @@ const Payment = () => {
                         </select>
                     </div>
                     <div class="PaymentInput">
-                        <span>Expiration yy</span>
+                        <span>{languageText.Expiration} yy</span>
                         <select name="" id="" class="year-input">
-                            <option value="year" selected disabled>Year</option>
+                            <option value="year" selected disabled>{languageText.Year}</option>
                             <option value="2025">2025</option>
                             <option value="2026">2026</option>
                             <option value="2027">2027</option>
@@ -118,7 +118,7 @@ const Payment = () => {
                         <input type="hidden" name="productID" />
                     </div>
                     <div class="PaymentInput">
-                        <span>cvv</span>
+                        <span>{languageText.CVV}</span>
                         <input type="text" maxlength="3" class="cvv-input" />
                     </div>
                 </div>

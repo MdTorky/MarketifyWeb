@@ -7,7 +7,7 @@ import ReviewPopup from '../../components/Review/Review';
 import { Link, useLocation } from 'react-router-dom';
 import Chat from '../../components/Chat/Chat';
 
-const Purchased = () => {
+const Purchased = ({ languageText }) => {
     const [activeFilter, setActiveFilter] = useState('all');
     const [activeSoldFilter, setActiveSoldFilter] = useState('all');
     const [showReviewPopup, setShowReviewPopup] = useState(false); // Add this state
@@ -66,11 +66,11 @@ const Purchased = () => {
                     <td>21 Jan</td>
                     <td className={`statusButton ${status ? "StatusPaid" : "StatusNotPaid"}`}>{`${status ? "Paid" : "Not Paid"}`}
 
-                        {!status && <Link to="/payment" className='PayButton'>Pay</Link>}</td>
+                        {!status && <Link to="/payment" className='PayButton'>{languageText.Pay}</Link>}</td>
 
                     <td>Cash</td>
                     <button className="PopButton PurchasedChatButton" onClick={openChat}>
-                        <span className="ProductToolTip" >Chat Now</span>
+                        <span className="ProductToolTip" >{languageText.ChatNow}</span>
                         <span><FontAwesomeIcon icon={faCommentDots} /></span>
                     </button>
                 </tr>
@@ -106,12 +106,12 @@ const Purchased = () => {
 
                     <td className='statusButton'>{PaymentType}
 
-                        {PaymentType === "Cash" && !status && <Link to="/payment" className='PayButton ConfirmButton'>Confirm</Link>}
+                        {PaymentType === "Cash" && !status && <Link to="/payment" className='PayButton ConfirmButton'>{languageText.Confirm}</Link>}
 
 
                     </td>
                     <button className="PopButton PurchasedChatButton" onClick={openChat}>
-                        <span className="ProductToolTip" >Chat Now</span>
+                        <span className="ProductToolTip" >{languageText.ChatNow}</span>
                         <span><FontAwesomeIcon icon={faCommentDots} /></span>
                     </button>
                 </tr>
@@ -123,38 +123,37 @@ const Purchased = () => {
     return (
         <div className="Browse">
             <div className="PurchasedProducts">
-                <h2>Purchased Products</h2>
+                <h2>{languageText.PurchasedProducts}</h2>
                 <div className="PurchasedFilter">
                     <button
                         className={`FilterButton ${activeFilter === 'all' ? 'active' : ''}`}
                         onClick={() => handleFilterClick('all')}
                     >
-                        All Products
+                        {languageText.AllProducts}
                     </button>
                     <button
                         className={`FilterButton ${activeFilter === 'paid' ? 'active' : ''}`}
                         onClick={() => handleFilterClick('paid')}
-                    >
-                        Paid
+                    >{languageText.Paid}
                     </button>
                     <button
                         className={`FilterButton ${activeFilter === 'unpaid' ? 'active' : ''}`}
                         onClick={() => handleFilterClick('unpaid')}
                     >
-                        Unpaid
+                        {languageText.Unpaid}
                     </button>
                 </div>
                 <table >
                     <tr className="PurchasedTitles">
-                        <th>Id</th>
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Seller Name</th>
-                        <th>Seller Phone</th>
-                        <th>Review</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Method</th>
+                        <th>{languageText.Id}</th>
+                        <th>{languageText.ProductName}</th>
+                        <th>{languageText.Price}</th>
+                        <th>{languageText.SellerName}</th>
+                        <th>{languageText.SellerPhone}</th>
+                        <th>{languageText.Review}</th>
+                        <th>{languageText.Date}</th>
+                        <th>{languageText.Status}</th>
+                        <th>{languageText.Method}</th>
                     </tr>
                     {/* <p>Method</p> */}
 
@@ -168,9 +167,10 @@ const Purchased = () => {
                         onClose={handleCloseReviewPopup}
                         onSubmit={handleReviewSubmit}
                         showReviewPopup={showReviewPopup}
+                        languageText={languageText}
                     />
                 )}
-                {isChatOpen && <Chat onClose={closeChat} />}
+                {isChatOpen && <Chat onClose={closeChat} languageText={languageText} />}
 
             </div>
 
@@ -178,38 +178,38 @@ const Purchased = () => {
 
 
             <div className="PurchasedProducts SoldProducts">
-                <h2>Sold Products</h2>
+                <h2>{languageText.SoldProducts}</h2>
                 <div className="PurchasedFilter">
                     <button
                         className={`FilterButton ${activeSoldFilter === 'all' ? 'active' : ''}`}
                         onClick={() => handleSoldFilterClick('all')}
                     >
-                        All Products
+                        {languageText.AllProducts}
                     </button>
                     <button
                         className={`FilterButton ${activeSoldFilter === 'paid' ? 'active' : ''}`}
                         onClick={() => handleSoldFilterClick('paid')}
                     >
-                        Paid
+                        {languageText.Paid}
                     </button>
                     <button
                         className={`FilterButton ${activeSoldFilter === 'unpaid' ? 'active' : ''}`}
                         onClick={() => handleSoldFilterClick('unpaid')}
                     >
-                        Unpaid
+                        {languageText.Unpaid}
                     </button>
                 </div>
                 <div className="SoldTable">
                     <table >
                         <tr className="PurchasedTitles">
-                            <th>Id</th>
-                            <th>Product Name</th>
-                            <th>Price</th>
-                            <th>Buyer Name</th>
-                            <th>Buyer Phone</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Method</th>
+                            <th>{languageText.Id}</th>
+                            <th>{languageText.ProductName}</th>
+                            <th>{languageText.Price}</th>
+                            <th>{languageText.BuyerName}</th>
+                            <th>{languageText.BuyerPhone}</th>
+                            <th>{languageText.Date}</th>
+                            <th>{languageText.Status}</th>
+                            <th>{languageText.Method}</th>
                         </tr>
                         {/* <p>Method</p> */}
 
@@ -219,17 +219,18 @@ const Purchased = () => {
                         </div>
                     </table>
                     <div className="TotalPrice">
-                        <p>Total</p>
-                        <div className="Total">RM 31</div>
+                        <p>{languageText.Total}</p>
+                        <div className="Total">{languageText.RM} 31</div>
                     </div>
                     {showReviewPopup && (
                         <ReviewPopup
                             onClose={handleCloseReviewPopup}
                             onSubmit={handleReviewSubmit}
                             showReviewPopup={showReviewPopup}
+                            languageText={languageText}
                         />
                     )}
-                    {isChatOpen && <Chat onClose={closeChat} />}
+                    {isChatOpen && <Chat onClose={closeChat} languageText={languageText} />}
 
                 </div>
             </div>

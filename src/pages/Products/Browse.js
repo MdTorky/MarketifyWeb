@@ -9,12 +9,12 @@ import Loader from '../../components/Loader/Loader'
 import { useItemsContext } from '../../hooks/useItemsContext'
 import { Icon } from '@iconify/react';
 // import { useLanguage } from '../../context/languageContext';
-const categories = ({ text }) => {
+const categories = ({ text, status }) => {
     return (
         <div className="CategoriesCheckbox">
-            <input id={text} className="CheckBoxInput" type="checkbox" />
+            <input id={text} className="CheckBoxInput" type="checkbox" disabled={status} />
             <label for={text} className="CheckBoxLabel">
-                <span className="CheckBoxSpan"></span>
+                {!status && <span className="CheckBoxSpan"></span>}
                 <div className="CheckBoxText">{text}</div>
             </label>
         </div>
@@ -35,7 +35,17 @@ const condition = ({ text }) => {
 
 
 
-
+const donation = ({ text }) => {
+    return (
+        <div className="CategoriesCheckbox">
+            <input id={text} className="CheckBoxInput" type="checkbox" />
+            <label for={text} className="CheckBoxLabel">
+                <span className="CheckBoxSpan"></span>
+                <div className="CheckBoxText">{text}</div>
+            </label>
+        </div>
+    )
+}
 
 const Browse = ({ api, languageText }) => {
 
@@ -76,14 +86,13 @@ const Browse = ({ api, languageText }) => {
 
     }, [])
 
-    console.log(products)
     return (
 
         <div className="Browse">
             {loading ? (
                 <div className="Loader">
                     <Loader />
-                    <p className="LoaderText">Loading</p>
+                    <p className="LoaderText">{languageText.Loading}</p>
                 </div>
             ) : (<>
                 <h2>{languageText.BrowseProducts}</h2>
@@ -91,14 +100,45 @@ const Browse = ({ api, languageText }) => {
                     <div className="LeftSide">
                         <div className="Categories">
                             <p>Categories</p>
-                            {categories({ text: "All Categories" })}
-                            {categories({ text: "Clothes" })}
+                            {categories({ text: languageText.AllCategories })}
+                            {categories({ text: languageText.MenClothing })}
+                            {categories({ text: languageText.WomenClothing })}
+                            {categories({ text: languageText.MenShoes })}
+                            {categories({ text: languageText.WomenShoes })}
+                            {categories({ text: languageText.MenBags })}
+                            {categories({ text: languageText.WomenBags })}
+                            {categories({ text: "-----------", status: true })}
+                            {categories({ text: languageText.FoodBeverages })}
+                            {categories({ text: languageText.Groceries })}
+                            {categories({ text: "-----------", status: true })}
+                            {categories({ text: languageText.Mobile })}
+                            {categories({ text: languageText.Computer })}
+                            {categories({ text: languageText.CamerasDrones })}
+                            {categories({ text: languageText.GamingConsoles })}
+                            {categories({ text: languageText.HomeAppliances })}
+                            {categories({ text: languageText.OtherTechnology })}
+                            {categories({ text: "-----------", status: true })}
+                            {categories({ text: languageText.Healthcare })}
+                            {categories({ text: languageText.Pharmaceuticals })}
+                            {categories({ text: "-----------", status: true })}
+                            {categories({ text: languageText.Furniture })}
+                            {categories({ text: languageText.Automotive })}
+                            {categories({ text: languageText.Tickets })}
+                            {categories({ text: "-----------", status: true })}
+                            {categories({ text: languageText.Books })}
+                            {categories({ text: languageText.GamesHobbies })}
+                            {categories({ text: languageText.SportsOutdoor })}
                         </div>
                         <div className="Categories">
                             <p>Condition</p>
-                            {condition({ text: "All Conditions" })}
-                            {condition({ text: "Brand New" })}
-                            {condition({ text: "New" })}
+                            {condition({ text: languageText.AllConditions })}
+                            {condition({ text: languageText.BrandNew })}
+                            {condition({ text: languageText.New })}
+                            {condition({ text: languageText.Used })}
+                        </div>
+                        <div className="Categories Donation">
+                            <p>Donations</p>
+                            {donation({ text: languageText.Donations })}
                         </div>
                     </div>
                     <div className="RightSide">

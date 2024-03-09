@@ -1,10 +1,10 @@
 import productCard from '../../components/ProductCard/ProductCard';
 
 
-const MyProducts = () => {
+const MyProducts = ({ languageText, api }) => {
     return (
         <div className="MyProducts">
-            <h2>My Products</h2>
+            <h2>{languageText.MyProducts}</h2>
             <div className="MyProductsCards">
                 {productCard({ edit: true })}
                 {productCard({ edit: true })}
