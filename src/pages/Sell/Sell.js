@@ -132,7 +132,8 @@ const Sell = ({ api, languageText }) => {
             pCategory: selectedCategories,
             pImage: imgUrl,
             userID: "UserID",
-            pType: "Sell"
+            pType: "Sell",
+            pStatus: "Valid",
         }
 
         const response = await fetch(`${api}/api/products`, {

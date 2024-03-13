@@ -166,6 +166,53 @@ body:has(.Sign) {
 
 
 
+
+
+
+
+
+.PasswordCheckBack {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.7em;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 800;
+    border: var(--text) 2px solid;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    animation: ScaleCenter 0.5s ease 0s 1 normal forwards;
+    margin-bottom: 10px;
+    /* margin: auto;
+    width: 80%;
+    white-space: wrap;
+    box-sizing: border-box; */
+}
+
+.PasswordCheckBackValid {
+    border: mediumseagreen 2px solid;
+
+}
+
+.PasswordCheck {
+    color: var(--text);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.PasswordCheck .PasswordIcon {
+    width: 0.65em;
+    height: 0.65em
+}
+
+
+.PasswordCheckerValid {
+    color: mediumaquamarine
+}
+
 /* Terms and Condition */
 
 .Sign .SignForm form .TermsContainer {
@@ -265,17 +312,19 @@ body:has(.Sign) {
 
 .Sign .SignForm .SignIn>.SignButton {
     width: 30%;
-    border-radius: 20px;
+    border-radius: 5px;
     margin: auto 0;
-    padding: 10px;
+    /* padding: 5px; */
     cursor: pointer;
     border: none;
     text-align: center;
     transition: 0.5s ease all;
-    background: var(--theme2);
+    /* background: var(--theme2); */
     color: var(--bg);
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
     text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 .Sign .SignForm .SignIn>.SignButton:hover {
@@ -313,6 +362,19 @@ body:has(.Sign) {
     transform: scale(1.2);
     color: var(--text)
 }
+
+.formError {
+    text-align: center;
+    background: var(--text);
+    color: var(--bg);
+    padding: 5px 10px;
+    width: fit-content;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+}
+
 
 /* Ipad View */
 

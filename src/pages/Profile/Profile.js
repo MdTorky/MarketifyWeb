@@ -5,9 +5,15 @@ import { Icon } from '@iconify-icon/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCommentDots, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react'
+import { useLogout } from '../../hooks/useLogout';
 const Profile = () => {
 
     const [fine, setFine] = useState(true)
+    const { logout } = useLogout()
+    const handleLogout = () => {
+        logout()
+    }
+
 
     const ReviewCard = () => {
         return (
@@ -42,6 +48,7 @@ const Profile = () => {
                         <div className="ProfileImgText">
                             <h2>Name</h2>
                             <Link to="/" className='EditButton'><Icon icon="mingcute:user-edit-fill" /> </Link>
+                            <button onClick={handleLogout} className='EditButton'><Icon icon="solar:logout-broken" /> </button>
                         </div>
                     </div>
                     <div className="ProfileInfo">

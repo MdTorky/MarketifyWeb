@@ -2,6 +2,8 @@
   "en": {
     "Loading": "Loading",
     "Submitting": "Submitting",
+    "Registering": "Registering",
+    "LoggingIn": "Signing In",
     "Submit": "Submit",
     "Chat": "Chat",
     "ChatNow": "Chat Now",
@@ -32,6 +34,11 @@
     "RM": "RM",
     "Send": "Send",
     "FullName": "Full Name",
+
+    "CharRegex": "It has to be at least 8 characters long",
+    "LetterRegex": "Contains both upper and lowercase letters",
+    "DigitRegex": "Contains at least one digit",
+    "SpecialRegex": "Contains at least one special character",
 
     "Home": "Home",
     "Products": "Products",

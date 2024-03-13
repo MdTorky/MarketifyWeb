@@ -41,8 +41,8 @@ function App() {
     <div className={`App ${isRTL ? 'arabic' : ''}`}>
       <BrowserRouter>
         <Routes>
-          <Route path="/SignUp" element={<SignUp />} />
-          <Route path="/SignIn" element={<SignIn />} />
+          <Route path="/SignUp" element={<SignUp api={api} languageText={languageText} />} />
+          <Route path="/SignIn" element={<SignIn api={api} languageText={languageText} />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
           <Route path="/" element={<NavBar><Footer><Home languageText={languageText} /></Footer></NavBar>} />
           <Route path="/browse" element={<NavBar><Footer><Browse api={api} languageText={languageText} /></Footer></NavBar>} />
