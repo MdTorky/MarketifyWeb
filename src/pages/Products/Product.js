@@ -9,6 +9,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import PurchaseForm from '../../components/PurhcaseForm/PurchaseForm';
 import { useItemsContext } from '../../hooks/useItemsContext'
 import Loader from '../../components/Loader/Loader'
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 const Product = ({ api, languageText }) => {
     const { id } = useParams();
@@ -20,6 +21,7 @@ const Product = ({ api, languageText }) => {
 
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(true)
+    const { user } = useAuthContext()
 
     const openChat = () => {
         setChatOpen(true);
@@ -43,7 +45,11 @@ const Product = ({ api, languageText }) => {
         // Fetch form data based on type and formId
         const fetchData = async () => {
             try {
-                const response = await fetch(`${api}/api/products/${id}`);
+                const response = await fetch(`${api}/api/products/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                });
                 if (!response.ok) {
                     console.error(`Error fetching form data. Status: ${response.status}, ${response.statusText}`);
                     return;
@@ -65,36 +71,84 @@ const Product = ({ api, languageText }) => {
             }
         };
 
-        fetchData();
-    }, [api, dispatch, id]);
+        if (user) {
+            fetchData();
+        }
+    }, [api, id, dispatch, user]);
+
+
+    // useEffect(() => {
+    //     const fetchItems = async () => {
+    //         try {
+    //             const response = await fetch(`${api}/api/products`, {
+    //                 headers: {
+    //                     'Authorization': `Bearer ${user.token}`
+    //                 }
+
+    //             })
+    //             if (!response.ok) {
+    //                 console.error(`Error fetching Items. Status: ${response.status}, ${response.statusText}`);
+    //                 setError('Failed to fetch data');
+    //                 return;
+    //             }
+    //             const json = await response.json();
+    //             console.log("Fetched products:", json);
+    //             dispatch({
+    //                 type: 'SET_ITEM',
+    //                 collection: "products",
+    //                 payload: json,
+    //             });
+    //             setLoading(false);
+    //         } catch (error) {
+    //             console.error('An error occurred while fetching data:', error);
+    //             setError('An error occurred while fetching data');
+    //         }
+    //     };
+
+    //     if (user) {
+    //         fetchItems()
+    //     }
+    // }, [dispatch, user]);
 
 
     useEffect(() => {
         const fetchItems = async () => {
+
             try {
-                const response = await fetch(`${api}/api/products`)
+
+                const response = await fetch(`${api}/api/products`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
                 if (!response.ok) {
                     console.error(`Error fetching Items. Status: ${response.status}, ${response.statusText}`);
                     setError('Failed to fetch data');
+
                     return;
                 }
-                const json = await response.json();
-                console.log("Fetched products:", json); // Log the fetched products
+                const json = await response.json()
+
                 dispatch({
                     type: 'SET_ITEM',
                     collection: "products",
                     payload: json,
                 });
-                setLoading(false);
+                setLoading(false)
+
+
             } catch (error) {
                 console.error('An error occurred while fetching data:', error);
                 setError('An error occurred while fetching data');
+
             }
         };
 
-        fetchItems();
-    }, []);
+        if (user) {
+            fetchItems()
+        }
 
+    }, [dispatch, user])
 
 
     // const recommendations = productData ? products.filter(product => product.pCategories.includes(productData.pCategories[0])) : [];
@@ -103,85 +157,87 @@ const Product = ({ api, languageText }) => {
 
 
     return (
-        <div className="Product">
-            {loading ? (
-                <div className="Loader">
-                    <Loader />
-                    <p className="LoaderText">{languageText.Loading}</p>
-                </div>
-            ) : (
-                <>
-                    <div className="ProductBackground">
+        user && (
+            <div className="Product">
+                {loading ? (
+                    <div className="Loader">
+                        <Loader />
+                        <p className="LoaderText">{languageText.Loading}</p>
+                    </div>
+                ) : (
+                    <>
+                        <div className="ProductBackground">
 
-                        <div className="ProductTop">
-                            <div className="ProductLeft">
-                                <div className="ProductImg">
-                                    <img src={productData?.pImage} alt="" />
+                            <div className="ProductTop">
+                                <div className="ProductLeft">
+                                    <div className="ProductImg">
+                                        <img src={productData?.pImage} alt="" />
+                                    </div>
+                                </div>
+                                <div className="ProductDetails">
+                                    <Link className="BackButton" to="/browse">
+                                        <FontAwesomeIcon icon={faArrowLeft} />
+                                        <p>{languageText.BackProducts}</p>
+                                    </Link>
+                                    <h3 className="ProductCondition">{productData?.pCondition}</h3>
+                                    <h2 className="ProductName">{productData?.pTitle}</h2>
+                                    <div class="SellerRatings">
+                                        <FontAwesomeIcon icon={faStar} className="Rating" />
+                                        <FontAwesomeIcon icon={faStar} className="Rating" />
+                                        <FontAwesomeIcon icon={faStar} className="Rating" />
+                                        <FontAwesomeIcon icon={faStar} className="Rating" />
+                                        <FontAwesomeIcon icon={faStar} />
+                                    </div>
+                                    <p className="ProductDescription">{productData?.pDescription}</p>
+
+                                    {/* <div className="ProductInfo"><span className="ProductTitle">Price: </span> 42.21 RM</div> */}
                                 </div>
                             </div>
-                            <div className="ProductDetails">
-                                <Link className="BackButton" to="/browse">
-                                    <FontAwesomeIcon icon={faArrowLeft} />
-                                    <p>{languageText.BackProducts}</p>
+                            <div className="ProductRight">
+                                <p className="ProductRecommendationTitle">{languageText.Recommendations}</p>
+                                <div className="ProductRecommendation">
+                                    {recommendations.map(product => (
+                                        <ProductCard key={product._id} edit={false} product={product} />
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div className="ProductPop">
+                            <div className="ProductPopLeft">
+                                <img src={productData?.pImage} alt="" />
+                                <div className="ProductPopText">
+                                    <h2 className="ProductName">{productData?.pTitle}</h2>
+                                    <p className="ProductDescription">{productData?.pDescription}</p>
+                                </div>
+                            </div>
+                            <div className="ProductPopRight">
+                                {productData?.pPrice ? <p className="ProductPrice">{productData?.pPrice}{languageText.RM}</p> : <p className="ProductPrice">Donation</p>}
+                                <button className="PopButton" onClick={openChat}>
+                                    <span className="ProductToolTip" >{languageText.ChatNow}</span>
+                                    <span><FontAwesomeIcon icon={faCommentDots} /></span>
+                                </button>
+                                {/* <button className="ChatPopButton"><FontAwesomeIcon icon={faCommentDots} /></button> */}
+
+                                <Link className="PopButton ProductBuyButton" onClick={openPurchaseForm}>
+                                    <span className="ProductToolTip ProductTip" >{languageText.BuyNow}</span>
+                                    <span><FontAwesomeIcon icon={faMoneyBill} /></span>
                                 </Link>
-                                <h3 className="ProductCondition">{productData?.pCondition}</h3>
-                                <h2 className="ProductName">{productData?.pTitle}</h2>
-                                <div class="SellerRatings">
-                                    <FontAwesomeIcon icon={faStar} className="Rating" />
-                                    <FontAwesomeIcon icon={faStar} className="Rating" />
-                                    <FontAwesomeIcon icon={faStar} className="Rating" />
-                                    <FontAwesomeIcon icon={faStar} className="Rating" />
-                                    <FontAwesomeIcon icon={faStar} />
-                                </div>
-                                <p className="ProductDescription">{productData?.pDescription}</p>
 
-                                {/* <div className="ProductInfo"><span className="ProductTitle">Price: </span> 42.21 RM</div> */}
+
+                                {/* <Link to="/" className="ProductPopButton"><FontAwesomeIcon icon={faMoneyBill} /></Link> */}
                             </div>
                         </div>
-                        <div className="ProductRight">
-                            <p className="ProductRecommendationTitle">{languageText.Recommendations}</p>
-                            <div className="ProductRecommendation">
-                                {recommendations.map(product => (
-                                    <ProductCard key={product._id} edit={false} product={product} />
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+                        {isChatOpen && <Chat onClose={closeChat} languageText={languageText} />}
+                        {isPurchaseFormOpen && (
 
-
-                    <div className="ProductPop">
-                        <div className="ProductPopLeft">
-                            <img src={productData?.pImage} alt="" />
-                            <div className="ProductPopText">
-                                <h2 className="ProductName">{productData?.pTitle}</h2>
-                                <p className="ProductDescription">{productData?.pDescription}</p>
-                            </div>
-                        </div>
-                        <div className="ProductPopRight">
-                            {productData?.pPrice ? <p className="ProductPrice">{productData?.pPrice}{languageText.RM}</p> : <p className="ProductPrice">Donation</p>}
-                            <button className="PopButton" onClick={openChat}>
-                                <span className="ProductToolTip" >{languageText.ChatNow}</span>
-                                <span><FontAwesomeIcon icon={faCommentDots} /></span>
-                            </button>
-                            {/* <button className="ChatPopButton"><FontAwesomeIcon icon={faCommentDots} /></button> */}
-
-                            <Link className="PopButton ProductBuyButton" onClick={openPurchaseForm}>
-                                <span className="ProductToolTip ProductTip" >{languageText.BuyNow}</span>
-                                <span><FontAwesomeIcon icon={faMoneyBill} /></span>
-                            </Link>
-
-
-                            {/* <Link to="/" className="ProductPopButton"><FontAwesomeIcon icon={faMoneyBill} /></Link> */}
-                        </div>
-                    </div>
-                    {isChatOpen && <Chat onClose={closeChat} languageText={languageText} />}
-                    {isPurchaseFormOpen && (
-
-                        <PurchaseForm closePurchaseForm={closePurchaseForm} />
-                    )}
-                </>
-            )}
-        </div>
+                            <PurchaseForm closePurchaseForm={closePurchaseForm} />
+                        )}
+                    </>
+                )}
+            </div>
+        )
     );
 }
 

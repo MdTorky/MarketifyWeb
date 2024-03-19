@@ -56,8 +56,145 @@
     flex-direction: column;
     margin-left: 30px;
     gap: 10px;
-
+    /* background: red; */
 }
+
+.Browse .Category {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    gap: 10px;
+    animation: BounceTop 1s ease 0s 1 normal forwards;
+}
+
+.Disabled {
+    display: none !important;
+}
+
+
+
+
+
+.ShowCategoriesButton {
+    --width: 150px;
+    --height: 35px;
+    --tooltip-height: 35px;
+    --tooltip-width: 90px;
+    --gap-between-tooltip-to-button: 18px;
+    --button-color: var(--text);
+    --tooltip-color: #fff;
+    width: var(--width);
+    height: var(--height);
+    background: var(--button-color);
+    position: relative;
+    text-align: center;
+    border-radius: 0.45em;
+    /* font-family: "Arial"; */
+    transition: background 0.3s;
+    cursor: pointer;
+    margin: auto;
+}
+
+.ShowCategoriesButton::before {
+    position: absolute;
+    content: attr(data-tooltip);
+    width: var(--tooltip-width);
+    height: var(--tooltip-height);
+    background-color: var(--tooltip-color);
+    font-size: 0.9rem;
+    color: #111;
+    border-radius: .25em;
+    line-height: var(--tooltip-height);
+    bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) + 10px);
+    left: calc(50% - var(--tooltip-width) / 2);
+}
+
+.ShowCategoriesButton::after {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: var(--tooltip-color);
+    left: calc(50% - 10px);
+    bottom: calc(100% + var(--gap-between-tooltip-to-button) - 10px);
+}
+
+.ShowCategoriesButton::after, .ShowCategoriesButton::before {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s;
+}
+
+.ShowCategoriesButton .text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    font-size: 0.8em;
+}
+
+.ShowCategoriesButton .button-wrapper, .text, .icon {
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    color: #fff;
+}
+
+.ShowCategoriesButton .text {
+    top: 0
+}
+
+.ShowCategoriesButton .text, .icon {
+    transition: top 0.5s;
+}
+
+.ShowCategoriesButton .icon {
+    color: #fff;
+    top: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ShowCategoriesButton .icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.ShowCategoriesButton:hover {
+    background: var(--text2);
+}
+
+.ShowCategoriesButton:hover .text {
+    top: -100%;
+}
+
+.ShowCategoriesButton:hover .icon {
+    top: 0;
+}
+
+.ShowCategoriesButton:hover:before, .ShowCategoriesButton:hover:after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.ShowCategoriesButton:hover:after {
+    bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) - 20px);
+}
+
+.ShowCategoriesButton:hover:before {
+    bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
+}
+
+
+
+
+
+
+
 
 .Browse .Categories p {
     font-size: 1.2em;
@@ -154,6 +291,117 @@
 
 
 
+.categories {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 10px auto 0 auto;
+    width: 200px;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    white-space: wrap;
+}
+
+.categories.Disabled {
+    display: none;
+}
+
+.categoryDropdown {
+    margin-top: 10px;
+}
+
+.categorySelect {
+    /* background-color: var(--theme); */
+    /* color: var(--bg); */
+    /* border: none; */
+    border-radius: 10px 0 10px 0;
+    padding: 5px;
+    transition: 0.5s ease all;
+    cursor: pointer;
+}
+
+
+
+.category {
+    background: var(--theme);
+    padding: 4px;
+    color: var(--bg);
+    border-radius: 10px;
+    font-size: 0.7em;
+}
+
+
+
+
+
+
+.categoryFilter {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+.categoryFilter select {
+    background: var(--theme);
+    color: var(--bg);
+    /* border: none; */
+    border-radius: 20px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+
+.categoryFilter option.selected-option {
+    background-color: var(--text);
+    color: white;
+}
+
+.categoryFilter.locationFilter option.selected-option {
+    background-color: mediumseagreen;
+    color: white;
+}
+
+
+.categoryFilter option {
+    background: none;
+    color: var(--bg);
+    border: none;
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.icon.filter {
+    background: var(--theme);
+    color: var(--bg);
+}
+
+/* .internships .selectedCategories {
+    width: fit-content;
+    margin: 20px auto 0px auto;
+} */
+
+.rowCategories {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    background: var(--bg2);
+    background: linear-gradient(to right, var(--bg), var(--bg2));
+    color: var(--theme);
+    font-weight: 700;
+    padding: 10px;
+    background: linear-gradient(to right, var(--bg2), var(--bg));
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.rowCategories.rowLocations {
+    color: mediumseagreen
+}
 
 
 

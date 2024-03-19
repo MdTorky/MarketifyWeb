@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import SignUp from './pages/SignUp/SignUp';
 import SignIn from './pages/SignUp/SignIn';
 import ForgotPassword from './pages/SignUp/ForgotPassword';
@@ -24,11 +24,14 @@ import ManageSoldProducts from './pages/Admin/ManageSoldProducts';
 import ManageReports from './pages/Admin/ManageReports';
 import { useLanguage } from './context/languageContext';
 import languageData from './language.json';
+import { useAuthContext } from './hooks/useAuthContext';
+import ResetPassword from './pages/SignUp/ResetPassword';
 
 
 
 function App() {
 
+  const { user } = useAuthContext()
   const api = process.env.REACT_APP_API_KEY;
   // const api = "http://localhost:4000";
 
@@ -41,26 +44,54 @@ function App() {
     <div className={`App ${isRTL ? 'arabic' : ''}`}>
       <BrowserRouter>
         <Routes>
-          <Route path="/SignUp" element={<SignUp api={api} languageText={languageText} />} />
-          <Route path="/SignIn" element={<SignIn api={api} languageText={languageText} />} />
-          <Route path="/ForgotPassword" element={<ForgotPassword />} />
-          <Route path="/" element={<NavBar><Footer><Home languageText={languageText} /></Footer></NavBar>} />
-          <Route path="/browse" element={<NavBar><Footer><Browse api={api} languageText={languageText} /></Footer></NavBar>} />
-          <Route path="/product/:id" element={<NavBar><Footer><Product api={api} languageText={languageText} /></Footer></NavBar>} />
-          <Route path="/purchased" element={<NavBar><Footer><Purchased api={api} languageText={languageText} /></Footer></NavBar>} />
-          <Route path="/myProducts" element={<NavBar><Footer><MyProducts api={api} languageText={languageText} /></Footer></NavBar>} />
-          <Route path="/payment" element={<NavBar><Footer><Payment api={api} languageText={languageText} /></Footer></NavBar>} />
-          <Route path="/sell" element={<NavBar><Footer><Sell api={api} languageText={languageText} /></Footer></NavBar>} />
-          <Route path="/donate" element={<NavBar><Footer><Donate api={api} languageText={languageText} /></Footer></NavBar>} />
-          <Route path="/profile/:id" element={<NavBar><Footer><Profile api={api} languageText={languageText} /></Footer></NavBar>} />
+
+          {/* Auth */}
+          <Route
+            path="/SignUp"
+            element={
+              !user ? (
+                <SignUp api={api} languageText={languageText} />
+              ) : user.userType === "admin" ? (
+                <Navigate to="/adminManageAccounts" />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
+          <Route
+            path="/SignIn"
+            element={
+              !user ? (
+                <SignIn api={api} languageText={languageText} />
+              ) : user.userType === "admin" ? (
+                <Navigate to="/adminManageAccounts" />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
+          <Route path="/forgotPassword" element={<ForgotPassword api={api} />} />
+          <Route path="/resetPassword/:id" element={<ResetPassword api={api} languageText={languageText} />} />
+
+
+
+          <Route path="/" element={user ? <NavBar><Footer><Home languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/browse" element={user ? <NavBar><Footer><Browse api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/product/:id" element={user ? <NavBar><Footer><Product api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/purchased" element={user ? <NavBar><Footer><Purchased api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/myProducts" element={user ? <NavBar><Footer><MyProducts api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/payment" element={user ? <NavBar><Footer><Payment api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/sell" element={user ? <NavBar><Footer><Sell api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/donate" element={user ? <NavBar><Footer><Donate api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/profile" element={user ? <NavBar><Footer><Profile api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
 
 
 
 
-          <Route path="/adminManageAccounts" element={<AdminNavBar><ManageAccounts /></AdminNavBar>} />
-          <Route path="/adminManageProducts" element={<AdminNavBar><ManageProducts /></AdminNavBar>} />
-          <Route path="/adminManageSoldProducts" element={<AdminNavBar><ManageSoldProducts /></AdminNavBar>} />
-          <Route path="/adminManageReports" element={<AdminNavBar><ManageReports /></AdminNavBar>} />
+          <Route path="/adminManageAccounts" element={user && user.userType == "admin" ? <AdminNavBar><ManageAccounts /></AdminNavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/adminManageProducts" element={user && user.userType == "admin" ? <AdminNavBar><ManageProducts /></AdminNavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/adminManageSoldProducts" element={user && user.userType == "Admin" ? <AdminNavBar><ManageSoldProducts /></AdminNavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/adminManageReports" element={user && user.userType == "Admin" ? <AdminNavBar><ManageReports /></AdminNavBar> : <Navigate to='/SignIn' />} />
           {/* <Route path="/adminManageAccounts" element={<AdminNavBar><ManageAccounts /></AdminNavBar>} /> */}
         </Routes>
         <ToastContainer />

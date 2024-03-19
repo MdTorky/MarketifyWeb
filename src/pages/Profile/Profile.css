@@ -53,7 +53,7 @@
     background: var(--theme);
     padding: 5px;
     color: var(--bg);
-    font-size: 1.2em;
+    font-size: 0.8em;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     text-transform: uppercase;
@@ -89,13 +89,18 @@
     justify-content: space-between;
     height: 170px;
     gap: 10px;
+    width: 300px;
+    box-sizing: border-box;
+    /* flex-wrap: wrap; */
+
 }
 
 .ProfileInfoField {
     display: flex;
     justify-content: space-between;
     color: var(--bg);
-    align-items: center
+    align-items: center;
+    box-sizing: border-box;
 }
 
 .ProfileInfoField p:first-child {
@@ -107,7 +112,8 @@
 }
 
 .ProfileInfoAddress {
-    font-size: 0.8em
+    font-size: 0.6em;
+    white-space: wrap;
 }
 
 
@@ -159,6 +165,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 3px var(--theme) double;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .ReviewCardLeft p {

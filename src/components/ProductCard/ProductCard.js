@@ -6,9 +6,10 @@ import { Link, useLocation } from 'react-router-dom';
 import './ProductCard.css'
 import PurchaseForm from '../PurhcaseForm/PurchaseForm';
 import { useState } from "react"
+import { useAuthContext } from '../../hooks/useAuthContext';
+
 const ProductCard = ({ edit, product }) => {
-
-
+    const { user } = useAuthContext()
     const [isPurchaseFormOpen, setPurchaseFormOpen] = useState(false);
 
 
@@ -30,7 +31,9 @@ const ProductCard = ({ edit, product }) => {
 
 
     return (
-        <Link to={`/product/${product._id}`} className="ProductCard">
+        //    <Link to={`/product/${product._id}`} className="ProductCard"> 
+        <Link to={user.userId !== product.userID ? `/product/${product._id}` : ''} className="ProductCard">
+
             <div className="ProductImg">
                 {/* <img src={logo} alt="" /> */}
                 <img src={product.pImage} alt="" />

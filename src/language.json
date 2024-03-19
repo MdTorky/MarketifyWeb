@@ -3,7 +3,8 @@
     "Loading": "Loading",
     "Submitting": "Submitting",
     "Registering": "Registering",
-    "LoggingIn": "Signing In",
+    "LoggingIn": "Logging In",
+    "YouMustBeLoggedIn": "You Must Be Logged In",
     "Submit": "Submit",
     "Chat": "Chat",
     "ChatNow": "Chat Now",
@@ -13,6 +14,7 @@
     "Categories": "Categories",
     "Condition": "Condition",
     "Donations": "Donations",
+    "Donation": "Donation",
     "EmailUs": "Email Us",
     "Id": "Id",
     "ProductName": "Product Name",
@@ -33,7 +35,15 @@
     "Recommendations": "Recommendations",
     "RM": "RM",
     "Send": "Send",
+    "Edit": "Edit",
+    "Logout": "Logout",
     "FullName": "Full Name",
+    "Email": "Email",
+    "Phone": "Phone",
+    "Passport": "Passport",
+    "Address": "Address",
+    "ProfileImage": "Profile Image",
+    "PassportImage": "Passport Image",
 
     "CharRegex": "It has to be at least 8 characters long",
     "LetterRegex": "Contains both upper and lowercase letters",
@@ -109,6 +119,10 @@
     "BrandNew": "Brand New",
     "New": "New",
     "Used": "Used",
+    "Show": "Show",
+    "Hide": "Hide",
+    "ShowCategories": "Show Categories",
+    "HideCategories": "Hide Categories",
 
     "AllProducts": "All Products",
     "Paid": "Paid",
@@ -134,7 +148,11 @@
 
     "Rate": "Rate",
     "WriteAReview": "Write a Review",
-    "ReviewEmpty": "Review cannot be empty"
+    "ReviewEmpty": "Review cannot be empty",
+    "Reviews": "Reviews",
+
+    "ProfileForm": "Profile Form",
+    "PayFine": "Pay Fine"
   },
   "ar": {
     "BrowseProducts": "تصفح المنتجات"

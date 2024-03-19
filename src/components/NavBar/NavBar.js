@@ -9,6 +9,7 @@ import { Icon } from '@iconify-icon/react';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useLanguage } from '../../context/languageContext';
 import languageData from '../../language.json';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 
 const NavBar = ({ children }) => {
@@ -18,6 +19,7 @@ const NavBar = ({ children }) => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const { isRTL } = useLanguage();
     const languageText = languageData[language]
+    const { user } = useAuthContext()
     return (
         <>
             <div className={`NavBar ${isRTL ? 'arabic' : ''}`}>
@@ -44,7 +46,7 @@ const NavBar = ({ children }) => {
                     </div>
 
                     <Link to="/" className='link user'><FontAwesomeIcon icon={faBell} /></Link>
-                    <Link to="/profile/3124124" className='link user'><FontAwesomeIcon icon={faUser} /></Link>
+                    <Link to="/profile" className='link user'><FontAwesomeIcon icon={faUser} /></Link>
                     {/* <Link to="/profile/3124124" className='link user'><Icon icon="line-md:account" /></Link> */}
                 </div>
             </div>

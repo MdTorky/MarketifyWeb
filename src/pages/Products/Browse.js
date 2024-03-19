@@ -1,44 +1,81 @@
 import './Products.css'
 import logo from '../../images/logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faLandMineOn, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from 'react-router-dom';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import { useState, useEffect } from 'react'
 import Loader from '../../components/Loader/Loader'
 import { useItemsContext } from '../../hooks/useItemsContext'
 import { Icon } from '@iconify/react';
+import { useAuthContext } from '../../hooks/useAuthContext';
+
 // import { useLanguage } from '../../context/languageContext';
-const categories = ({ text, status }) => {
+// const categories = ({ text, status }) => {
+//     return (
+//         <div className="CategoriesCheckbox">
+//             <input id={text} className="CheckBoxInput" type="checkbox" disabled={status} />
+//             <label for={text} className="CheckBoxLabel">
+//                 {!status && <span className="CheckBoxSpan"></span>}
+//                 <div className="CheckBoxText">{text}</div>
+//             </label>
+//         </div>
+//     )
+// }
+
+
+const Categories = ({ text, status, onChange }) => {
+
     return (
         <div className="CategoriesCheckbox">
-            <input id={text} className="CheckBoxInput" type="checkbox" disabled={status} />
-            <label for={text} className="CheckBoxLabel">
+            <input
+                id={text}
+                className="CheckBoxInput"
+                type="checkbox"
+                checked={status}
+                onChange={() => onChange(text)}
+                disabled={status === "true" ? "disabled" : ""}
+            />
+            <label htmlFor={text} className="CheckBoxLabel">
                 {!status && <span className="CheckBoxSpan"></span>}
                 <div className="CheckBoxText">{text}</div>
             </label>
         </div>
-    )
-}
+    );
+};
 
-const condition = ({ text }) => {
+
+
+
+
+
+const condition = ({ text, status, onChange }) => {
     return (
         <div className="CategoriesCheckbox">
-            <input id={text} className="CheckBoxInput" type="checkbox" />
-            <label for={text} className="CheckBoxLabel">
-                <span className="CheckBoxSpan"></span>
+            <input
+                id={text}
+                className="CheckBoxInput"
+                type="checkbox"
+                checked={status}
+                onChange={() => onChange(text)}
+            />
+            <label htmlFor={text} className="CheckBoxLabel">
+                {/* <span className="CheckBoxSpan"></span> */}
+                {!status && <span className="CheckBoxSpan"></span>}
+
                 <div className="CheckBoxText">{text}</div>
             </label>
         </div>
-    )
-}
+    );
+};
 
 
-
-const donation = ({ text }) => {
+const donation = ({ text, onChange }) => {
     return (
         <div className="CategoriesCheckbox">
-            <input id={text} className="CheckBoxInput" type="checkbox" />
+            <input id={text} className="CheckBoxInput" type="checkbox"
+                onChange={() => onChange(text)}
+            />
             <label for={text} className="CheckBoxLabel">
                 <span className="CheckBoxSpan"></span>
                 <div className="CheckBoxText">{text}</div>
@@ -51,40 +88,112 @@ const Browse = ({ api, languageText }) => {
 
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
-
+    const { user } = useAuthContext()
     const { products, dispatch } = useItemsContext()
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedConditions, setSelectedConditions] = useState([]);
+    const [selectedDonations, setSelectedDonations] = useState([]);
+    const [showCategories, setShowCategories] = useState(false);
     useEffect(() => {
         const fetchItems = async () => {
-
             try {
-
-                const response = await fetch(`${api}/api/products`)
+                const response = await fetch(`${api}/api/products`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                });
                 if (!response.ok) {
                     console.error(`Error fetching Items. Status: ${response.status}, ${response.statusText}`);
                     setError('Failed to fetch data');
-
                     return;
                 }
-                const json = await response.json()
-
+                const json = await response.json();
+                const filteredJson = json.filter((product) => product.userID !== user.userId);
                 dispatch({
                     type: 'SET_ITEM',
                     collection: "products",
-                    payload: json,
+                    payload: filteredJson,
                 });
-                setLoading(false)
-
-
+                setLoading(false);
             } catch (error) {
                 console.error('An error occurred while fetching data:', error);
                 setError('An error occurred while fetching data');
-
             }
         };
 
-        fetchItems()
+        if (user) {
+            fetchItems();
+        }
+    }, [dispatch, user, api, languageText, selectedCategories, selectedConditions]);
 
-    }, [])
+
+    // const handleCategoryChange = (category) => {
+    //     const index = selectedCategories.indexOf(category);
+    //     if (index === -1) {
+    //         setSelectedCategories([...selectedCategories, category]);
+    //     } else {
+    //         setSelectedCategories(selectedCategories.filter((cat) => cat !== category));
+    //     }
+    // };
+
+    const handleCategoryChange = (category) => {
+        if (category === languageText.AllCategories) {
+            setSelectedCategories([]);
+        } else {
+            const index = selectedCategories.indexOf(category);
+            if (index === -1) {
+                setSelectedCategories([...selectedCategories, category]);
+            } else {
+                setSelectedCategories(selectedCategories.filter((cat) => cat !== category));
+            }
+        }
+    };
+
+
+    const handleConditionChange = (condition) => {
+        if (condition === languageText.AllConditions) {
+            setSelectedConditions([]);
+        } else {
+            const index = selectedConditions.indexOf(condition);
+            if (index === -1) {
+                setSelectedConditions([...selectedConditions, condition]);
+            } else {
+                setSelectedConditions(selectedConditions.filter((cond) => cond !== condition));
+            }
+        }
+    };
+
+    const handleDonationChange = (donation) => {
+        if (donation != languageText.Donations) {
+            setSelectedDonations([]);
+        } else {
+            const index = selectedDonations.indexOf(donation);
+            if (index === -1) {
+                setSelectedDonations([...selectedDonations, donation]);
+            } else {
+                setSelectedDonations(selectedDonations.filter((dont) => dont !== donation));
+            }
+        }
+    }
+
+
+
+
+    const filterProductsByCategoryAndCondition = (product) => {
+        const categoryFilter = selectedCategories.length === 0 || product.pCategory.some((category) => selectedCategories.includes(category));
+        const conditionFilter = selectedConditions.length === 0 || selectedConditions.includes(product.pCondition);
+        const donationFilter = selectedDonations.length === 0 || selectedDonations.includes(product.pType);
+        return categoryFilter && conditionFilter && donationFilter;
+    };
+
+    const handleShowCategories = () => {
+        setShowCategories(true);
+    }
+
+    const handleHideCategories = () => {
+        setShowCategories(false);
+
+    }
 
     return (
 
@@ -99,69 +208,91 @@ const Browse = ({ api, languageText }) => {
                 <div className="AllBrowse">
                     <div className="LeftSide">
                         <div className="Categories">
-                            <p>Categories</p>
-                            {categories({ text: languageText.AllCategories })}
-                            {categories({ text: languageText.MenClothing })}
-                            {categories({ text: languageText.WomenClothing })}
-                            {categories({ text: languageText.MenShoes })}
-                            {categories({ text: languageText.WomenShoes })}
-                            {categories({ text: languageText.MenBags })}
-                            {categories({ text: languageText.WomenBags })}
-                            {categories({ text: "-----------", status: true })}
-                            {categories({ text: languageText.FoodBeverages })}
-                            {categories({ text: languageText.Groceries })}
-                            {categories({ text: "-----------", status: true })}
-                            {categories({ text: languageText.Mobile })}
-                            {categories({ text: languageText.Computer })}
-                            {categories({ text: languageText.CamerasDrones })}
-                            {categories({ text: languageText.GamingConsoles })}
-                            {categories({ text: languageText.HomeAppliances })}
-                            {categories({ text: languageText.OtherTechnology })}
-                            {categories({ text: "-----------", status: true })}
-                            {categories({ text: languageText.Healthcare })}
-                            {categories({ text: languageText.Pharmaceuticals })}
-                            {categories({ text: "-----------", status: true })}
-                            {categories({ text: languageText.Furniture })}
-                            {categories({ text: languageText.Automotive })}
-                            {categories({ text: languageText.Tickets })}
-                            {categories({ text: "-----------", status: true })}
-                            {categories({ text: languageText.Books })}
-                            {categories({ text: languageText.GamesHobbies })}
-                            {categories({ text: languageText.SportsOutdoor })}
+                            <p>{languageText.Categories}</p>
+                            {!showCategories &&
+
+
+                                <div class="ShowCategoriesButton" data-tooltip={languageText.Show} onClick={handleShowCategories}>
+                                    <div class="button-wrapper">
+                                        <div class="text">{languageText.ShowCategories}</div>
+                                        <span class="icon">
+                                            {/* <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"></path></svg> */}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m12 20l6-6m-6 6l-6-6m6 6V9.5M12 4v2.5" /></svg>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            }
+                            {showCategories &&
+
+
+
+                                <div class="ShowCategoriesButton" data-tooltip={languageText.Hide} onClick={handleHideCategories}>
+                                    <div class="button-wrapper">
+                                        <div class="text">{languageText.HideCategories}</div>
+
+                                        <span class="icon">
+                                            {/* <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"></path></svg> */}
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m12 4l-6 6m6-6l6 6m-6-6v10.5m0 5.5v-2.5" /></svg>
+                                        </span>
+                                    </div>
+                                </div>
+                            }
+                            <div className={`${showCategories ? "Category" : "Disabled"}`}>
+                                {Categories({ text: languageText.AllCategories, status: selectedCategories.includes(languageText.AllCategories), onChange: handleCategoryChange })}
+                                {/* {categories({ text: languageText.MenClothing, status: selectedCategories.includes(languageText.MenClothing) })} */}
+                                {/* {categories({ text: languageText.WomenClothing })} */}
+                                {Categories({ text: languageText.MenClothing, status: selectedCategories.includes(languageText.MenClothing), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.WomenClothing, status: selectedCategories.includes(languageText.WomenClothing), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.MenShoes, status: selectedCategories.includes(languageText.MenShoes), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.WomenShoes, status: selectedCategories.includes(languageText.WomenShoes), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.MenBags, status: selectedCategories.includes(languageText.MenBags), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.WomenBags, status: selectedCategories.includes(languageText.WomenBags), onChange: handleCategoryChange })}
+                                {/* {categories({ text: languageText.WomenBags })} */}
+                                {Categories({ text: "-----------", status: "true", onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.FoodBeverages, status: selectedCategories.includes(languageText.FoodBeverages), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.Groceries, status: selectedCategories.includes(languageText.Groceries), onChange: handleCategoryChange })}
+                                {Categories({ text: "-----------", status: "true", onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.Mobile, status: selectedCategories.includes(languageText.Mobile), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.Computer, status: selectedCategories.includes(languageText.Computer), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.CamerasDrones, status: selectedCategories.includes(languageText.CamerasDrones), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.GamingConsoles, status: selectedCategories.includes(languageText.GamingConsoles), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.HomeAppliances, status: selectedCategories.includes(languageText.HomeAppliances), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.OtherTechnology, status: selectedCategories.includes(languageText.OtherTechnology), onChange: handleCategoryChange })}
+                                {Categories({ text: "-----------", status: "true" })}
+                                {Categories({ text: languageText.Healthcare, status: selectedCategories.includes(languageText.Healthcare), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.Pharmaceuticals, status: selectedCategories.includes(languageText.Pharmaceuticals), onChange: handleCategoryChange })}
+                                {Categories({ text: "-----------", status: "true" })}
+                                {Categories({ text: languageText.Furniture, status: selectedCategories.includes(languageText.Furniture), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.Automotive, status: selectedCategories.includes(languageText.Automotive), onChange: handleCategoryChange })}
+                                {Categories({ text: "-----------", status: "true" })}
+                                {Categories({ text: languageText.Books, status: selectedCategories.includes(languageText.Books), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.GamesHobbies, status: selectedCategories.includes(languageText.GamesHobbies), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.SportsOutdoor, status: selectedCategories.includes(languageText.SportsOutdoor), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.Tickets, status: selectedCategories.includes(languageText.Tickets), onChange: handleCategoryChange })}
+                            </div>
                         </div>
                         <div className="Categories">
-                            <p>Condition</p>
-                            {condition({ text: languageText.AllConditions })}
-                            {condition({ text: languageText.BrandNew })}
-                            {condition({ text: languageText.New })}
-                            {condition({ text: languageText.Used })}
+                            {/* <p>Condition</p> */}
+                            <p>{languageText.Condition}</p>
+
+                            {condition({ text: languageText.AllConditions, status: selectedConditions.includes(languageText.AllConditions), onChange: handleConditionChange })}
+                            {condition({ text: languageText.BrandNew, status: selectedConditions.includes(languageText.BrandNew), onChange: handleConditionChange })}
+                            {condition({ text: languageText.New, status: selectedConditions.includes(languageText.New), onChange: handleConditionChange })}
+                            {condition({ text: languageText.Used, status: selectedConditions.includes(languageText.Used), onChange: handleConditionChange })}
                         </div>
                         <div className="Categories Donation">
-                            <p>Donations</p>
-                            {donation({ text: languageText.Donations })}
+                            <p>{languageText.Donations}</p>
+
+                            {donation({ text: languageText.Donations, onChange: handleDonationChange })}
                         </div>
                     </div>
                     <div className="RightSide">
-                        {products && products.map((product) => (
+                        {/* {products && products.filter(filterProductsByCategory && filterProductsByCondition).map((product) => ( */}
+                        {products && products.filter(filterProductsByCategoryAndCondition).map((product) => (
                             <ProductCard key={product._id} edit={false} product={product} />
 
                         ))}
-                        {/* {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })}
-                    {ProductCard({ edit: false })} */}
 
 
                     </div>

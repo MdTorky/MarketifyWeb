@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import Loader from "../../components/Loader/Loader";
 import { useItemsContext } from '../../hooks/useItemsContext'
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 
 
@@ -28,6 +29,7 @@ const Sell = ({ api, languageText }) => {
     const [error, setError] = useState(null);
     const [submitting, setSubmitting] = useState(false)
     const navigate = useNavigate();
+    const { user } = useAuthContext()
 
 
 
@@ -120,59 +122,68 @@ const Sell = ({ api, languageText }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setSubmitting(true)
 
-        const imgUrl = await uploadFile('image', img);
-
-        const item = {
-            pTitle,
-            pDescription,
-            pPrice,
-            pCondition,
-            pCategory: selectedCategories,
-            pImage: imgUrl,
-            userID: "UserID",
-            pType: "Sell",
-            pStatus: "Valid",
+        if (!user) {
+            setError(languageText.YouMustBeLoggedIn)
         }
+        else {
 
-        const response = await fetch(`${api}/api/products`, {
-            method: "POST",
-            body: JSON.stringify(item),
-            headers: {
-                'Content-Type': 'application/json'
+            setSubmitting(true)
+
+            const imgUrl = await uploadFile('image', img);
+
+            const item = {
+                pTitle,
+                pDescription,
+                pPrice,
+                pCondition,
+                pCategory: selectedCategories,
+                pImage: imgUrl,
+                userID: user.userId,
+                pType: "Sell",
+                pStatus: "Valid",
             }
-        })
-        const json = await response.json()
 
-        if (!response.ok) {
-            setError(json.error);
-        } else {
-            setError(null);
-            dispatch({
-                type: 'CREATE_FORM',
-                collection: "products",
-                payload: json
-            });
-            toast.success("Added Successfully", {
-                position: "bottom-center",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                style: {
-                    // fontFamily: language === 'ar' ?
-                    //     'Noto Kufi Arabic, sans-serif' :
-                    //     'Poppins, sans-serif',
-                },
-            });
-            setSubmitting(false);
-            navigate("/")
+            const response = await fetch(`${api}/api/products`, {
+                method: "POST",
+                body: JSON.stringify(item),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+
+                }
+            })
+            const json = await response.json()
+
+            if (!response.ok) {
+                setError(json.error);
+            } else {
+                setError(null);
+                dispatch({
+                    type: 'CREATE_FORM',
+                    collection: "products",
+                    payload: json
+                });
+                toast.success("Added Successfully", {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    style: {
+                        // fontFamily: language === 'ar' ?
+                        //     'Noto Kufi Arabic, sans-serif' :
+                        //     'Poppins, sans-serif',
+                    },
+                });
+                setSubmitting(false);
+                navigate("/")
 
 
+            }
         }
 
     }

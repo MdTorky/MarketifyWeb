@@ -10,6 +10,7 @@ import withReactContent from 'sweetalert2-react-content';
 import { Icon } from '@iconify/react';
 import { useLogin } from '../../hooks/useLogin';
 import Loader from '../../components/Loader/Loader'
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 const SignIn = ({ api, languageText }) => {
 
@@ -18,7 +19,7 @@ const SignIn = ({ api, languageText }) => {
     const [errors, setError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const { login, loading, error } = useLogin(api)
-
+    const { user } = useAuthContext()
 
 
     const handleTogglePassword = () => {
@@ -41,6 +42,7 @@ const SignIn = ({ api, languageText }) => {
     }
     return (
         <div className="Sign">
+
             <div className="logo">
                 <img src={logo} alt="" />
             </div>
