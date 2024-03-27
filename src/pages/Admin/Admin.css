@@ -226,6 +226,7 @@
     top: 100%;
     left: 0;
     right: 0;
+    margin: auto;
     cursor: pointer;
     background: var(--bg);
     border: 3px solid var(--theme);
@@ -234,7 +235,7 @@
     transition: 0.5s all ease;
     font-weight: 800;
     color: var(--theme);
-
+    width: fit-content
 }
 
 .StatusButton:hover {
@@ -244,6 +245,14 @@
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     transform: scale(1.08);
 
+}
+
+.StatusButton1 {
+    left: -20% !important;
+}
+
+.StatusButton2 {
+    left: 60% !important;
 }
 
 .TableButton {
@@ -296,4 +305,8 @@
     color: var(--theme);
     width: fit-content;
     margin: auto;
+}
+
+.UserEmail {
+    font-size: 0.5em;
 }

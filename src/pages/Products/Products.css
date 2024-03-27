@@ -408,16 +408,30 @@
 
 
 
+.NoProductsContainer {
+    /* margin: auto; */
+    display: flex;
+    /* margin-left: 90px; */
+    gap: 20px;
+    /* justify-content: center; */
+
+}
 
 
+.NoProductsContainer p {
+    background: var(--text2);
+    color: var(--bg);
+    height: fit-content;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    text-transform: uppercase;
+    font-size: 2em;
 
-
-
-
-
-
-
-
+}
 
 /* .ProductCard .favorite {
     position: absolute;
@@ -1404,7 +1418,7 @@ select:focus {
     display: flex;
     overflow: hidden;
     flex-direction: column;
-    margin-bottom: 70px;
+    margin-bottom: 10%;
 }
 
 .MyProducts h2 {

@@ -76,19 +76,90 @@ function App() {
 
 
           <Route path="/" element={user ? <NavBar><Footer><Home languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
-          <Route path="/browse" element={user ? <NavBar><Footer><Browse api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
-          <Route path="/product/:id" element={user ? <NavBar><Footer><Product api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
-          <Route path="/purchased" element={user ? <NavBar><Footer><Purchased api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
-          <Route path="/myProducts" element={user ? <NavBar><Footer><MyProducts api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
-          <Route path="/payment" element={user ? <NavBar><Footer><Payment api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
-          <Route path="/sell" element={user ? <NavBar><Footer><Sell api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
-          <Route path="/donate" element={user ? <NavBar><Footer><Donate api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
+          {/* <Route path="/browse" element={user ? <NavBar><Footer><Browse api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
+          {/* <Route path="/product/:id" element={user ? <NavBar><Footer><Product api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
+
+          <Route path="/browse" element={
+            !user ? (<Navigate to='/SignIn' />
+            ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" || user.userStatus === "Inactive" ? (
+              <Navigate to='/profile' />
+            ) : (
+              <NavBar><Footer><Browse api={api} languageText={languageText} /></Footer></NavBar>
+            )
+          } />
+          <Route path="/product/:id" element={
+            !user ? (<Navigate to='/SignIn' />
+            ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (
+              <Navigate to='/profile' />
+            ) : (
+              <NavBar><Footer><Product api={api} languageText={languageText} /></Footer></NavBar>
+            )
+          } />
+
+          <Route path="/purchased" element={
+            !user ? (<Navigate to='/SignIn' />
+            ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (
+              <Navigate to='/profile' />
+            ) : (
+              <NavBar><Footer><Purchased api={api} languageText={languageText} /></Footer></NavBar>
+            )
+          } />
+
+
+          <Route path="/myProducts" element={
+            !user ? (<Navigate to='/SignIn' />
+            ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (
+              <Navigate to='/profile' />
+            ) : (
+              <NavBar><Footer><MyProducts api={api} languageText={languageText} /></Footer></NavBar>
+            )
+          } />
+
+          <Route path="/payment" element={
+            !user ? (<Navigate to='/SignIn' />
+            ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (
+              <Navigate to='/profile' />
+            ) : (
+              <NavBar><Footer><Payment api={api} languageText={languageText} /></Footer></NavBar>
+            )
+          } />
+          <Route path="/sell" element={
+            !user ? (<Navigate to='/SignIn' />
+            ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (
+              <Navigate to='/profile' />
+            ) : (
+              <NavBar><Footer><Sell api={api} languageText={languageText} /></Footer></NavBar>
+            )
+          } />
+          <Route path="/donate" element={
+            !user ? (<Navigate to='/SignIn' />
+            ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (
+              <Navigate to='/profile' />
+            ) : (
+              <NavBar><Footer><Donate api={api} languageText={languageText} /></Footer></NavBar>
+            )
+          } />
+          {/* <Route path="/payment" element={
+            !user ? (<Navigate to='/SignIn' />
+            ) : user.userStatus === "Pending" ? (
+              <Navigate to='/profile' />
+            ) : (
+              <NavBar><Footer><Payment api={api} languageText={languageText} /></Footer></NavBar>
+            )
+          } /> */}
+
+          {/* <Route path="/purchased" element={user ? <NavBar><Footer><Purchased api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
+          {/* <Route path="/myProducts" element={user ? <NavBar><Footer><MyProducts api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
+          {/* <Route path="/payment" element={user ? <NavBar><Footer><Payment api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
+          {/* <Route path="/sell" element={user ? <NavBar><Footer><Sell api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
+          {/* <Route path="/donate" element={user ? <NavBar><Footer><Donate api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
           <Route path="/profile" element={user ? <NavBar><Footer><Profile api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
 
 
 
 
-          <Route path="/adminManageAccounts" element={user && user.userType == "admin" ? <AdminNavBar><ManageAccounts /></AdminNavBar> : <Navigate to='/SignIn' />} />
+
+          <Route path="/adminManageAccounts" element={user && user.userType == "admin" ? <AdminNavBar ><ManageAccounts api={api} languageText={languageText} /></AdminNavBar> : <Navigate to='/SignIn' />} />
           <Route path="/adminManageProducts" element={user && user.userType == "admin" ? <AdminNavBar><ManageProducts /></AdminNavBar> : <Navigate to='/SignIn' />} />
           <Route path="/adminManageSoldProducts" element={user && user.userType == "Admin" ? <AdminNavBar><ManageSoldProducts /></AdminNavBar> : <Navigate to='/SignIn' />} />
           <Route path="/adminManageReports" element={user && user.userType == "Admin" ? <AdminNavBar><ManageReports /></AdminNavBar> : <Navigate to='/SignIn' />} />

@@ -24,7 +24,7 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 // }
 
 
-const Categories = ({ text, status, onChange }) => {
+const Categories = ({ text, status, onChange, type }) => {
 
     return (
         <div className="CategoriesCheckbox">
@@ -33,7 +33,7 @@ const Categories = ({ text, status, onChange }) => {
                 className="CheckBoxInput"
                 type="checkbox"
                 checked={status}
-                onChange={() => onChange(text)}
+                onChange={() => onChange(type)}
                 disabled={status === "true" ? "disabled" : ""}
             />
             <label htmlFor={text} className="CheckBoxLabel">
@@ -49,7 +49,7 @@ const Categories = ({ text, status, onChange }) => {
 
 
 
-const condition = ({ text, status, onChange }) => {
+const condition = ({ text, status, onChange, type }) => {
     return (
         <div className="CategoriesCheckbox">
             <input
@@ -57,7 +57,7 @@ const condition = ({ text, status, onChange }) => {
                 className="CheckBoxInput"
                 type="checkbox"
                 checked={status}
-                onChange={() => onChange(text)}
+                onChange={() => onChange(type)}
             />
             <label htmlFor={text} className="CheckBoxLabel">
                 {/* <span className="CheckBoxSpan"></span> */}
@@ -70,11 +70,11 @@ const condition = ({ text, status, onChange }) => {
 };
 
 
-const donation = ({ text, onChange }) => {
+const donation = ({ text, onChange, type }) => {
     return (
         <div className="CategoriesCheckbox">
             <input id={text} className="CheckBoxInput" type="checkbox"
-                onChange={() => onChange(text)}
+                onChange={() => onChange(type)}
             />
             <label for={text} className="CheckBoxLabel">
                 <span className="CheckBoxSpan"></span>
@@ -137,7 +137,7 @@ const Browse = ({ api, languageText }) => {
     // };
 
     const handleCategoryChange = (category) => {
-        if (category === languageText.AllCategories) {
+        if (category === 'All Categories') {
             setSelectedCategories([]);
         } else {
             const index = selectedCategories.indexOf(category);
@@ -151,7 +151,7 @@ const Browse = ({ api, languageText }) => {
 
 
     const handleConditionChange = (condition) => {
-        if (condition === languageText.AllConditions) {
+        if (condition === "All Conditions") {
             setSelectedConditions([]);
         } else {
             const index = selectedConditions.indexOf(condition);
@@ -164,7 +164,7 @@ const Browse = ({ api, languageText }) => {
     };
 
     const handleDonationChange = (donation) => {
-        if (donation != languageText.Donations) {
+        if (donation != "Donations") {
             setSelectedDonations([]);
         } else {
             const index = selectedDonations.indexOf(donation);
@@ -239,63 +239,66 @@ const Browse = ({ api, languageText }) => {
                                 </div>
                             }
                             <div className={`${showCategories ? "Category" : "Disabled"}`}>
-                                {Categories({ text: languageText.AllCategories, status: selectedCategories.includes(languageText.AllCategories), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.AllCategories, status: selectedCategories.includes(languageText.AllCategories), onChange: handleCategoryChange, type: "All Categories" })}
                                 {/* {categories({ text: languageText.MenClothing, status: selectedCategories.includes(languageText.MenClothing) })} */}
                                 {/* {categories({ text: languageText.WomenClothing })} */}
-                                {Categories({ text: languageText.MenClothing, status: selectedCategories.includes(languageText.MenClothing), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.WomenClothing, status: selectedCategories.includes(languageText.WomenClothing), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.MenShoes, status: selectedCategories.includes(languageText.MenShoes), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.WomenShoes, status: selectedCategories.includes(languageText.WomenShoes), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.MenBags, status: selectedCategories.includes(languageText.MenBags), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.WomenBags, status: selectedCategories.includes(languageText.WomenBags), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.MenClothing, status: selectedCategories.includes(languageText.MenClothing), onChange: handleCategoryChange, type: "Men's Clothing" })}
+                                {Categories({ text: languageText.WomenClothing, status: selectedCategories.includes(languageText.WomenClothing), onChange: handleCategoryChange, type: "Women's Clothing" })}
+                                {Categories({ text: languageText.MenShoes, status: selectedCategories.includes(languageText.MenShoes), onChange: handleCategoryChange, type: "Men's Shoes" })}
+                                {Categories({ text: languageText.WomenShoes, status: selectedCategories.includes(languageText.WomenShoes), onChange: handleCategoryChange, type: "Women's Shoes" })}
+                                {Categories({ text: languageText.MenBags, status: selectedCategories.includes(languageText.MenBags), onChange: handleCategoryChange, type: "Men's Bags" })}
+                                {Categories({ text: languageText.WomenBags, status: selectedCategories.includes(languageText.WomenBags), onChange: handleCategoryChange, type: "Women's Bags" })}
                                 {/* {categories({ text: languageText.WomenBags })} */}
                                 {Categories({ text: "-----------", status: "true", onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.FoodBeverages, status: selectedCategories.includes(languageText.FoodBeverages), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.Groceries, status: selectedCategories.includes(languageText.Groceries), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.FoodBeverages, status: selectedCategories.includes(languageText.FoodBeverages), onChange: handleCategoryChange, type: "Food & Beverages" })}
+                                {Categories({ text: languageText.Groceries, status: selectedCategories.includes(languageText.Groceries), onChange: handleCategoryChange, type: "Groceries" })}
                                 {Categories({ text: "-----------", status: "true", onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.Mobile, status: selectedCategories.includes(languageText.Mobile), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.Computer, status: selectedCategories.includes(languageText.Computer), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.CamerasDrones, status: selectedCategories.includes(languageText.CamerasDrones), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.GamingConsoles, status: selectedCategories.includes(languageText.GamingConsoles), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.HomeAppliances, status: selectedCategories.includes(languageText.HomeAppliances), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.OtherTechnology, status: selectedCategories.includes(languageText.OtherTechnology), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.Mobile, status: selectedCategories.includes(languageText.Mobile), onChange: handleCategoryChange, type: "Mobile" })}
+                                {Categories({ text: languageText.Computer, status: selectedCategories.includes(languageText.Computer), onChange: handleCategoryChange, type: "Computer" })}
+                                {Categories({ text: languageText.CamerasDrones, status: selectedCategories.includes(languageText.CamerasDrones), onChange: handleCategoryChange, type: "Cameras & Drones" })}
+                                {Categories({ text: languageText.GamingConsoles, status: selectedCategories.includes(languageText.GamingConsoles), onChange: handleCategoryChange, type: "Gaming Consoles" })}
+                                {Categories({ text: languageText.HomeAppliances, status: selectedCategories.includes(languageText.HomeAppliances), onChange: handleCategoryChange, type: "Home Appliances" })}
+                                {Categories({ text: languageText.OtherTechnology, status: selectedCategories.includes(languageText.OtherTechnology), onChange: handleCategoryChange, type: "Other Technology" })}
                                 {Categories({ text: "-----------", status: "true" })}
-                                {Categories({ text: languageText.Healthcare, status: selectedCategories.includes(languageText.Healthcare), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.Pharmaceuticals, status: selectedCategories.includes(languageText.Pharmaceuticals), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.Healthcare, status: selectedCategories.includes(languageText.Healthcare), onChange: handleCategoryChange, type: "Healthcare" })}
+                                {Categories({ text: languageText.Pharmaceuticals, status: selectedCategories.includes(languageText.Pharmaceuticals), onChange: handleCategoryChange, type: "Pharmaceuticals" })}
                                 {Categories({ text: "-----------", status: "true" })}
-                                {Categories({ text: languageText.Furniture, status: selectedCategories.includes(languageText.Furniture), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.Automotive, status: selectedCategories.includes(languageText.Automotive), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.Furniture, status: selectedCategories.includes(languageText.Furniture), onChange: handleCategoryChange, type: "Furniture" })}
+                                {Categories({ text: languageText.Automotive, status: selectedCategories.includes(languageText.Automotive), onChange: handleCategoryChange, type: "Automotive" })}
                                 {Categories({ text: "-----------", status: "true" })}
-                                {Categories({ text: languageText.Books, status: selectedCategories.includes(languageText.Books), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.GamesHobbies, status: selectedCategories.includes(languageText.GamesHobbies), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.SportsOutdoor, status: selectedCategories.includes(languageText.SportsOutdoor), onChange: handleCategoryChange })}
-                                {Categories({ text: languageText.Tickets, status: selectedCategories.includes(languageText.Tickets), onChange: handleCategoryChange })}
+                                {Categories({ text: languageText.Books, status: selectedCategories.includes(languageText.Books), onChange: handleCategoryChange, type: "Books" })}
+                                {Categories({ text: languageText.GamesHobbies, status: selectedCategories.includes(languageText.GamesHobbies), onChange: handleCategoryChange, type: "Games & Hobbies" })}
+                                {Categories({ text: languageText.SportsOutdoor, status: selectedCategories.includes(languageText.SportsOutdoor), onChange: handleCategoryChange, type: "Sports & Outdoor" })}
+                                {Categories({ text: languageText.Tickets, status: selectedCategories.includes(languageText.Tickets), onChange: handleCategoryChange, type: "Tickets" })}
                             </div>
                         </div>
                         <div className="Categories">
                             {/* <p>Condition</p> */}
                             <p>{languageText.Condition}</p>
 
-                            {condition({ text: languageText.AllConditions, status: selectedConditions.includes(languageText.AllConditions), onChange: handleConditionChange })}
-                            {condition({ text: languageText.BrandNew, status: selectedConditions.includes(languageText.BrandNew), onChange: handleConditionChange })}
-                            {condition({ text: languageText.New, status: selectedConditions.includes(languageText.New), onChange: handleConditionChange })}
-                            {condition({ text: languageText.Used, status: selectedConditions.includes(languageText.Used), onChange: handleConditionChange })}
+                            {condition({ text: languageText.AllConditions, status: selectedConditions.includes(languageText.AllConditions), onChange: handleConditionChange, type: "All Conditions" })}
+                            {condition({ text: languageText.BrandNew, status: selectedConditions.includes(languageText.BrandNew), onChange: handleConditionChange, type: "Brand New" })}
+                            {condition({ text: languageText.New, status: selectedConditions.includes(languageText.New), onChange: handleConditionChange, type: "New" })}
+                            {condition({ text: languageText.Used, status: selectedConditions.includes(languageText.Used), onChange: handleConditionChange, type: "Used" })}
                         </div>
                         <div className="Categories Donation">
                             <p>{languageText.Donations}</p>
 
-                            {donation({ text: languageText.Donations, onChange: handleDonationChange })}
+                            {donation({ text: languageText.Donations, onChange: handleDonationChange, type: "Donations" })}
                         </div>
                     </div>
                     <div className="RightSide">
                         {/* {products && products.filter(filterProductsByCategory && filterProductsByCondition).map((product) => ( */}
                         {products && products.filter(filterProductsByCategoryAndCondition).map((product) => (
-                            <ProductCard key={product._id} edit={false} product={product} />
-
+                            <ProductCard key={product._id} edit={false} product={product} languageText={languageText} />
                         ))}
-
-
                     </div>
+
+                    {products.length <= 0 && (
+                        <div className="NoProductsContainer">
+                            <p><Icon icon="lucide:package-x" />{languageText.NoProducts}</p>
+                        </div>
+                    )}
                 </div>
                 {error && <div className="ErrorMessage"><Icon icon="ooui:error" />{error}</div>}
             </>

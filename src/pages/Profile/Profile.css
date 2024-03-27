@@ -205,3 +205,27 @@
     box-shadow: none;
     transform: scale(0.9);
 }
+
+
+
+.ApprovalIconContainer {
+    margin: auto;
+}
+
+.ApprovalIcon {
+    font-size: 9em;
+    color: var(--bg)
+}
+
+.ApprovalText {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    color: var(--bg)
+}
+
+.ApprovalText h3 {
+    color: var(--text);
+    text-transform: capitalize;
+}

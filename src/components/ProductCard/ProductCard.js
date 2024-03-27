@@ -8,7 +8,7 @@ import PurchaseForm from '../PurhcaseForm/PurchaseForm';
 import { useState } from "react"
 import { useAuthContext } from '../../hooks/useAuthContext';
 
-const ProductCard = ({ edit, product }) => {
+const ProductCard = ({ edit, product, languageText }) => {
     const { user } = useAuthContext()
     const [isPurchaseFormOpen, setPurchaseFormOpen] = useState(false);
 
@@ -50,7 +50,7 @@ const ProductCard = ({ edit, product }) => {
                     </g>
                 </svg>
 
-                <div className="ProductPrice">{product.pPrice} RM</div>
+                {product.pPrice ? <div className="ProductPrice">{product.pPrice} RM</div> : <div className="ProductPrice">{languageText.Donations}</div>}
             </div>
             {/* <label className="favorite">
                 <input checked="" type="checkbox" />

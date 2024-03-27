@@ -99,7 +99,7 @@ const Sell = ({ api, languageText }) => {
     const uploadFile = async (type, file) => {
         const data = new FormData();
         data.append("file", file);
-        data.append("upload_preset", type === 'image' ? 'images_preset' : '');
+        data.append("upload_preset", type === 'image' ? 'products_preset' : '');
 
         try {
             let cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;

@@ -10,6 +10,7 @@ import PurchaseForm from '../../components/PurhcaseForm/PurchaseForm';
 import { useItemsContext } from '../../hooks/useItemsContext'
 import Loader from '../../components/Loader/Loader'
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { Icon } from '@iconify/react';
 
 const Product = ({ api, languageText }) => {
     const { id } = useParams();
@@ -197,8 +198,13 @@ const Product = ({ api, languageText }) => {
                                 <p className="ProductRecommendationTitle">{languageText.Recommendations}</p>
                                 <div className="ProductRecommendation">
                                     {recommendations.map(product => (
-                                        <ProductCard key={product._id} edit={false} product={product} />
+                                        <ProductCard key={product._id} edit={false} product={product} languageText={languageText} />
                                     ))}
+                                    {recommendations.length <= 0 &&
+                                        <div className="NoProductsContainer">
+                                            <p><Icon icon="ant-design:dislike-twotone" />{languageText.NoRecommendations}</p>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>

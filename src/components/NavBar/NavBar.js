@@ -10,7 +10,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 import { useLanguage } from '../../context/languageContext';
 import languageData from '../../language.json';
 import { useAuthContext } from '../../hooks/useAuthContext';
-
+import { useLogout } from '../../hooks/useLogout';
 
 const NavBar = ({ children }) => {
 
@@ -20,6 +20,11 @@ const NavBar = ({ children }) => {
     const { isRTL } = useLanguage();
     const languageText = languageData[language]
     const { user } = useAuthContext()
+    const { logout } = useLogout()
+
+    const handleLogout = () => {
+        logout()
+    }
     return (
         <>
             <div className={`NavBar ${isRTL ? 'arabic' : ''}`}>
@@ -46,7 +51,15 @@ const NavBar = ({ children }) => {
                     </div>
 
                     <Link to="/" className='link user'><FontAwesomeIcon icon={faBell} /></Link>
-                    <Link to="/profile" className='link user'><FontAwesomeIcon icon={faUser} /></Link>
+                    <div className="dropdown">
+                        <Link className='link user'><FontAwesomeIcon icon={faUser} /></Link>
+                        <div className="dropdownContent">
+                            <Link to="/profile" className={`link ${location.pathname === '/profile' ? 'active' : ''} `}>{languageText.Profile}</Link>
+                            <Link className="link" onClick={handleLogout}>{languageText.Logout}</Link>
+                            {/* <Link to="/myProducts" className={`link ${location.pathname === '/myProducts' ? 'active' : ''} `}>{languageText.MyProducts}</Link> */}
+                        </div>
+                    </div>
+                    {/* <Link to="/profile" className='link user'><FontAwesomeIcon icon={faUser} /></Link> */}
                     {/* <Link to="/profile/3124124" className='link user'><Icon icon="line-md:account" /></Link> */}
                 </div>
             </div>

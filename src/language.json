@@ -3,7 +3,9 @@
     "Loading": "Loading",
     "Submitting": "Submitting",
     "Registering": "Registering",
+    "Updating": "Updating",
     "LoggingIn": "Logging In",
+    "Profile": "Profile",
     "YouMustBeLoggedIn": "You Must Be Logged In",
     "Submit": "Submit",
     "Chat": "Chat",
@@ -92,6 +94,8 @@
     "GeneralInquiry": "General Inquiries",
     "EmailUsAnyInquiries": "Email Us for any Inquiries",
 
+    "NoProducts": "No Products",
+    "NoRecommendations": "No Recommendations",
     "AllCategories": "All Categories",
     "MenClothing": "Men's Clothing",
     "WomenClothing": "Women's Clothing",
@@ -152,7 +156,12 @@
     "Reviews": "Reviews",
 
     "ProfileForm": "Profile Form",
-    "PayFine": "Pay Fine"
+    "PayFine": "Pay Fine",
+    "InformationAddedSuccessfully": "Information Added Successfully",
+    "UnderEvaluation": "Your account is still under evaluation",
+    "ValidAccount": "In order to make sure our community holds up a standard, we must check the the information the user provided are valid",
+    "Deactivated": "Your account has been deactivated",
+    "DeactivatedDescription": "Review the reason down below and contact support"
   },
   "ar": {
     "BrowseProducts": "تصفح المنتجات"

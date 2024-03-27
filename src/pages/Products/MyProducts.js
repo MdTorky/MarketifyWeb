@@ -64,9 +64,14 @@ const MyProducts = ({ languageText, api }) => {
                 <h2>{languageText.MyProducts}</h2>
                 <div className="MyProductsCards">
                     {products && products.map((product) => (
-                        <ProductCard key={product._id} edit={true} product={product} />
+                        <ProductCard key={product._id} edit={true} product={product} languageText={languageText} />
 
                     ))}
+                    {products.length <= 0 && (
+                        <div className="NoProductsContainer">
+                            <p><Icon icon="lucide:package-x" />{languageText.NoProducts}</p>
+                        </div>
+                    )}
                     {/* {productCard({ edit: true })}
                     {productCard({ edit: true })}
                     {productCard({ edit: true })}

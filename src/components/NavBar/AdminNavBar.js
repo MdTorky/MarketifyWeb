@@ -3,9 +3,13 @@ import logo from '../../images/logo3.png'
 import { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import './AdminNavBar.css'
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useLogout } from '../../hooks/useLogout';
 
 const AdminNavBar = ({ children }) => {
     const location = useLocation();
+    const { logout } = useLogout()
+
     const [activeButton, setActiveButton] = useState('');
     useEffect(() => {
         // Extract the pathname from the location object
@@ -25,7 +29,9 @@ const AdminNavBar = ({ children }) => {
             setActiveButton('');
         }
     }, [location.pathname]);
-
+    const handleLogout = () => {
+        logout()
+    }
 
     return (
         <>
@@ -42,6 +48,7 @@ const AdminNavBar = ({ children }) => {
                     <Link to="/adminManageProducts" className={`NavButton ${activeButton === 'adminManageProducts' ? 'active' : 'notActive'}`}><Icon icon="fluent-mdl2:product-variant" /><span>Manage Products</span></Link>
                     <Link to="/adminManageSoldProducts" className={`NavButton ${activeButton === 'adminManageSoldProducts' ? 'active' : 'notActive'}`}><Icon icon="mdi:package-variant-closed-check" /><span>Manage Sold Products</span></Link>
                     <Link to="/adminManageReports" className={`NavButton ${activeButton === 'adminManageReports' ? 'active' : 'notActive'}`}><Icon icon="fluent-mdl2:report-warning" /><span>Manage Reports</span></Link>
+                    <Link onClick={handleLogout} className="NavButton" ><Icon icon="solar:logout-broken" /><span>Logout</span></Link>
                     <div className="NavContentHover"></div>
                 </div>
             </div>
