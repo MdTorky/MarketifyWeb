@@ -10,7 +10,13 @@ import PurchaseForm from '../../components/PurhcaseForm/PurchaseForm';
 import { useItemsContext } from '../../hooks/useItemsContext'
 import Loader from '../../components/Loader/Loader'
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { useChat } from '../../hooks/useChat';
 import { Icon } from '@iconify/react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useChatState } from "../../context/ChatContext";
+import axios from 'axios';
+
 
 const Product = ({ api, languageText }) => {
     const { id } = useParams();
@@ -22,10 +28,26 @@ const Product = ({ api, languageText }) => {
 
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(true)
+    // const { user, selectedChat, setSelectedChat, chats, setChats } = useAuthContext()
     const { user } = useAuthContext()
 
-    const openChat = () => {
+    const [userOneError, setUserOneError] = useState(null);
+    const [userTwoError, setUserTwoError] = useState(null);
+    const { accessChat, chatError } = useChat(api, toast);
+
+    const {
+        setSelectedChat,
+        notification,
+        setNotification,
+        chats,
+        setChats,
+    } = useChatState();
+
+    const openChat = (userSeller) => {
+        setUserTwoError(userSeller)
         setChatOpen(true);
+        accessChat(userSeller.userID)
+        // fetchChats()
     };
 
     const closeChat = () => {
@@ -40,6 +62,29 @@ const Product = ({ api, languageText }) => {
         setPurchaseFormOpen(false);
     };
 
+
+    const fetchChats = async () => {
+        // console.log(user._id);
+        try {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            };
+
+            const { data } = await axios.get(`${api}/api/chat`, config);
+            setChats(data);
+        } catch (error) {
+            toast({
+                title: "Error Occured!",
+                description: "Failed to Load the chats",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom-left",
+            });
+        }
+    };
 
 
     useEffect(() => {
@@ -157,6 +202,7 @@ const Product = ({ api, languageText }) => {
     const recommendations = productData ? products.filter(product => productData.pCategory && productData.pCategory.length > 0 && product.pCategory.includes(productData.pCategory[0]) && product._id !== productData._id).slice(0, 6) : [];
 
 
+
     return (
         user && (
             <div className="Product">
@@ -220,7 +266,7 @@ const Product = ({ api, languageText }) => {
                             </div>
                             <div className="ProductPopRight">
                                 {productData?.pPrice ? <p className="ProductPrice">{productData?.pPrice}{languageText.RM}</p> : <p className="ProductPrice">Donation</p>}
-                                <button className="PopButton" onClick={openChat}>
+                                <button className="PopButton" onClick={() => openChat(productData)}>
                                     <span className="ProductToolTip" >{languageText.ChatNow}</span>
                                     <span><FontAwesomeIcon icon={faCommentDots} /></span>
                                 </button>
@@ -235,7 +281,7 @@ const Product = ({ api, languageText }) => {
                                 {/* <Link to="/" className="ProductPopButton"><FontAwesomeIcon icon={faMoneyBill} /></Link> */}
                             </div>
                         </div>
-                        {isChatOpen && <Chat onClose={closeChat} languageText={languageText} />}
+                        {isChatOpen && <Chat onClose={closeChat} languageText={languageText} userSeller={userTwoError} api={api} />}
                         {isPurchaseFormOpen && (
 
                             <PurchaseForm closePurchaseForm={closePurchaseForm} />

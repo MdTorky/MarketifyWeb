@@ -5,17 +5,21 @@ import App from './App';
 import { ItemsContextProvider } from './context/ItemContext';
 import { LanguageProvider } from './context/languageContext';
 import { AuthContextProvider } from './context/AuthContext';
+import ChatProvider from './context/ChatContext';
+// import MessagesProvider from './context/MessageProvider'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
       <LanguageProvider>
         <ItemsContextProvider>
-          <App />
+          <ChatProvider>
+            <App />
+          </ChatProvider>
         </ItemsContextProvider>
       </LanguageProvider>
     </AuthContextProvider>
-  </React.StrictMode>
+  </React.StrictMode >
 );
 
 // If you want to start measuring performance in your app, pass a function

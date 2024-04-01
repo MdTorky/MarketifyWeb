@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from 'react'
+import { createContext, useReducer, useEffect, useState } from 'react'
 
 export const AuthContext = createContext()
 
@@ -27,7 +27,10 @@ export const AuthContextProvider = ({ children }) => {
     }, [])
 
 
+
+
     return (
+        // <AuthContext.Provider value={{ ...state, dispatch, selectedChat, setSelectedChat, chats, setChats }}>
         <AuthContext.Provider value={{ ...state, dispatch }}>
             {children}
         </AuthContext.Provider>

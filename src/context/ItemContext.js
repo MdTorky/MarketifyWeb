@@ -41,7 +41,8 @@ export const itemsReducer = (state, action) => {
 export const ItemsContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(itemsReducer, {
         products: [],
-        users: []
+        users: [],
+        message: [],
     })
 
 
