@@ -229,3 +229,13 @@
     color: var(--text);
     text-transform: capitalize;
 }
+
+
+.EditUserImage {
+    width: 50%;
+    /* height: 200px; */
+    margin: 10px auto;
+    border: 3px double var(--bg);
+    border-radius: 100px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

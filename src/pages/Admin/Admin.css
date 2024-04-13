@@ -223,7 +223,7 @@
 
 .StatusButton {
     position: absolute;
-    top: 100%;
+    top: 90%;
     left: 0;
     right: 0;
     margin: auto;
@@ -248,7 +248,7 @@
 }
 
 .StatusButton1 {
-    left: -20% !important;
+    left: -60% !important;
 }
 
 .StatusButton2 {

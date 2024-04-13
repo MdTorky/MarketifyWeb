@@ -12,7 +12,6 @@ const Purchased = ({ languageText }) => {
     const [activeSoldFilter, setActiveSoldFilter] = useState('all');
     const [showReviewPopup, setShowReviewPopup] = useState(false); // Add this state
     const [paymentType, setPaymentType] = useState("Cash"); // Add this state
-    // const [status, setStatus] = useState(''); // Add this state
 
     const handleFilterClick = (filter) => {
         setActiveFilter(filter);

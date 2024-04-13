@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useStatus } from 'react';
 import { Icon } from '@iconify-icon/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faStar, faCommentDots, faMoneyBill, faEnvelope, faPhone, faAddressBook, faLocation, faLocationPin, faLocationDot, faClose } from '@fortawesome/free-solid-svg-icons';
@@ -8,61 +8,53 @@ import { useItemsContext } from '../../hooks/useItemsContext'
 
 
 
-const UserError = ({ CloseErrorForm, userOne, api }) => {
+const Pending = ({ CloseErrorForm, userOne, api, user }) => {
     const { users = [], dispatch } = useItemsContext()
 
 
-    const handleUpdate = async (e) => {
-        e.preventDefault();
+    const handleNotification = async () => {
 
-        try {
 
-            const response = await fetch(`${api}/api/user/${userOne._id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    userError: error
-                }),
-            });
-
-            if (!response.ok) {
-                console.error(`Error updating form status. Status: ${response.status}, ${response.statusText}`);
-                return;
-            }
-
-            const updatedData = await response.json();
-            dispatch({
-                type: 'UPDATE_ITEM',
-                collection: 'users',
-                payload: { id: userOne._id, changes: updatedData },
-            });
-
-            {
-                toast.success("Error Added Successfully", {
-                    position: "bottom-center",
-                    autoClose: 3000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                });
-            }
-            CloseErrorForm()
-
-        } catch (error) {
-            console.error('An error occurred while updating form status:', error);
+        const item = {
+            type: 'admin',
+            sender: user.userId,
+            receiver: userOne._id,
+            content: error,
+            status: 'unseen'
         }
-    };
+
+        const response = await fetch(`${api}/api/notification`, {
+            method: "POST",
+            body: JSON.stringify(item),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+
+            }
+        })
+        const json = await response.json()
+
+        if (!response.ok) {
+            setError(json.error);
+        } else {
+            setError(null);
+            dispatch({
+                type: 'CREATE_FORM',
+                collection: "notifications",
+                payload: json
+            });
+        }
+    }
+
+
+
+
 
     const [error, setError] = useState('')
     return (
         <div className="PurchaseFormPopup">
             <h3>Enter the Reason for Not Approving </h3>
-            <form className='Form' onSubmit={handleUpdate}>
+            <form className='Form' onSubmit={handleNotification}>
 
 
                 <div className="InputField">
@@ -97,4 +89,4 @@ const UserError = ({ CloseErrorForm, userOne, api }) => {
     );
 }
 
-export default UserError;
+export default Pending;

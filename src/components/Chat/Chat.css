@@ -119,7 +119,10 @@
 
 .ChatInput .ChatButton:hover {
     transform: scale(1.4);
-    color: var(--bg2)
+    color: var(--bg2);
+    background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
 .ChatTip {
@@ -128,7 +131,7 @@
 
 .PopButton:hover .ChatTip,
 .PopButton:hover .ChatTip::before {
-    background: var(--theme);
+    background: var(--theme) !important;
 }
 
 

@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Icon } from '@iconify-icon/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCommentDots, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLogout } from '../../hooks/useLogout';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useItemsContext } from '../../hooks/useItemsContext'
@@ -29,6 +29,8 @@ const Profile = ({ languageText, api }) => {
     const [updating, setUpdating] = useState(false)
     const [error, setError] = useState(null);
     const [submitting, setSubmitting] = useState(false)
+    const [userData, setUserData] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     const handleUserImgChange = (e) => {
         const file = e.target.files[0];
@@ -62,6 +64,45 @@ const Profile = ({ languageText, api }) => {
     }
 
 
+
+
+
+    useEffect(() => {
+        // Fetch form data based on type and formId
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`${api}/api/user/${user.userId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                });
+                if (!response.ok) {
+                    console.error(`Error fetching form data. Status: ${response.status}, ${response.statusText}`);
+                    return;
+                }
+
+                const data = await response.json();
+                dispatch({
+                    type: 'GET_ITEM',
+                    collection: "users",
+                    payload: data,
+                });
+                setUserData(data);
+
+            } catch (error) {
+                console.error('An error occurred while fetching form data:', error);
+            } finally {
+                // Set loading to false once the data is fetched (success or error)
+                setLoading(false);
+            }
+        };
+
+        if (user) {
+            fetchData();
+        }
+    }, [api, dispatch, user, userData]);
+
+
     const ReviewCard = () => {
 
         return (
@@ -75,7 +116,7 @@ const Profile = ({ languageText, api }) => {
                 </div>
                 <div className="ReviewCardRight">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti saepe fuga hic, reprehenderit pariatur optio eos ducimus molestiae exercitationem est.</p>
-                    <div class="SellerRatings">
+                    <div className="SellerRatings">
                         <FontAwesomeIcon icon={faStar} className="Rating" />
                         <FontAwesomeIcon icon={faStar} className="Rating" />
                         <FontAwesomeIcon icon={faStar} className="Rating" />
@@ -177,6 +218,8 @@ const Profile = ({ languageText, api }) => {
             console.error('An error occurred while updating form status:', error);
         }
     };
+
+
 
 
 
@@ -303,58 +346,65 @@ const Profile = ({ languageText, api }) => {
         return (
 
             <div className="Profile">
-                <div className="ProfileBack">
-                    <div className="ProfileLeft">
-                        <div className="ProfileImgContainer">
-                            <img src={user.userImage} alt="" />
-                            <div className="ProfileImgText">
-                                <h2>{user.userFname}</h2>
-                                <Link className="PopButton ProductBuyButton">
-                                    <span className="ProductToolTip ProductTip" >{languageText.Edit}</span>
-                                    <span><Icon icon="mingcute:user-edit-fill" /></span>
-                                </Link>
-                                {/* <button className="PopButton ProductBuyButton" onClick={handleLogout}>
+                {loading ? (
+                    <div className="Loader">
+                        <Loader />
+                        <p className="LoaderText">{languageText.Loading}</p>
+                    </div>
+                ) : (
+                    <div className="ProfileBack">
+                        <div className="ProfileLeft">
+                            <div className="ProfileImgContainer">
+                                <img src={userData?.userImage} alt="" />
+                                <div className="ProfileImgText">
+                                    <h2>{userData?.userFname}</h2>
+                                    <Link to="/editProfile" className="PopButton ProductBuyButton">
+                                        <span className="ProductToolTip ProductTip" >{languageText.Edit}</span>
+                                        <span><Icon icon="mingcute:user-edit-fill" /></span>
+                                    </Link>
+                                    {/* <button className="PopButton ProductBuyButton" onClick={handleLogout}>
                                     <span className="ProductToolTip ProductTip" >{languageText.Logout}</span>
                                     <span><Icon icon="solar:logout-broken" /></span>
                                 </button> */}
-                                {/* <Link to="/" className='EditButton'><Icon icon="mingcute:user-edit-fill" /> </Link> */}
-                                {/* <button onClick={handleLogout} className='EditButton'><Icon icon="solar:logout-broken" /> </button> */}
+                                    {/* <Link to="/" className='EditButton'><Icon icon="mingcute:user-edit-fill" /> </Link> */}
+                                    {/* <button onClick={handleLogout} className='EditButton'><Icon icon="solar:logout-broken" /> </button> */}
+                                </div>
+                            </div>
+                            <div className="ProfileInfo">
+                                <div className="ProfileInfoField">
+                                    <p><Icon icon="line-md:email" /> {languageText.Email}: </p>
+                                    <p className="ProfileInfoAddress">{userData?.userEmail}</p>
+                                </div>
+                                <div className="ProfileInfoField">
+                                    <p><Icon icon="line-md:phone" /> {languageText.Phone}: </p>
+                                    <p className="">{userData?.userPhoneNo}</p>
+
+                                </div>
+                                <div className="ProfileInfoField">
+                                    <p><Icon icon="mdi:passport" /> {languageText.Passport}: </p>
+                                    <p className="">{userData?.userPassport}</p>
+
+                                </div>
+                                <div className="ProfileInfoField">
+                                    <p><Icon icon="line-md:my-location" /> {languageText.Address}: </p>
+                                    <p className="ProfileInfoAddress">{userData?.userAddress}</p>
+
+                                </div>
                             </div>
                         </div>
-                        <div className="ProfileInfo">
-                            <div className="ProfileInfoField">
-                                <p><Icon icon="line-md:email" /> {languageText.Email}: </p>
-                                <p className="ProfileInfoAddress">{user.userEmail}</p>
-                            </div>
-                            <div className="ProfileInfoField">
-                                <p><Icon icon="line-md:phone" /> {languageText.Phone}: </p>
-                                <p className="">{user.userPhoneNo}</p>
+                        <div className="ProfileRight">
+                            <h1>{languageText.Reviews}</h1>
 
-                            </div>
-                            <div className="ProfileInfoField">
-                                <p><Icon icon="mdi:passport" /> {languageText.Passport}: </p>
-                                <p className="">{user.userPassport}</p>
+                            {ReviewCard()}
+                            {ReviewCard()}
 
-                            </div>
-                            <div className="ProfileInfoField">
-                                <p><Icon icon="line-md:my-location" /> {languageText.Address}: </p>
-                                <p className="ProfileInfoAddress">{user.userAddress}</p>
-
-                            </div>
                         </div>
+
+                        {userData?.userFine > 0 && (
+                            <button className='PayFineButton'><Icon icon="fa6-regular:money-bill-1" />{languageText.PayFine}: {userData?.userFine} {languageText.RM}</button>
+                        )}
                     </div>
-                    <div className="ProfileRight">
-                        <h1>{languageText.Reviews}</h1>
-
-                        {ReviewCard()}
-                        {ReviewCard()}
-
-                    </div>
-
-                    {user.userFine && (
-                        <button className='PayFineButton'><Icon icon="fa6-regular:money-bill-1" />{languageText.PayFine}: {user.userFine} {languageText.RM}</button>
-                    )}
-                </div>
+                )}
             </div>
         );
     }

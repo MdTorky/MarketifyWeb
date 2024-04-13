@@ -1,4 +1,3 @@
-// Chat.js
 import { faPaperPlane, faPlay, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
@@ -22,7 +21,7 @@ const Chat = ({ onClose, languageText, userSeller, api }) => {
 
 
     const [sellerData, setSellerData] = useState('')
-    const { users = [], message = [], dispatch } = useItemsContext()
+    const { users = [], message = [], notifications = [], dispatch } = useItemsContext()
     const { user } = useAuthContext()
     const [messages, setMessages] = useState([])
     const [loading, setLoading] = useState(false)
@@ -31,25 +30,26 @@ const Chat = ({ onClose, languageText, userSeller, api }) => {
     const [socketConnected, setSocketConnected] = useState(false);
     const [typing, setTyping] = useState(false)
     const [isTyping, setIsTyping] = useState(false)
-
-    const [fetchAgain, setFetchAgain] = useState(false);
-
-
+    const [otherUser, setOtherUser] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        socket = io(api);
-        socket.emit("setup", user);
-        socket.on("connected", () => setSocketConnected(true));
-        socket.on("typing", () => setIsTyping(true));
-        socket.on("stop typing", () => setIsTyping(false));
-    }, [])
+        if (!selectedChat) return;
+
+        const otherUser = selectedChat.users.find(u => u._id !== user.userId);
+        setOtherUser(otherUser);
+        console.log(otherUser)
+    }, [selectedChat, user]);
+
 
 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${api}/api/user/${userSeller.userID}`);
+                const response = await fetch(`${api}/api/user/${userSeller}`);
+                // const response = await fetch(`${api}/api/user/${userSeller.userID}`) || await fetch(`${api}/api/user/${userSeller._id}`);
+
                 if (!response.ok) {
                     console.error(`Error fetching suggestions. Status: ${response.status}, ${response.statusText}`);
                     return;
@@ -103,8 +103,13 @@ const Chat = ({ onClose, languageText, userSeller, api }) => {
     }
 
 
+    useEffect(() => {
+        fetchMessages();
 
-    // console.log(selectedChat)
+        selectedChatCompare = selectedChat
+        // }, [selectedChat, api, dispatch, sellerData])
+    }, [selectedChat])
+
     const sendMessage = async (event) => {
         if (event.key === "Enter" && newMessage) {
             socket.emit("stop typing", selectedChat._id)
@@ -125,9 +130,76 @@ const Chat = ({ onClose, languageText, userSeller, api }) => {
                 },
                     config
                 );
-                // console.log(data)
+
+
                 socket.emit('new message', data)
                 setMessages([...messages, data])
+
+
+
+
+                try {
+                    const response = await fetch(`${api}/api/notification/${user.userId}/${otherUser._id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${user.token}`
+
+                        }
+                    });
+
+                    if (!response.ok) {
+                        console.error(`Error deleting suggestion. Status: ${response.status}, ${response.statusText}`);
+                        return;
+                    }
+                    if (response.ok) {
+                        const json = await response.json();
+                        dispatch({
+                            type: 'DELETE_ITEM',
+                            collection: "notifications",
+                            payload: json
+                        });
+                    }
+
+                } catch (error) {
+                    console.error('An error occurred while deleting data:', error);
+                }
+
+
+
+
+
+                const item = {
+                    type: 'message',
+                    sender: user.userId,
+                    receiver: otherUser._id,
+                    content: newMessage,
+                    status: 'unseen'
+                }
+
+                const response = await fetch(`${api}/api/notification`, {
+                    method: "POST",
+                    body: JSON.stringify(item),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${user.token}`
+
+                    }
+                })
+                const json = await response.json()
+
+                if (!response.ok) {
+                    setError(json.error);
+                } else {
+                    setError(null);
+                    dispatch({
+                        type: 'CREATE_FORM',
+                        collection: "notifications",
+                        payload: json
+                    });
+                }
+
+
             } catch (error) {
                 toast({
                     title: "Error Occurred!",
@@ -139,27 +211,31 @@ const Chat = ({ onClose, languageText, userSeller, api }) => {
                 });
             }
         }
+
     }
 
 
+
     useEffect(() => {
-        fetchMessages();
+        socket = io(api);
+        socket.emit("setup", user);
+        socket.on("connected", () => setSocketConnected(true));
+        socket.on("typing", () => setIsTyping(true));
+        socket.on("stop typing", () => setIsTyping(false));
+    }, [])
 
-        selectedChatCompare = selectedChat
-    }, [selectedChat])
 
+
+
+
+    // console.log(notification, "-------------------")
 
     useEffect(() => {
         socket.on("message received", (newMessageReceived) => {
             if (
-                !selectedChatCompare || // if chat is not selected or doesn't match current chat
+                !selectedChatCompare ||
                 selectedChatCompare._id !== newMessageReceived.chat._id
             ) {
-                if (!notification.includes(newMessageReceived)) {
-                    setNotification([newMessageReceived, ...notification]);
-                    setFetchAgain(!fetchAgain)
-                }
-
             } else {
                 setMessages([...messages, newMessageReceived]);
             }
@@ -194,7 +270,7 @@ const Chat = ({ onClose, languageText, userSeller, api }) => {
         <div className="Chat">
             <div className="ChatHeader">
                 <div className="ChatHeaderLeft">
-                    <img src={sellerData.userImage} alt="" />
+                    {<img src={sellerData.userImage} alt="" />}
                     <span>{sellerData.userFname}</span>
                 </div>
                 <button onClick={onClose}>
@@ -210,18 +286,6 @@ const Chat = ({ onClose, languageText, userSeller, api }) => {
                 <div className="ChatBody">
                     <ChatBody messages={messages} />
 
-                    {/* {messages.map((message) => (
-                            <div key={message.id} className={`ChatMessage ${message.sender}`}>
-                                <div className="ChatImg">
-                                    {message.sender === 'seller' && <img src={sellerData.userImage} alt="Seller" className="MessageImage" />}
-                                    {message.sender === 'seller' ? <p className="MessageTimestamp">{message.timestamp}</p> : <p className="MessageTimestampUser">{message.timestamp}</p>}
-                                </div>
-                                <div className={`MessageContent ${message.sender === 'seller' ? '' : 'UserContent'}`}>
-                                <p className="MessageText">{message.text}</p>
-                                {message.sender === 'seller' && <p className="MessageTriangle"><FontAwesomeIcon icon={faPlay} /></p>}
-                                </div>
-                            </div>
-                        ))} */}
                 </div>
             )}
             {isTyping ? (
@@ -239,7 +303,6 @@ const Chat = ({ onClose, languageText, userSeller, api }) => {
                     type="text"
                     placeholder={languageText.TypeSomething}
                     value={newMessage}
-                    // onChange={(e) => setNewMessage(e.target.value)}
                     onChange={typingHandler}
 
                 />

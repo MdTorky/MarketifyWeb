@@ -8,18 +8,25 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import Loader from "../../components/Loader/Loader";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCommentDots } from '@fortawesome/free-solid-svg-icons';
+import { useChat } from '../../hooks/useChat';
+import Chat from '../../components/Chat/Chat';
+import Pending from '../../components/UserError/Pending';
 const ManageAccounts = ({ api, languageText }) => {
 
     const [isFineFormOpen, setFineFormOpen] = useState(false);
     const [isUserErrorFormOpen, setErrorFormOpen] = useState(false);
+    const [isPendingFormOpen, setPendingFormOpen] = useState(false);
     const { users = [], dispatch } = useItemsContext()
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true)
     const [updating, setUpdating] = useState(false)
-    // const navigate = useNavigate();
     const { user } = useAuthContext()
     const [userOneError, setUserOneError] = useState(null);
     const [searchInput, setSearchInput] = useState('');
+    const { accessChat, chatError } = useChat(api, toast);
+    const [isChatOpen, setChatOpen] = useState(false);
 
     const openFineForm = (userOne) => {
         setUserOneError(userOne);
@@ -37,6 +44,29 @@ const ManageAccounts = ({ api, languageText }) => {
 
     const CloseErrorForm = () => {
         setErrorFormOpen(false);
+    };
+
+
+    const OpenPendingForm = (userOne) => {
+        setUserOneError(userOne);
+        setPendingFormOpen(true);
+    }
+
+    const ClosePendingForm = () => {
+        setPendingFormOpen(false);
+    };
+
+    const openChat = (userSeller) => {
+        setUserOneError(userSeller._id)
+        setChatOpen(true);
+        accessChat(userSeller._id)
+        // fetchChats()
+    };
+
+    const closeChat = () => {
+        setChatOpen(false);
+        setUserOneError(null)
+
     };
 
 
@@ -70,7 +100,7 @@ const ManageAccounts = ({ api, languageText }) => {
         if (user) {
             fetchItems();
         }
-    }, [api, dispatch]);
+    }, [api, dispatch, user, isFineFormOpen]);
 
 
 
@@ -145,7 +175,7 @@ const ManageAccounts = ({ api, languageText }) => {
             let userStatus = null;
             if (status === "Pending") {
                 userStatus = "Pending"
-                openErrorForm(userOne)
+                OpenPendingForm(userOne)
             }
             else if (status === "Activate") {
                 userStatus = "Active"
@@ -216,12 +246,25 @@ const ManageAccounts = ({ api, languageText }) => {
             userPhoneNo.toLowerCase().includes(searchTerm)
         );
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
     const TableData = ({ userOne }) => {
         return (
             <tr className="TableData">
                 {/* <td><button className="DeleteButton"><Icon icon="mdi:delete-circle" /></button>1</td> */}
                 {/* <td>Data</td> */}
-                <td>{userOne.userFname}</td>
+                <td style={{ whiteSpace: 'nowrap', fontSize: "0.8em" }}>{userOne.userFname}</td>
                 <td className='UserEmail'>{userOne.userEmail}</td>
                 <td>{userOne.userPhoneNo}</td>
                 <td className="StatusGreen">
@@ -229,30 +272,49 @@ const ManageAccounts = ({ api, languageText }) => {
                     {userOne.userPassportImage && <button className="StatusButton" onClick={() => { window.open(userOne.userPassportImage, "_blank") }}>View Proof</button>}
                 </td>
                 <td>{userOne.userAddress}</td>
-                <td className={`${userOne.userStatus === "Active" ? "StatusGreen" : 'StatusRed'}`}>
-                    {userOne.userStatus}
-                    {/* <button className="StatusButton" oncClick={handleStatusUpdate({ user })}>{userOne.userStatus === "NotActive" || userOne.userStatus === "Waiting" ? "Activate" : "Deactivate"}</button> */}
-                    {(userOne.userStatus === "Active" || userOne.userStatus === "Inactive") && <button className="StatusButton" onClick={(e) => handleStatusUpdate({ e, userOne: userOne })}>
-                        {userOne.userStatus === "Inactive" || userOne.userStatus === "Waiting" ? "Activate" : "Deactivate"}
-                    </button>}
-                    {userOne.userStatus === "Pending" && <button className="StatusButton" onClick={(e) => handleStatusUpdate({ e, userOne: userOne })}>
-                        {userOne.userStatus === "Pending" && "Send Message"}
-                    </button>}
-                    {userOne.userStatus === "Waiting" &&
-                        <div className="StatusButtons">
-                            <button className="StatusButton StatusButton1" onClick={(e) => handleStatusUpdateSecond({ e, userOne: userOne, status: "Activate" })}>
-                                Activate
-                            </button>
-                            <button className="StatusButton StatusButton2" onClick={(e) => handleStatusUpdateSecond({ e, userOne: userOne, status: "Pending" })}>
-                                Pending
-                            </button>
-                        </div>
+                {updating ? (<td>HELLO</td>) : (
+                    <td className={`${userOne.userStatus === "Active" ? "StatusGreen" : 'StatusRed'}`}>
+                        {userOne.userStatus}
+                        {/* <button className="StatusButton" oncClick={handleStatusUpdate({ user })}>{userOne.userStatus === "NotActive" || userOne.userStatus === "Waiting" ? "Activate" : "Deactivate"}</button> */}
+                        {(userOne.userStatus === "Active" || userOne.userStatus === "Inactive") && <button className="StatusButton" onClick={(e) => handleStatusUpdate({ e, userOne: userOne })}>
+                            {userOne.userStatus === "Inactive" || userOne.userStatus === "Waiting" ? "Activate" : "Deactivate"}
+                        </button>}
+                        {userOne.userStatus === "Waiting" &&
+                            <div className="StatusButtons">
+                                <button className="StatusButton StatusButton1" onClick={(e) => handleStatusUpdateSecond({ e, userOne: userOne, status: "Activate" })}>
+                                    Activate
+                                </button>
+                                <button className="StatusButton StatusButton2"
+                                    onClick={(e) => handleStatusUpdateSecond({ e, userOne: userOne, status: "Pending" })}
+                                // onClick={() => OpenPendingForm(userOne)}
+                                >
+                                    Pending
+                                </button>
+                            </div>
 
 
+                        }
+                    </td>
+                )}
+                {/* <td>{userOne.userFine ? userOne.userFine : "No Fine"}</td> */}
+
+                <td>
+                    {userOne.userFine
+                        ? (
+                            <span>
+                                {userOne.userFine} RM
+                                <button className='TableButton' onClick={() => openFineForm(userOne)}>Change</button>
+                            </span>
+                        )
+                        : <button className='TableButton' onClick={() => openFineForm(userOne)}>Add</button>
                     }
                 </td>
-
-                <td>{userOne.userFine ? userOne.userFine + " RM" : <button className='TableButton' onClick={() => openFineForm(userOne)}>Add</button>}</td>
+                <td>
+                    <button className="TableButton" onClick={() => openChat(userOne)}>
+                        <span className="ProductToolTip" >{languageText.ChatNow}</span>
+                        <span><FontAwesomeIcon icon={faCommentDots} /></span>
+                    </button>
+                </td>
             </tr>
         )
     }
@@ -306,7 +368,8 @@ const ManageAccounts = ({ api, languageText }) => {
                                 <th>Passport</th>
                                 <th>Address</th>
                                 <th>Status</th>
-                                <th>Fine</th>
+                                <th>Add Fine</th>
+                                <th>Chat</th>
                             </tr>
                             {/* {users.map((userOne) => (
                                 <TableData userOne={userOne} />
@@ -323,21 +386,17 @@ const ManageAccounts = ({ api, languageText }) => {
 
 
                             ))}
-                            {/* {isUserErrorFormOpen && (
-
-                                <UserError CloseErrorForm={CloseErrorForm} userOne={userOne} />
-                            )} */}
                             {isFineFormOpen && (
 
                                 <Fine CloseFineForm={CloseFineForm} userOne={userOneError} api={api} />
                             )}
-                            {/* {isUserErrorFormOpen && (
-                                // <UserError CloseErrorForm={CloseErrorForm} api={api} />
-                                
-                            )} */}
                             {isUserErrorFormOpen && (
                                 <UserError CloseErrorForm={CloseErrorForm} userOne={userOneError} api={api} />
                             )}
+                            {isPendingFormOpen && (
+                                <Pending CloseErrorForm={ClosePendingForm} userOne={userOneError} api={api} user={user} />
+                            )}
+                            {isChatOpen && <Chat onClose={closeChat} languageText={languageText} userSeller={userOneError} api={api} />}
 
                         </table>
                     )

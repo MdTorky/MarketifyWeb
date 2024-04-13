@@ -50,29 +50,29 @@ const Home = ({ languageText }) => {
             <div className="Banners">
 
                 <div className="Banner1">
-                    <div class="banner-box">
+                    <div className="banner-box">
                         <h4>{languageText.ClothingDescription}</h4>
                         <h2>{languageText.Clothing}</h2>
                     </div>
 
-                    <div class="banner-box banner-box2">
+                    <div className="banner-box banner-box2">
                         <h4>{languageText.AppliancesDescription}</h4>
                         <h2>{languageText.Appliances}</h2>
                     </div>
                 </div>
 
                 <div className="Banner2">
-                    <div class="banner-box">
+                    <div className="banner-box">
                         <h4>{languageText.StudyMaterialsDescription}</h4>
                         <h2>{languageText.StudyMaterials}</h2>
                     </div>
 
-                    <div class="banner-box banner-box2">
+                    <div className="banner-box banner-box2">
                         <h4>{languageText.FoodDescription}</h4>
                         <h2>{languageText.Food}</h2>
                     </div>
 
-                    <div class="banner-box banner-box3">
+                    <div className="banner-box banner-box3">
                         <h4>{languageText.VehiclesDescription}</h4>
                         <h2>{languageText.Vehicles}</h2>
                     </div>

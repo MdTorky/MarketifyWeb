@@ -50,7 +50,8 @@ const ProductCard = ({ edit, product, languageText }) => {
                     </g>
                 </svg>
 
-                {product.pPrice ? <div className="ProductPrice">{product.pPrice} RM</div> : <div className="ProductPrice">{languageText.Donations}</div>}
+                {product.pPrice != 0 && product.pType === "Sell" && (<div className="ProductPrice">{product.pPrice} RM</div>)}
+                {product.pType === "Donations" && (<div className="ProductPrice">{languageText.Donation}</div>)}
             </div>
             {/* <label className="favorite">
                 <input checked="" type="checkbox" />
@@ -125,7 +126,7 @@ const ProductCard = ({ edit, product, languageText }) => {
                     <button className="BuyButton button" onClick={handleTrashButtonClick}>
                         <FontAwesomeIcon icon={faTrash} />
                     </button>
-                    <Link className="BuyButton button EditButton" to="/"><FontAwesomeIcon icon={faPenToSquare} /></Link>
+                    <Link className="BuyButton button EditButton" to={`/editProduct/${product._id}`}><FontAwesomeIcon icon={faPenToSquare} /></Link>
                 </div>
             ) : (
                 // <div className="ProductButton">

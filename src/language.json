@@ -4,6 +4,7 @@
     "Submitting": "Submitting",
     "Registering": "Registering",
     "Updating": "Updating",
+    "Clearing": "Clearing",
     "LoggingIn": "Logging In",
     "Profile": "Profile",
     "YouMustBeLoggedIn": "You Must Be Logged In",
@@ -42,10 +43,13 @@
     "FullName": "Full Name",
     "Email": "Email",
     "Phone": "Phone",
+    "PhoneNo": "Phone No",
     "Passport": "Passport",
     "Address": "Address",
     "ProfileImage": "Profile Image",
     "PassportImage": "Passport Image",
+    "ChangeToSell": "Change to Sell",
+    "ChangeToDonation": "Change to Donation",
 
     "CharRegex": "It has to be at least 8 characters long",
     "LetterRegex": "Contains both upper and lowercase letters",
@@ -156,12 +160,21 @@
     "Reviews": "Reviews",
 
     "ProfileForm": "Profile Form",
+    "EditProfile": "Edit Profile",
+    "EditProduct": "Edit Product",
     "PayFine": "Pay Fine",
     "InformationAddedSuccessfully": "Information Added Successfully",
+    "ProfileUpdatedSuccessfully": "Profile Updated Successfully",
+    "ProductChangedSuccessfullyTo": "Product Changed Successfully to",
+    "ProductUpdateSuccessfully": "Product Updated Successfully",
     "UnderEvaluation": "Your account is still under evaluation",
     "ValidAccount": "In order to make sure our community holds up a standard, we must check the the information the user provided are valid",
     "Deactivated": "Your account has been deactivated",
-    "DeactivatedDescription": "Review the reason down below and contact support"
+    "DeactivatedDescription": "Review the reason down below and contact support",
+
+    "NotificationWall": "Notification Wall",
+    "NoNotifications": "No Notifications",
+    "Clear": "Clear"
   },
   "ar": {
     "BrowseProducts": "تصفح المنتجات"

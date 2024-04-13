@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import SignUp from './pages/SignUp/SignUp';
 import SignIn from './pages/SignUp/SignIn';
@@ -16,6 +17,7 @@ import MyProducts from './pages/Products/MyProducts';
 import Sell from './pages/Sell/Sell';
 import Donate from './pages/Sell/Donate';
 import Profile from './pages/Profile/Profile';
+import axios from 'axios';
 
 import AdminNavBar from './components/NavBar/AdminNavBar';
 import ManageAccounts from './pages/Admin/ManageAccounts'
@@ -26,11 +28,15 @@ import { useLanguage } from './context/languageContext';
 import languageData from './language.json';
 import { useAuthContext } from './hooks/useAuthContext';
 import ResetPassword from './pages/SignUp/ResetPassword';
+import { useChatState } from "./context/ChatContext";
+import EditProfile from './pages/Profile/EditProfile';
+import EditProduct from './pages/Products/EditProduct';
 
 
 
 function App() {
-
+  const [fetchAgain, setFetchAgain] = useState(false);
+  const [loggedUser, setLoggedUser] = useState();
   const { user } = useAuthContext()
   const api = process.env.REACT_APP_API_KEY;
   // const api = "http://localhost:4000";
@@ -38,6 +44,23 @@ function App() {
 
   const { isRTL, language } = useLanguage();
   const languageText = languageData[language];
+  const {
+    setSelectedChat,
+    notification,
+    setNotification,
+    chats,
+    setChats,
+  } = useChatState();
+
+
+
+
+
+
+
+
+
+
 
 
   return (
@@ -75,16 +98,18 @@ function App() {
 
 
 
-          <Route path="/" element={user ? <NavBar><Footer><Home languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
-          {/* <Route path="/browse" element={user ? <NavBar><Footer><Browse api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
-          {/* <Route path="/product/:id" element={user ? <NavBar><Footer><Product api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
+          <Route path="/" element={user ? <NavBar api={api}><Footer><Home languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/editProfile" element={user ? <NavBar api={api}><Footer><EditProfile api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/editProduct/:id" element={user ? <NavBar api={api}><Footer><EditProduct api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
+          {/* <Route path="/browse" element={user ? <NavBar api={api}><Footer><Browse api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
+          {/* <Route path="/product/:id" element={user ? <NavBar api={api}><Footer><Product api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
 
           <Route path="/browse" element={
             !user ? (<Navigate to='/SignIn' />
             ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" || user.userStatus === "Inactive" ? (
               <Navigate to='/profile' />
             ) : (
-              <NavBar><Footer><Browse api={api} languageText={languageText} /></Footer></NavBar>
+              <NavBar api={api}><Footer><Browse api={api} languageText={languageText} /></Footer></NavBar>
             )
           } />
           <Route path="/product/:id" element={
@@ -92,7 +117,7 @@ function App() {
             ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (
               <Navigate to='/profile' />
             ) : (
-              <NavBar><Footer><Product api={api} languageText={languageText} /></Footer></NavBar>
+              <NavBar api={api}><Footer><Product api={api} languageText={languageText} fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} /></Footer></NavBar>
             )
           } />
 
@@ -101,7 +126,7 @@ function App() {
             ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (
               <Navigate to='/profile' />
             ) : (
-              <NavBar><Footer><Purchased api={api} languageText={languageText} /></Footer></NavBar>
+              <NavBar api={api}><Footer><Purchased api={api} languageText={languageText} /></Footer></NavBar>
             )
           } />
 
@@ -111,7 +136,7 @@ function App() {
             ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (
               <Navigate to='/profile' />
             ) : (
-              <NavBar><Footer><MyProducts api={api} languageText={languageText} /></Footer></NavBar>
+              <NavBar api={api}><Footer><MyProducts api={api} languageText={languageText} /></Footer></NavBar>
             )
           } />
 
@@ -120,7 +145,7 @@ function App() {
             ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (
               <Navigate to='/profile' />
             ) : (
-              <NavBar><Footer><Payment api={api} languageText={languageText} /></Footer></NavBar>
+              <NavBar api={api}><Footer><Payment api={api} languageText={languageText} /></Footer></NavBar>
             )
           } />
           <Route path="/sell" element={
@@ -128,7 +153,7 @@ function App() {
             ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (
               <Navigate to='/profile' />
             ) : (
-              <NavBar><Footer><Sell api={api} languageText={languageText} /></Footer></NavBar>
+              <NavBar api={api}><Footer><Sell api={api} languageText={languageText} /></Footer></NavBar>
             )
           } />
           <Route path="/donate" element={
@@ -136,7 +161,7 @@ function App() {
             ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (
               <Navigate to='/profile' />
             ) : (
-              <NavBar><Footer><Donate api={api} languageText={languageText} /></Footer></NavBar>
+              <NavBar api={api}><Footer><Donate api={api} languageText={languageText} /></Footer></NavBar>
             )
           } />
           {/* <Route path="/payment" element={
@@ -144,16 +169,16 @@ function App() {
             ) : user.userStatus === "Pending" ? (
               <Navigate to='/profile' />
             ) : (
-              <NavBar><Footer><Payment api={api} languageText={languageText} /></Footer></NavBar>
+              <NavBar api={api}><Footer><Payment api={api} languageText={languageText} /></Footer></NavBar>
             )
           } /> */}
 
-          {/* <Route path="/purchased" element={user ? <NavBar><Footer><Purchased api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
-          {/* <Route path="/myProducts" element={user ? <NavBar><Footer><MyProducts api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
-          {/* <Route path="/payment" element={user ? <NavBar><Footer><Payment api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
-          {/* <Route path="/sell" element={user ? <NavBar><Footer><Sell api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
-          {/* <Route path="/donate" element={user ? <NavBar><Footer><Donate api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
-          <Route path="/profile" element={user ? <NavBar><Footer><Profile api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
+          {/* <Route path="/purchased" element={user ? <NavBar api={api}><Footer><Purchased api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
+          {/* <Route path="/myProducts" element={user ? <NavBar api={api}><Footer><MyProducts api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
+          {/* <Route path="/payment" element={user ? <NavBar api={api}><Footer><Payment api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
+          {/* <Route path="/sell" element={user ? <NavBar api={api}><Footer><Sell api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
+          {/* <Route path="/donate" element={user ? <NavBar api={api}><Footer><Donate api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
+          <Route path="/profile" element={user ? <NavBar api={api}><Footer><Profile api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
 
 
 

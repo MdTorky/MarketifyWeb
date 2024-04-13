@@ -16,13 +16,13 @@ const Footer = ({ children }) => {
             <div className="Footer">
 
                 <div className="FooterItems">
-                    <div class="Footers">
+                    <div className="Footers">
                         <img src={logo} alt="" />
                     </div>
                     <div className="FooterColumn">
                         <div className="FooterItems">
 
-                            <div class="Footers">
+                            <div className="Footers">
                                 <h4>{languageText.About}</h4>
 
                                 <Link to="FAQ.php" className='FooterLinks'>{languageText.FAQ}</Link>
@@ -31,7 +31,7 @@ const Footer = ({ children }) => {
                                 <Link to="terms.html" className='FooterLinks' >{languageText.TermsConditions}</Link>
 
                             </div>
-                            <div class="Footers">
+                            <div className="Footers">
                                 <h4>{languageText.Menus}</h4>
 
                                 <Link to="/" className='FooterLinks'>{languageText.Home}</Link>

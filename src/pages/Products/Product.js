@@ -18,7 +18,7 @@ import { useChatState } from "../../context/ChatContext";
 import axios from 'axios';
 
 
-const Product = ({ api, languageText }) => {
+const Product = ({ api, languageText, setFetchAgain, fetchAgain }) => {
     const { id } = useParams();
     const { products = [], dispatch } = useItemsContext();
     const [productData, setProductData] = useState(null);
@@ -31,7 +31,7 @@ const Product = ({ api, languageText }) => {
     // const { user, selectedChat, setSelectedChat, chats, setChats } = useAuthContext()
     const { user } = useAuthContext()
 
-    const [userOneError, setUserOneError] = useState(null);
+
     const [userTwoError, setUserTwoError] = useState(null);
     const { accessChat, chatError } = useChat(api, toast);
 
@@ -46,7 +46,7 @@ const Product = ({ api, languageText }) => {
     const openChat = (userSeller) => {
         setUserTwoError(userSeller)
         setChatOpen(true);
-        accessChat(userSeller.userID)
+        accessChat(userSeller)
         // fetchChats()
     };
 
@@ -63,28 +63,7 @@ const Product = ({ api, languageText }) => {
     };
 
 
-    const fetchChats = async () => {
-        // console.log(user._id);
-        try {
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${user.token}`,
-                },
-            };
 
-            const { data } = await axios.get(`${api}/api/chat`, config);
-            setChats(data);
-        } catch (error) {
-            toast({
-                title: "Error Occured!",
-                description: "Failed to Load the chats",
-                status: "error",
-                duration: 5000,
-                isClosable: true,
-                position: "bottom-left",
-            });
-        }
-    };
 
 
     useEffect(() => {
@@ -122,39 +101,6 @@ const Product = ({ api, languageText }) => {
         }
     }, [api, id, dispatch, user]);
 
-
-    // useEffect(() => {
-    //     const fetchItems = async () => {
-    //         try {
-    //             const response = await fetch(`${api}/api/products`, {
-    //                 headers: {
-    //                     'Authorization': `Bearer ${user.token}`
-    //                 }
-
-    //             })
-    //             if (!response.ok) {
-    //                 console.error(`Error fetching Items. Status: ${response.status}, ${response.statusText}`);
-    //                 setError('Failed to fetch data');
-    //                 return;
-    //             }
-    //             const json = await response.json();
-    //             console.log("Fetched products:", json);
-    //             dispatch({
-    //                 type: 'SET_ITEM',
-    //                 collection: "products",
-    //                 payload: json,
-    //             });
-    //             setLoading(false);
-    //         } catch (error) {
-    //             console.error('An error occurred while fetching data:', error);
-    //             setError('An error occurred while fetching data');
-    //         }
-    //     };
-
-    //     if (user) {
-    //         fetchItems()
-    //     }
-    // }, [dispatch, user]);
 
 
     useEffect(() => {
@@ -266,7 +212,7 @@ const Product = ({ api, languageText }) => {
                             </div>
                             <div className="ProductPopRight">
                                 {productData?.pPrice ? <p className="ProductPrice">{productData?.pPrice}{languageText.RM}</p> : <p className="ProductPrice">Donation</p>}
-                                <button className="PopButton" onClick={() => openChat(productData)}>
+                                <button className="PopButton" onClick={() => openChat(productData.userID)}>
                                     <span className="ProductToolTip" >{languageText.ChatNow}</span>
                                     <span><FontAwesomeIcon icon={faCommentDots} /></span>
                                 </button>

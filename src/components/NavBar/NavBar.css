@@ -20,7 +20,7 @@
     right: 50%; */
 }
 
-.NavBar img {
+.NavBar .logo img {
     width: 20%;
 }
 
@@ -149,7 +149,23 @@
 
 
 
+.MessagesCount {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 0.6em;
+    background: var(--text);
+    width: 15px;
+    height: 15px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
 
+
+    /* display: ; */
+}
 
 
 
