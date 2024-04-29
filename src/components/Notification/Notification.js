@@ -13,26 +13,40 @@ const Notification = ({ NotificationLengthUnseen, notifications, notificationsOp
     const { users = [], dispatch } = useItemsContext();
     const { user } = useAuthContext();
     const [deleting, setDeleting] = useState(false);
+    const [product, setProduct] = useState([])
     useEffect(() => {
         fetchSendersData();
+        fetchProductsData()
     }, [notifications, api, dispatch]); // Fetch data whenever notifications change
 
     useEffect(() => {
         if (notifications.length === 0) {
-            setSender([]); // Clear sender data if notifications are empty
+            setSender([]);
+            setProduct([]); // Clear sender data if notifications are empty
         }
     }, [notifications, api, dispatch]);
 
     const fetchSendersData = async () => {
         const sendersData = [];
         for (const single of notifications) {
-            if (single.type === "message" || single.type === "admin") {
-                const senderData = await fetchSenderData(single.sender);
-                sendersData.push({ senderData, notificationData: single });
-            }
+            // if (single.type === "message" || single.type === "admin") {
+            const senderData = await fetchSenderData(single.sender);
+            sendersData.push({ senderData, notificationData: single });
+            // }
+
         }
         setSender(sendersData);
     };
+
+    const fetchProductsData = async () => {
+        const productsData = []
+        for (const item of notifications) {
+            const productData = await fetchProductData(item.product);
+            productsData.push({ productData, notificationData: item })
+        }
+
+        setProduct(productsData)
+    }
 
     const fetchSenderData = async (id) => {
         try {
@@ -53,6 +67,33 @@ const Notification = ({ NotificationLengthUnseen, notifications, notificationsOp
                 payload: data,
             });
             return data;
+        } catch (error) {
+            console.error('An error occurred while fetching form data:', error);
+            return null;
+        }
+    };
+
+
+    const fetchProductData = async (id) => {
+        try {
+            const response = await fetch(`${api}/api/products/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            });
+            if (!response.ok) {
+                console.error(`Error fetching form data. Status: ${response.status}, ${response.statusText}`);
+                return null;
+            }
+
+            const data = await response.json();
+            dispatch({
+                type: 'GET_ITEM',
+                collection: "products",
+                payload: data,
+            });
+            return data;
+
         } catch (error) {
             console.error('An error occurred while fetching form data:', error);
             return null;
@@ -129,33 +170,42 @@ const Notification = ({ NotificationLengthUnseen, notifications, notificationsOp
                                 ) : (
                                     sender.length > 0 ? (
                                         sender.map(({ senderData, notificationData }, index) => (
-                                            notificationData.type === 'message' ? (
-                                                <div key={index}>
+                                            <div key={index}>
+                                                {notificationData.type === 'message' ? (
                                                     <Link onClick={() => openChat(senderData._id)} className="NotificationMessage">
                                                         <div className='NotificationImageTime'>
                                                             <img className="NotificationImage" src={senderData.userImage} alt="" />
                                                             <p>{formatDate(notificationData.createdAt)}</p>
                                                         </div>
                                                         <div className="UserCardInfo">
-                                                            <div className="SenderName" >{senderData.userFname}</div>
+                                                            <div className="SenderName">{senderData.userFname}</div>
                                                             <p className='NotificationContent'>{notificationData.content}</p>
                                                         </div>
                                                     </Link>
-                                                </div>
-                                            ) : (
-                                                <div key={index}>
+                                                ) : notificationData.type === 'admin' ? (
                                                     <Link className="NotificationMessage">
                                                         <div className='NotificationImageTime'>
                                                             <img className="NotificationImage" src={senderData.userImage} alt="" />
                                                             <p>{formatDate(notificationData.createdAt)}</p>
                                                         </div>
                                                         <div className="UserCardInfo">
-                                                            <div className="SenderName" >Admin Notification</div>
+                                                            <div className="SenderName">Admin Notification</div>
                                                             <p className='NotificationContent'>{notificationData.content}</p>
                                                         </div>
                                                     </Link>
-                                                </div>
-                                            )
+                                                ) : (
+                                                    <Link to="/purchased" className="NotificationMessage">
+                                                        <div className='NotificationImageTime'>
+                                                            <img className="NotificationImage" src={product[index]?.productData?.pImage} alt="" />
+                                                            <p>{formatDate(notificationData.createdAt)}</p>
+                                                        </div>
+                                                        <div className="UserCardInfo">
+                                                            <div className="SenderName">{languageText.SoldProduct}</div>
+                                                            <p className='NotificationContent'>{"Your " + product[index]?.productData?.pTitle + " " + notificationData.content + " by " + senderData.userFname}</p>
+                                                        </div>
+                                                    </Link>
+                                                )}
+                                            </div>
                                         ))
                                     ) : (
                                         <div>

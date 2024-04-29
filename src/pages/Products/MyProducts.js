@@ -34,7 +34,7 @@ const MyProducts = ({ languageText, api }) => {
                     return;
                 }
                 const json = await response.json();
-                const filteredJson = json.filter((product) => product.userID === user.userId);
+                const filteredJson = json.filter((product) => product.userID === user.userId && product.pStatus === "Valid");
                 dispatch({
                     type: 'SET_ITEM',
                     collection: "products",
@@ -64,7 +64,7 @@ const MyProducts = ({ languageText, api }) => {
                 <h2>{languageText.MyProducts}</h2>
                 <div className="MyProductsCards">
                     {products && products.map((product) => (
-                        <ProductCard key={product._id} edit={true} product={product} languageText={languageText} />
+                        <ProductCard key={product._id} edit={true} product={product} languageText={languageText} api={api} />
 
                     ))}
                     {products.length <= 0 && (

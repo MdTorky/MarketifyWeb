@@ -145,6 +145,7 @@
     color: var(--bg);
     position: relative;
     border-radius: 5px;
+    align-items: center;
 }
 
 .AdminBottomRow table tr.TableHeading {
@@ -179,6 +180,13 @@
     width: 100px;
     font-weight: 600;
     position: relative;
+}
+
+.AdminBottomRow table tr.TableData img {
+    width: 50%;
+    /* height: 50%; */
+    border-radius: 20px;
+
 }
 
 .AdminBottomRow table tr.TableData:last-child {
@@ -293,7 +301,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 70%;
+    top: 80%;
     font-size: 0.8em;
     font-weight: 800;
     letter-spacing: 3px;

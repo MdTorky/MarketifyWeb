@@ -1075,6 +1075,14 @@ select:focus {
 
 }
 
+.Form .input.disabled {
+
+    border: 3px solid var(--theme);
+    box-shadow: 0px 0px 20px -17px;
+    color: var(--theme);
+
+}
+
 .Form .input.invalid, .Form .LabelInputImg.invalid {
     border: 3px solid var(--text);
     box-shadow: 0px 0px 20px -17px;
@@ -1205,7 +1213,7 @@ select:focus {
     flex-direction: column;
     align-content: space-between;
     justify-content: space-between;
-    height: 150px;
+    /* height: 150px; */
     /* margin-left: -170px; */
     margin-top: 10px;
     position: absolute;
@@ -1269,7 +1277,7 @@ select:focus {
 
 .PurchasedTitles td, .PurchasedTitles th {
     width: 150px;
-    justify-content: center;
+    /* justify-content: center; */
     margin: auto;
     text-align: center;
     /* font-weight: 800; */
@@ -1277,10 +1285,9 @@ select:focus {
 }
 
 .PurchasedTitles tr td {
-    width: 100px;
-    font-weight: 900;
+    /* width: 100px; */
+    /* font-weight: 900; */
     position: relative;
-
 }
 
 .PurchasedItems {

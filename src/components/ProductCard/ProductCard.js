@@ -7,11 +7,15 @@ import './ProductCard.css'
 import PurchaseForm from '../PurhcaseForm/PurchaseForm';
 import { useState } from "react"
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { useItemsContext } from '../../hooks/useItemsContext'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const ProductCard = ({ edit, product, languageText }) => {
+const ProductCard = ({ edit, product, languageText, api }) => {
     const { user } = useAuthContext()
     const [isPurchaseFormOpen, setPurchaseFormOpen] = useState(false);
-
+    const [updating, setUpdating] = useState(false)
+    const { users = [], products = [], dispatch } = useItemsContext()
 
     const handleTrashButtonClick = (event) => {
         event.preventDefault();
@@ -28,6 +32,58 @@ const ProductCard = ({ edit, product, languageText }) => {
         setPurchaseFormOpen(false);
     };
 
+
+    const handleDelete = async (e) => {
+        setUpdating(true);
+        e.stopPropagation();
+        e.preventDefault();
+
+        const confirmDelete = window.confirm(languageText.AreYouSureProduct);
+
+        if (!confirmDelete) {
+            return; // Cancel deletion if user clicks Cancel
+        }
+
+        try {
+            const response = await fetch(`${api}/api/products/${product._id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                },
+            });
+
+            if (!response.ok) {
+                console.error(`Error deleting suggestion. Status: ${response.status}, ${response.statusText}`);
+                return;
+            }
+            if (response.ok) {
+                const json = await response.json();
+                dispatch({
+                    type: 'DELETE_ITEM',
+                    collection: "products",
+                    payload: json
+                });
+                {
+                    toast.success(`${languageText.DeletedSuccessfully}`, {
+                        position: "bottom-center",
+                        autoClose: 3000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "dark"
+                    });
+                }
+                setUpdating(false);
+
+
+            }
+
+        } catch (error) {
+            console.error('An error occurred while deleting data:', error);
+        }
+    };
 
 
     return (
@@ -123,7 +179,7 @@ const ProductCard = ({ edit, product, languageText }) => {
             {edit ? (
 
                 <div className="ProductButton">
-                    <button className="BuyButton button" onClick={handleTrashButtonClick}>
+                    <button className="BuyButton button" onClick={handleDelete}>
                         <FontAwesomeIcon icon={faTrash} />
                     </button>
                     <Link className="BuyButton button EditButton" to={`/editProduct/${product._id}`}><FontAwesomeIcon icon={faPenToSquare} /></Link>

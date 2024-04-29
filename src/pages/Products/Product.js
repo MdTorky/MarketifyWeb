@@ -18,7 +18,7 @@ import { useChatState } from "../../context/ChatContext";
 import axios from 'axios';
 
 
-const Product = ({ api, languageText, setFetchAgain, fetchAgain }) => {
+const Product = ({ api, languageText }) => {
     const { id } = useParams();
     const { products = [], dispatch } = useItemsContext();
     const [productData, setProductData] = useState(null);
@@ -33,6 +33,7 @@ const Product = ({ api, languageText, setFetchAgain, fetchAgain }) => {
 
 
     const [userTwoError, setUserTwoError] = useState(null);
+    const [product, setProduct] = useState(null);
     const { accessChat, chatError } = useChat(api, toast);
 
     const {
@@ -54,8 +55,10 @@ const Product = ({ api, languageText, setFetchAgain, fetchAgain }) => {
         setChatOpen(false);
     };
 
-    const openPurchaseForm = () => {
+    const openPurchaseForm = (product) => {
         setPurchaseFormOpen(true);
+        setProduct(product)
+
     };
 
     const closePurchaseForm = () => {
@@ -190,7 +193,7 @@ const Product = ({ api, languageText, setFetchAgain, fetchAgain }) => {
                                 <p className="ProductRecommendationTitle">{languageText.Recommendations}</p>
                                 <div className="ProductRecommendation">
                                     {recommendations.map(product => (
-                                        <ProductCard key={product._id} edit={false} product={product} languageText={languageText} />
+                                        <ProductCard key={product._id} edit={false} product={product} languageText={languageText} api={api} />
                                     ))}
                                     {recommendations.length <= 0 &&
                                         <div className="NoProductsContainer">
@@ -218,7 +221,7 @@ const Product = ({ api, languageText, setFetchAgain, fetchAgain }) => {
                                 </button>
                                 {/* <button className="ChatPopButton"><FontAwesomeIcon icon={faCommentDots} /></button> */}
 
-                                <Link className="PopButton ProductBuyButton" onClick={openPurchaseForm}>
+                                <Link className="PopButton ProductBuyButton" onClick={() => openPurchaseForm(productData)}>
                                     <span className="ProductToolTip ProductTip" >{languageText.BuyNow}</span>
                                     <span><FontAwesomeIcon icon={faMoneyBill} /></span>
                                 </Link>
@@ -230,7 +233,7 @@ const Product = ({ api, languageText, setFetchAgain, fetchAgain }) => {
                         {isChatOpen && <Chat onClose={closeChat} languageText={languageText} userSeller={userTwoError} api={api} />}
                         {isPurchaseFormOpen && (
 
-                            <PurchaseForm closePurchaseForm={closePurchaseForm} />
+                            <PurchaseForm closePurchaseForm={closePurchaseForm} languageText={languageText} product={product} api={api} />
                         )}
                     </>
                 )}

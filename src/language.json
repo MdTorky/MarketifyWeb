@@ -64,6 +64,7 @@
     "PurchasedProducts": "Purchased Products",
     "SoldProducts": "Sold Products",
     "MyProducts": "My Products",
+    "Close": "Close",
     "Sell": "Sell",
     "Donate": "Donate",
     "English": "English",
@@ -174,7 +175,19 @@
 
     "NotificationWall": "Notification Wall",
     "NoNotifications": "No Notifications",
-    "Clear": "Clear"
+    "Clear": "Clear",
+    "SoldProduct": "Sold Product",
+    "DeletedSuccessfully": "Deleted Successfully",
+    "AreYouSureProduct": "Are You Sure You Want to Delete This Product?",
+
+    "EnterYourInformation": "Enter Your Information",
+    "PaymentMethod": "Payment Method",
+    "CreditCard": "Credit Card",
+    "Cash": "Cash",
+    "SubmitPurchase": "Submit Purchase",
+    "PurchasedSuccessfully": "Purchased Successfully",
+    "AreYouSure": "Are You Sure",
+    "PaidForTheProduct": "Paid for the Product?"
   },
   "ar": {
     "BrowseProducts": "تصفح المنتجات"

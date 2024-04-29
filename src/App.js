@@ -185,9 +185,9 @@ function App() {
 
 
           <Route path="/adminManageAccounts" element={user && user.userType == "admin" ? <AdminNavBar ><ManageAccounts api={api} languageText={languageText} /></AdminNavBar> : <Navigate to='/SignIn' />} />
-          <Route path="/adminManageProducts" element={user && user.userType == "admin" ? <AdminNavBar><ManageProducts /></AdminNavBar> : <Navigate to='/SignIn' />} />
-          <Route path="/adminManageSoldProducts" element={user && user.userType == "Admin" ? <AdminNavBar><ManageSoldProducts /></AdminNavBar> : <Navigate to='/SignIn' />} />
-          <Route path="/adminManageReports" element={user && user.userType == "Admin" ? <AdminNavBar><ManageReports /></AdminNavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/adminManageProducts" element={user && user.userType == "admin" ? <AdminNavBar><ManageProducts api={api} languageText={languageText} /></AdminNavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/adminManageSoldProducts" element={user && user.userType == "admin" ? <AdminNavBar><ManageSoldProducts api={api} languageText={languageText} /></AdminNavBar> : <Navigate to='/SignIn' />} />
+          <Route path="/adminManageReports" element={user && user.userType == "admin" ? <AdminNavBar><ManageReports api={api} languageText={languageText} /></AdminNavBar> : <Navigate to='/SignIn' />} />
           {/* <Route path="/adminManageAccounts" element={<AdminNavBar><ManageAccounts /></AdminNavBar>} /> */}
         </Routes>
         <ToastContainer />

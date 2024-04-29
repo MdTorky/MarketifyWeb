@@ -272,7 +272,7 @@ const ManageAccounts = ({ api, languageText }) => {
                     {userOne.userPassportImage && <button className="StatusButton" onClick={() => { window.open(userOne.userPassportImage, "_blank") }}>View Proof</button>}
                 </td>
                 <td>{userOne.userAddress}</td>
-                {updating ? (<td>HELLO</td>) : (
+                {updating ? (<td></td>) : (
                     <td className={`${userOne.userStatus === "Active" ? "StatusGreen" : 'StatusRed'}`}>
                         {userOne.userStatus}
                         {/* <button className="StatusButton" oncClick={handleStatusUpdate({ user })}>{userOne.userStatus === "NotActive" || userOne.userStatus === "Waiting" ? "Activate" : "Deactivate"}</button> */}

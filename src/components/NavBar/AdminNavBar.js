@@ -21,9 +21,9 @@ const AdminNavBar = ({ children }) => {
             setActiveButton('adminManageAccounts');
         } else if (pathname.includes('/adminManageProducts')) {
             setActiveButton('adminManageProducts');
-        } else if (pathname.includes('adminManageSoldProducts')) {
+        } else if (pathname.includes('/adminManageSoldProducts')) {
             setActiveButton('adminManageSoldProducts');
-        } else if (pathname.includes('adminManageReports')) {
+        } else if (pathname.includes('/adminManageReports')) {
             setActiveButton('adminManageReports');
         } else {
             setActiveButton('');

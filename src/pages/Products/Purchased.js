@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import './Products.css';
 import profile from '../../images/Profile.jpg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,12 +7,34 @@ import { faStar, faCommentDots, faMoneyBill } from '@fortawesome/free-solid-svg-
 import ReviewPopup from '../../components/Review/Review';
 import { Link, useLocation } from 'react-router-dom';
 import Chat from '../../components/Chat/Chat';
+import { useChatState } from "../../context/ChatContext";
+import { useChat } from '../../hooks/useChat';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useItemsContext } from '../../hooks/useItemsContext'
+import Loader from '../../components/Loader/Loader'
+import { Icon } from '@iconify/react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const Purchased = ({ languageText }) => {
+const Purchased = ({ languageText, api }) => {
     const [activeFilter, setActiveFilter] = useState('all');
     const [activeSoldFilter, setActiveSoldFilter] = useState('all');
-    const [showReviewPopup, setShowReviewPopup] = useState(false); // Add this state
-    const [paymentType, setPaymentType] = useState("Cash"); // Add this state
+    const [showReviewPopup, setShowReviewPopup] = useState(false);
+    const [paymentType, setPaymentType] = useState("Cash");
+    const { products = [], transactions = [], users = [], dispatch } = useItemsContext();
+    const { user } = useAuthContext()
+    const { accessChat, chatError } = useChat(api, toast);
+    const [isChatOpen, setChatOpen] = useState(false);
+
+    const [loading, setLoading] = useState(false)
+    const [updating, setUpdating] = useState(false)
+
+    const [productLoading, setProductLoading] = useState(false)
+    const [userLoading, setUserLoading] = useState(false)
+    const [seller, setSeller] = useState(null)
+    const [error, setError] = useState(null)
+
+
 
     const handleFilterClick = (filter) => {
         setActiveFilter(filter);
@@ -35,40 +58,243 @@ const Purchased = ({ languageText }) => {
     };
 
 
-    const [isChatOpen, setChatOpen] = useState(false);
-    const openChat = () => {
+
+    const openChat = (userSeller) => {
+        setSeller(userSeller)
         setChatOpen(true);
+        accessChat(userSeller)
+        // fetchChats()
     };
 
     const closeChat = () => {
         setChatOpen(false);
     };
 
-    const PurchasedItem = ({ status }) => {
+
+    useEffect(() => {
+        const fetchItems = async () => {
+            setLoading(true)
+
+            try {
+
+                const response = await fetch(`${api}/api/transactions`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                if (!response.ok) {
+                    console.error(`Error fetching Items. Status: ${response.status}, ${response.statusText}`);
+                    setError('Failed to fetch data');
+
+                    return;
+                }
+                const json = await response.json()
+
+                dispatch({
+                    type: 'SET_ITEM',
+                    collection: "transactions",
+                    payload: json,
+                });
 
 
-        if (activeFilter === 'all' || (activeFilter === 'paid' && status) || (activeFilter === 'unpaid' && !status)) {
+                const userResponse = await fetch(`${api}/api/user`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                if (!response.ok) {
+                    console.error(`Error fetching Items. Status: ${response.status}, ${response.statusText}`);
+                    setError('Failed to fetch data');
+
+                    return;
+                }
+                const userJson = await userResponse.json()
+
+                dispatch({
+                    type: 'SET_ITEM',
+                    collection: "users",
+                    payload: userJson,
+                });
+
+
+                const productResponse = await fetch(`${api}/api/products`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                if (!response.ok) {
+                    console.error(`Error fetching Items. Status: ${response.status}, ${response.statusText}`);
+                    setError('Failed to fetch data');
+
+                    return;
+                }
+                const productJson = await productResponse.json()
+
+                dispatch({
+                    type: 'SET_ITEM',
+                    collection: "products",
+                    payload: productJson,
+                });
+
+
+                setLoading(false)
+
+
+            } catch (error) {
+                console.error('An error occurred while fetching data:', error);
+                setError('An error occurred while fetching data');
+
+            }
+        };
+
+        if (user) {
+            fetchItems()
+        }
+    }, [api, dispatch, user])
+
+
+
+
+
+
+
+    const boughtFilter = transactions.filter((transaction) => transaction.buyerID === user.userId)
+    const soldFilter = transactions.filter((transaction) => transaction.sellerID === user.userId)
+
+
+
+    const calculateTotalPrice = () => {
+        let totalPriceValue = 0;
+        soldFilter.forEach(transaction => {
+            const product = products.find(productOne => transaction.productID === productOne._id);
+            if (product) {
+                totalPriceValue += product.pPrice;
+            }
+        });
+        return totalPriceValue;
+    };
+
+    const totalPrice = calculateTotalPrice();
+
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const months = [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        ];
+        const month = months[date.getMonth()];
+        const day = date.getDate();
+        let hour = date.getHours();
+        const minute = date.getMinutes();
+        const period = hour >= 12 ? 'PM' : 'AM';
+        hour = hour % 12 || 12;
+
+        // return `${month} ${day}, ${hour}:${minute.toString().padStart(2, '0')}${period}`;
+        return `${month} ${day}, ${hour}${period}`;
+    };
+
+
+
+
+
+
+
+
+    const handleStatusUpdate = async ({ e, transaction, buyer }) => {
+        e.preventDefault();
+
+        const confirmDelete = window.confirm(languageText.AreYouSure + " " + buyer + " " + languageText.PaidForTheProduct);
+
+        if (!confirmDelete) {
+            return;
+        }
+        try {
+            setUpdating(true);
+
+            const response = await fetch(`${api}/api/transactions/${transaction._id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+                body: JSON.stringify({
+                    transactionStatus: "Paid"
+                }),
+            });
+
+            if (!response.ok) {
+                console.error(`Error updating form status. Status: ${response.status}, ${response.statusText}`);
+                return;
+            }
+
+            const updatedData = await response.json();
+            dispatch({
+                type: 'UPDATE_ITEM',
+                collection: 'transactions',
+                payload: { id: transaction._id, changes: updatedData },
+            });
+
+            {
+                toast.success("Status Changed Successfully", {
+                    position: "bottom-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }
+            setUpdating(false);
+
+
+        } catch (error) {
+            console.error('An error occurred while updating form status:', error);
+        }
+    };
+
+
+
+    const PurchasedItem = ({ transaction, index }) => {
+        const productFilter = products.find(productOne => transaction.productID === productOne._id)
+        const sellerFilter = users.find(seller => transaction.sellerID === seller._id)
+        let productType
+        if (productFilter?.pType === "Sell") {
+            productType = true
+        }
+        else {
+            productType = false
+
+        }
+        if (activeFilter === 'all' || (activeFilter === 'paid' && transaction.transactionStatus === "Paid") || (activeFilter === 'unpaid' && transaction.transactionStatus === "Not Paid")) {
             return (
-                <tr className={`PurchasedTitles PurchasedItems`} style={{ marginBottom: !status ? '20px' : '0' }}>
-                    <td>#21</td>
+                <tr className={`PurchasedTitles PurchasedItems`} style={{ marginBottom: transaction.transactionStatus === "Not Paid" ? '20px' : '0' }} key={transaction._id} index={index}>
+
+                    <td>{index + 1}</td>
                     <td className="ProductInfo">
-                        <img src={profile} alt="" />
-                        <p>Bike</p>
+                        <img src={productFilter?.pImage} alt="" />
+                        <p>{productFilter?.pTitle}</p>
                     </td>
-                    <td>20RM</td>
-                    <td>Mohamed</td>
-                    <td>+201554206775</td>
+                    {productFilter?.pType === "Sell" ? <td>{productFilter?.pPrice} RM</td> : <td>{languageText.Donation}</td>}
+                    <td>{sellerFilter?.userFname}</td>
+                    <td>{sellerFilter?.userPhoneNo}</td>
                     <button className="ReviewButton" onClick={handleReviewButtonClick}>
                         <FontAwesomeIcon icon={faStar} />
                     </button>
 
-                    <td>21 Jan</td>
-                    <td className={`statusButton ${status ? "StatusPaid" : "StatusNotPaid"}`}>{`${status ? "Paid" : "Not Paid"}`}
+                    <td>{formatDate(transaction.createdAt)}</td>
+                    {productType ?
+                        <td className={`statusButton ${transaction.transactionStatus === "Paid" ? "StatusPaid" : "StatusNotPaid"}`}>{transaction.transactionStatus}
+                            {transaction.transactionStatus === "Not Paid" && transaction.paymentMethod === "Credit Card" && <Link to="/payment" className='PayButton'>{languageText.Pay}</Link>}</td> :
+                        //  <td className={`statusButton ${transaction.transactionStatus === "Paid" ? "StatusPaid" : "StatusNotPaid"}`}>{transaction.transactionStatus}
+                        //  {transaction.transactionStatus === "Not Paid" && transaction.paymentMethod === "Credit Card" && <Link to="/payment" className='PayButton'>{languageText.Pay}</Link>}</td>
+                        <td className='statusButton'>{languageText.Donations}</td>
 
-                        {!status && <Link to="/payment" className='PayButton'>{languageText.Pay}</Link>}</td>
-
-                    <td>Cash</td>
-                    <button className="PopButton PurchasedChatButton" onClick={openChat}>
+                    }
+                    {productType ? <td>{transaction.paymentMethod}</td> : <td className='statusButton'>{languageText.Donations}</td>}
+                    <button className="PopButton PurchasedChatButton" onClick={() => openChat(transaction.sellerID)}>
                         <span className="ProductToolTip" >{languageText.ChatNow}</span>
                         <span><FontAwesomeIcon icon={faCommentDots} /></span>
                     </button>
@@ -79,133 +305,101 @@ const Purchased = ({ languageText }) => {
     }
 
 
-    const SoldItem = ({ status, PaymentType }) => {
+    const SoldItem = ({ transaction, index }) => {
 
 
-        if (activeSoldFilter === 'all' || (activeSoldFilter === 'paid' && status) || (activeSoldFilter === 'unpaid' && !status)) {
+        const productFilter = products.find(productOne => transaction.productID === productOne._id)
+        const buyer = users.find(seller => transaction.buyerID === seller._id)
+        // setTotalPrice(totalPrice + productFilter.pPrice)
+        const [totalPrice, setTotalPrice] = useState(0);
+        let productType
+        if (productFilter?.pType === "Sell") {
+            productType = true
+        }
+        else {
+            productType = false
+
+        }
+        // useEffect(() => {
+        //     setTotalPrice(prevTotalPrice => prevTotalPrice + productFilter.pPrice);
+        // }, [transaction, productFilter]);
+
+        if (activeSoldFilter === 'all' || (activeSoldFilter === 'paid' && transaction.transactionStatus === "Paid") || (activeSoldFilter === 'unpaid' && transaction.transactionStatus === "Not Paid")) {
             return (
-                <tr className={`PurchasedTitles PurchasedItems`} style={{ marginBottom: !status ? '20px' : '0' }}>
-                    <td>#21</td>
+                <tr className={`PurchasedTitles PurchasedItems`} style={{ marginBottom: transaction.transactionStatus === "Not Paid" ? '20px' : '0' }} key={transaction._id} index={index}>
+                    <td>{index + 1}</td>
                     <td className="ProductInfo">
-                        <img src={profile} alt="" />
-                        <p>Bike</p>
+                        <img src={productFilter?.pImage} alt="" />
+                        <p>{productFilter?.pTitle}</p>
                     </td>
-                    <td>20RM</td>
-                    <td>Mohamed</td>
-                    <td>+201554206775</td>
+                    {productFilter?.pType === "Sell" ? <td>{productFilter?.pPrice} RM</td> : <td>{languageText.Donation}</td>}
+                    <td>{buyer.userFname}</td>
+                    <td>{buyer.userPhoneNo}</td>
                     {/* <button className="ReviewButton" onClick={handleReviewButtonClick}>
                         <FontAwesomeIcon icon={faStar} />
                     </button> */}
 
-                    <td>21 Jan</td>
-                    <td className={`statusButton ${status ? "StatusPaid" : "StatusNotPaid"}`}>{`${status ? "Paid" : "Not Paid"}`}
+                    <td>{formatDate(transaction.createdAt)}</td>
 
-                        {/* {!status && <Link to="/payment" className='PayButton'>Pay</Link>} */}
-                    </td>
+                    {productType ? <td className={`statusButton ${transaction.transactionStatus === "Paid" ? "StatusPaid" : "StatusNotPaid"}`}>{transaction.transactionStatus}</td> : <td className='statusButton'>{languageText.Donations}</td>}
 
-                    <td className='statusButton'>{PaymentType}
-
-                        {PaymentType === "Cash" && !status && <Link to="/payment" className='PayButton ConfirmButton'>{languageText.Confirm}</Link>}
-
-
-                    </td>
-                    <button className="PopButton PurchasedChatButton" onClick={openChat}>
+                    {productType ? <td className='statusButton'>{transaction.paymentMethod}
+                        {transaction.paymentMethod === "Cash" && transaction.transactionStatus === "Not Paid" && <Link onClick={(e) => handleStatusUpdate({ e, transaction, buyer: buyer.userFname })} className='PayButton ConfirmButton'>{languageText.Confirm}</Link>}</td> :
+                        <td className='statusButton'>{languageText.Donations}</td>}
+                    <button className="PopButton PurchasedChatButton" onClick={() => openChat(transaction.buyerID)}>
                         <span className="ProductToolTip" >{languageText.ChatNow}</span>
                         <span><FontAwesomeIcon icon={faCommentDots} /></span>
                     </button>
                 </tr>
             )
+
+
         }
         return null;
+
     }
 
+
+
     return (
+
         <div className="Browse">
-            <div className="PurchasedProducts">
-                <h2>{languageText.PurchasedProducts}</h2>
-                <div className="PurchasedFilter">
-                    <button
-                        className={`FilterButton ${activeFilter === 'all' ? 'active' : ''}`}
-                        onClick={() => handleFilterClick('all')}
-                    >
-                        {languageText.AllProducts}
-                    </button>
-                    <button
-                        className={`FilterButton ${activeFilter === 'paid' ? 'active' : ''}`}
-                        onClick={() => handleFilterClick('paid')}
-                    >{languageText.Paid}
-                    </button>
-                    <button
-                        className={`FilterButton ${activeFilter === 'unpaid' ? 'active' : ''}`}
-                        onClick={() => handleFilterClick('unpaid')}
-                    >
-                        {languageText.Unpaid}
-                    </button>
-                </div>
-                <table >
-                    <tr className="PurchasedTitles">
-                        <th>{languageText.Id}</th>
-                        <th>{languageText.ProductName}</th>
-                        <th>{languageText.Price}</th>
-                        <th>{languageText.SellerName}</th>
-                        <th>{languageText.SellerPhone}</th>
-                        <th>{languageText.Review}</th>
-                        <th>{languageText.Date}</th>
-                        <th>{languageText.Status}</th>
-                        <th>{languageText.Method}</th>
-                    </tr>
-                    {/* <p>Method</p> */}
 
-                    <div className='ProductColumn'>
-                        {PurchasedItem({ status: false })}
-                        {PurchasedItem({ status: true })}
+            {(loading || productLoading || userLoading) ? (
+                <div className="Loader">
+                    <Loader />
+                    <p className="LoaderText">{languageText.Loading}</p>
+                </div>
+            ) : (<>
+                <div className="PurchasedProducts">
+                    <h2>{languageText.PurchasedProducts}</h2>
+                    <div className="PurchasedFilter">
+                        <button
+                            className={`FilterButton ${activeFilter === 'all' ? 'active' : ''}`}
+                            onClick={() => handleFilterClick('all')}
+                        >
+                            {languageText.AllProducts}
+                        </button>
+                        <button
+                            className={`FilterButton ${activeFilter === 'paid' ? 'active' : ''}`}
+                            onClick={() => handleFilterClick('paid')}
+                        >{languageText.Paid}
+                        </button>
+                        <button
+                            className={`FilterButton ${activeFilter === 'unpaid' ? 'active' : ''}`}
+                            onClick={() => handleFilterClick('unpaid')}
+                        >
+                            {languageText.Unpaid}
+                        </button>
                     </div>
-                </table>
-                {showReviewPopup && (
-                    <ReviewPopup
-                        onClose={handleCloseReviewPopup}
-                        onSubmit={handleReviewSubmit}
-                        showReviewPopup={showReviewPopup}
-                        languageText={languageText}
-                    />
-                )}
-                {isChatOpen && <Chat onClose={closeChat} languageText={languageText} />}
-
-            </div>
-
-
-
-
-            <div className="PurchasedProducts SoldProducts">
-                <h2>{languageText.SoldProducts}</h2>
-                <div className="PurchasedFilter">
-                    <button
-                        className={`FilterButton ${activeSoldFilter === 'all' ? 'active' : ''}`}
-                        onClick={() => handleSoldFilterClick('all')}
-                    >
-                        {languageText.AllProducts}
-                    </button>
-                    <button
-                        className={`FilterButton ${activeSoldFilter === 'paid' ? 'active' : ''}`}
-                        onClick={() => handleSoldFilterClick('paid')}
-                    >
-                        {languageText.Paid}
-                    </button>
-                    <button
-                        className={`FilterButton ${activeSoldFilter === 'unpaid' ? 'active' : ''}`}
-                        onClick={() => handleSoldFilterClick('unpaid')}
-                    >
-                        {languageText.Unpaid}
-                    </button>
-                </div>
-                <div className="SoldTable">
                     <table >
                         <tr className="PurchasedTitles">
                             <th>{languageText.Id}</th>
                             <th>{languageText.ProductName}</th>
                             <th>{languageText.Price}</th>
-                            <th>{languageText.BuyerName}</th>
-                            <th>{languageText.BuyerPhone}</th>
+                            <th>{languageText.SellerName}</th>
+                            <th>{languageText.SellerPhone}</th>
+                            <th>{languageText.Review}</th>
                             <th>{languageText.Date}</th>
                             <th>{languageText.Status}</th>
                             <th>{languageText.Method}</th>
@@ -213,14 +407,11 @@ const Purchased = ({ languageText }) => {
                         {/* <p>Method</p> */}
 
                         <div className='ProductColumn'>
-                            {SoldItem({ status: false, PaymentType: "Cash" })}
-                            {SoldItem({ status: true, PaymentType: "Credit Card" })}
+                            {boughtFilter && boughtFilter.map((transaction, index) => (
+                                <PurchasedItem transaction={transaction} index={index} />
+                            ))}
                         </div>
                     </table>
-                    <div className="TotalPrice">
-                        <p>{languageText.Total}</p>
-                        <div className="Total">{languageText.RM} 31</div>
-                    </div>
                     {showReviewPopup && (
                         <ReviewPopup
                             onClose={handleCloseReviewPopup}
@@ -229,10 +420,85 @@ const Purchased = ({ languageText }) => {
                             languageText={languageText}
                         />
                     )}
-                    {isChatOpen && <Chat onClose={closeChat} languageText={languageText} />}
+                    {/* {isChatOpen && <Chat onClose={closeChat} languageText={languageText} />} */}
 
                 </div>
-            </div>
+
+
+
+
+                <div className="PurchasedProducts SoldProducts">
+                    <h2>{languageText.SoldProducts}</h2>
+                    <div className="PurchasedFilter">
+                        <button
+                            className={`FilterButton ${activeSoldFilter === 'all' ? 'active' : ''}`}
+                            onClick={() => handleSoldFilterClick('all')}
+                        >
+                            {languageText.AllProducts}
+                        </button>
+                        <button
+                            className={`FilterButton ${activeSoldFilter === 'paid' ? 'active' : ''}`}
+                            onClick={() => handleSoldFilterClick('paid')}
+                        >
+                            {languageText.Paid}
+                        </button>
+                        <button
+                            className={`FilterButton ${activeSoldFilter === 'unpaid' ? 'active' : ''}`}
+                            onClick={() => handleSoldFilterClick('unpaid')}
+                        >
+                            {languageText.Unpaid}
+                        </button>
+                    </div>
+                    <div className="SoldTable">
+                        <table >
+                            <tr className="PurchasedTitles">
+                                <th>{languageText.Id}</th>
+                                <th>{languageText.ProductName}</th>
+                                <th>{languageText.Price}</th>
+                                <th>{languageText.BuyerName}</th>
+                                <th>{languageText.BuyerPhone}</th>
+                                <th>{languageText.Date}</th>
+                                <th>{languageText.Status}</th>
+                                <th>{languageText.Method}</th>
+                            </tr>
+                            {/* <p>Method</p> */}
+
+                            {updating ? (
+                                <div className="Loader">
+                                    <Loader />
+                                    <p className="LoaderText">Updating</p>
+                                </div>
+                            ) : (
+                                <div className='ProductColumn'>
+                                    {soldFilter && soldFilter.map((transaction, index) => (
+                                        <SoldItem transaction={transaction} index={index} />
+                                    ))}
+
+                                </div>
+                            )}
+
+                        </table>
+                        {soldFilter.length > 0 && <div className="TotalPrice">
+                            <p>{languageText.Total}</p>
+                            {totalPrice ? <div className="Total">{languageText.RM} {totalPrice}</div> : <div className="Total">{languageText.RM} 0</div>}
+                        </div>}
+
+                        {showReviewPopup && (
+                            <ReviewPopup
+                                onClose={handleCloseReviewPopup}
+                                onSubmit={handleReviewSubmit}
+                                showReviewPopup={showReviewPopup}
+                                languageText={languageText}
+                            />
+                        )}
+                        {isChatOpen && <Chat onClose={closeChat} languageText={languageText} userSeller={seller} api={api} />}
+
+                        {/* {isChatOpen && <Chat onClose={closeChat} languageText={languageText} />} */}
+
+                    </div>
+                </div>
+            </>
+            )}
         </div>
     );
 };
