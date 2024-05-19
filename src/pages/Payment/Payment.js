@@ -1,10 +1,103 @@
 import './Payment.css'
 import Visa from '../../images/visa.png'
 import Chip from '../../images/chip.png'
-import { useEffect } from 'react'
-const Payment = ({ languageText }) => {
+import { useEffect, useState } from 'react'
+import { Link, useLocation, useParams } from 'react-router-dom';
+import { useChatState } from "../../context/ChatContext";
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useItemsContext } from '../../hooks/useItemsContext'
+import Loader from '../../components/Loader/Loader'
+import { Icon } from '@iconify/react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios"
+
+import { loadStripe } from "@stripe/stripe-js"
+const Payment = ({ languageText, api }) => {
+    const { id } = useParams();
+    const [transactionData, setTransactionData] = useState();
+    const { products = [], transactions = [], users = [], dispatch } = useItemsContext();
+    const { user } = useAuthContext()
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState("")
+
+    useEffect(() => {
+        const fetchItems = async () => {
+            setLoading(true)
+
+            try {
+                const response = await fetch(`${api}/api/products/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                });
+                if (!response.ok) {
+                    console.error(`Error fetching form data. Status: ${response.status}, ${response.statusText}`);
+                    return;
+                }
+
+                const data = await response.json();
+                dispatch({
+                    type: 'GET_ITEM',
+                    collection: "products",
+                    payload: data,
+                });
+
+                setTransactionData(data)
+                setLoading(false)
 
 
+            } catch (error) {
+                console.error('An error occurred while fetching data:', error);
+                setError('An error occurred while fetching data');
+
+            }
+        };
+
+        if (user) {
+            fetchItems()
+        }
+    }, [api, dispatch, user])
+
+
+    // const makePayment = async () => {
+    //     const stripe = await loadStripe(process.env.REACT_STRIPE_KEY)
+    //     const body = {
+    //         products: transactionData
+    //     }
+    //     const headers = {
+    //         "Content-Type": "application/json"
+    //     }
+
+    //     const response = await fetch(`${api}/api/create-checkout-session`, {
+    //         method: "POST",
+    //         headers: headers,
+    //         body: JSON.stringify(body)
+    //     })
+
+    //     const session = await response.json()
+    //     const result = stripe.redirectToCheckout({
+    //         sessionId: session._id
+    //     })
+
+    //     if (result.error) {
+    //         console.log(result.error)
+    //     }
+    // }
+
+    const handleCheckout = () => {
+        // alert(JSON.stringify(transactionData))
+
+        axios.post(`${api}/api/stripe/create-checkout-session`, {
+            products: transactionData,
+            userId: user.userId,
+        }).then((res) => {
+            if (res.data.url) {
+                window.location.href = res.data.url
+            }
+
+        }).catch((err) => { console.log(err.message) })
+    }
 
     useEffect(() => {
         document.querySelector('.card-number-input').oninput = () => {
@@ -38,7 +131,6 @@ const Payment = ({ languageText }) => {
 
     return (
         <div className="Payment">
-
             <div class="PaymentCardContainer">
                 <div class="VisaCardFront">
                     <div class="VisaCardImage">
@@ -55,7 +147,7 @@ const Payment = ({ languageText }) => {
                             <span>Expires</span>
                             <div class="VisaCardExpiration">
                                 <span class="CardMonth">mm</span>
-                                {/* <span > | </span> */}
+                                <span > | </span>
                                 <span class="CardYear">yy</span>
                             </div>
                         </div>
@@ -74,9 +166,13 @@ const Payment = ({ languageText }) => {
 
             <form action="" method="post">
                 <div class="PaymentInput">
+
                     <span>{languageText.CardNumber}</span>
+
                     <input type="number" maxlength="16" class="card-number-input" required />
                 </div>
+                {/* <h1>{transactionData.pTitle}</h1> */}
+
                 <div class="PaymentInput">
                     <span>{languageText.CardHolderName}</span>
                     <input type="text" class="card-holder-input" required />
@@ -122,7 +218,7 @@ const Payment = ({ languageText }) => {
                         <input type="text" maxlength="3" class="cvv-input" />
                     </div>
                 </div>
-                <input type="submit" value="submit" class="submit-btn" name="submit2" />
+                <input type="submit" value="submit" class="submit-btn" name="submit2" onClick={() => handleCheckout()} />
             </form>
         </div>
 

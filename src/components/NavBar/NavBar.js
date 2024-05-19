@@ -173,11 +173,15 @@ const NavBar = ({ children, api }) => {
                         <Link className='link'>{languageText.Products}</Link>
                         <div className="dropdownContent">
                             <Link to="/browse" className={`link ${location.pathname === '/browse' ? 'active' : ''} `}>{languageText.Browse}</Link>
+                            {/* <Link to="" className={`link ${location.pathname === '/browse' ? 'active' : ''} `}>{languageText.Browse}</Link> */}
                             <Link to="/purchased" className={`link ${location.pathname === '/purchased' ? 'active' : ''} `}>{languageText.Purchased}</Link>
+                            {/* <Link to="" className={`link ${location.pathname === '/purchased' ? 'active' : ''} `}>{languageText.Purchased}</Link> */}
                             <Link to="/myProducts" className={`link ${location.pathname === '/myProducts' ? 'active' : ''} `}>{languageText.MyProducts}</Link>
+                            {/* <Link to="" className={`link ${location.pathname === '/myProducts' ? 'active' : ''} `}>{languageText.MyProducts}</Link> */}
                         </div>
                     </div>
                     <Link to="/sell" className={`link ${((location.pathname === '/sell') || (location.pathname === '/donate')) ? 'active' : ''} `}>{languageText.Sell}</Link>
+                    {/* <Link to="" className={`link ${((location.pathname === '/sell') || (location.pathname === '/donate')) ? 'active' : ''} `}>{languageText.Sell}</Link> */}
                     <div className="dropdown">
                         <Link className="link user"><FontAwesomeIcon icon={faGlobe} /></Link>
                         <LanguageSwitcher languageText={languageText} />

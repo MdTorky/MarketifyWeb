@@ -15,12 +15,12 @@ import Loader from '../../components/Loader/Loader'
 import { Icon } from '@iconify/react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios"
 
 const Purchased = ({ languageText, api }) => {
     const [activeFilter, setActiveFilter] = useState('all');
     const [activeSoldFilter, setActiveSoldFilter] = useState('all');
     const [showReviewPopup, setShowReviewPopup] = useState(false);
-    const [paymentType, setPaymentType] = useState("Cash");
     const { products = [], transactions = [], users = [], dispatch } = useItemsContext();
     const { user } = useAuthContext()
     const { accessChat, chatError } = useChat(api, toast);
@@ -257,6 +257,39 @@ const Purchased = ({ languageText, api }) => {
 
 
 
+
+
+    // const handleCheckout = (product) => {
+    //     axios.post(`${api}/api/stripe/create-checkout-session`, {
+    //         product,
+    //         userId: user.userId,
+    //     }).then((res) => {
+    //         if (res.data.url) {
+    //             window.location.href = res.data.url
+    //         }
+    //     }).catch((err) => { console.log(err.message) })
+    // }
+
+
+    const handleCheckout = (product) => {
+        const payload = {
+            products: [product],  // Wrap product in an array
+            userId: user.userId,
+        };
+
+        console.log('Payload:', payload);
+
+        axios.post(`${api}/api/stripe/create-checkout-session`, payload)
+            .then((res) => {
+                if (res.data.url) {
+                    window.location.href = res.data.url;
+                }
+            })
+            .catch((err) => {
+                console.error('Error:', err.response?.data || err.message);
+            });
+    };
+
     const PurchasedItem = ({ transaction, index }) => {
         const productFilter = products.find(productOne => transaction.productID === productOne._id)
         const sellerFilter = users.find(seller => transaction.sellerID === seller._id)
@@ -287,7 +320,8 @@ const Purchased = ({ languageText, api }) => {
                     <td>{formatDate(transaction.createdAt)}</td>
                     {productType ?
                         <td className={`statusButton ${transaction.transactionStatus === "Paid" ? "StatusPaid" : "StatusNotPaid"}`}>{transaction.transactionStatus}
-                            {transaction.transactionStatus === "Not Paid" && transaction.paymentMethod === "Credit Card" && <Link to="/payment" className='PayButton'>{languageText.Pay}</Link>}</td> :
+                            {/* {transaction.transactionStatus === "Not Paid" && transaction.paymentMethod === "Credit Card" && <Link to={`/payment/${transaction.productID}`} className='PayButton'>{languageText.Pay}</Link>}</td> : */}
+                            {transaction.transactionStatus === "Not Paid" && transaction.paymentMethod === "Credit Card" && <Link onClick={() => handleCheckout(productFilter)} className='PayButton'>{languageText.Pay}</Link>}</td> :
                         //  <td className={`statusButton ${transaction.transactionStatus === "Paid" ? "StatusPaid" : "StatusNotPaid"}`}>{transaction.transactionStatus}
                         //  {transaction.transactionStatus === "Not Paid" && transaction.paymentMethod === "Credit Card" && <Link to="/payment" className='PayButton'>{languageText.Pay}</Link>}</td>
                         <td className='statusButton'>{languageText.Donations}</td>

@@ -31,6 +31,7 @@ import ResetPassword from './pages/SignUp/ResetPassword';
 import { useChatState } from "./context/ChatContext";
 import EditProfile from './pages/Profile/EditProfile';
 import EditProduct from './pages/Products/EditProduct';
+import CheckoutSuccess from './pages/Payment/CheckoutSuccess';
 
 
 
@@ -94,6 +95,7 @@ function App() {
             }
           />
           <Route path="/forgotPassword" element={<ForgotPassword api={api} />} />
+          <Route path="/checkoutSuccess" element={<CheckoutSuccess api={api} />} />
           <Route path="/resetPassword/:id" element={<ResetPassword api={api} languageText={languageText} />} />
 
 
@@ -140,7 +142,7 @@ function App() {
             )
           } />
 
-          <Route path="/payment" element={
+          <Route path="/payment/:id" element={
             !user ? (<Navigate to='/SignIn' />
             ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (
               <Navigate to='/profile' />
@@ -148,6 +150,15 @@ function App() {
               <NavBar api={api}><Footer><Payment api={api} languageText={languageText} /></Footer></NavBar>
             )
           } />
+
+          {/* <Route path="/checkoutSuccess" element={
+            !user ? (<Navigate to='/SignIn' />
+            ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (
+              <Navigate to='/profile' />
+            ) : (
+              <NavBar api={api}><Footer><CheckoutSuccess api={api} languageText={languageText} /></Footer></NavBar>
+            )
+          } /> */}
           <Route path="/sell" element={
             !user ? (<Navigate to='/SignIn' />
             ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" ? (

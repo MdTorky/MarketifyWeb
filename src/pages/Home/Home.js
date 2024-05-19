@@ -12,6 +12,7 @@ const Home = ({ languageText }) => {
                     <h3>{languageText.BuySellBenefit}</h3>
                     <h1 className="anim">{languageText.ShopWithUs}</h1>
                     <Link to="/browse" className="HeroButton">{languageText.ShopNow}</Link>
+                    {/* <Link to="" className="HeroButton">{languageText.ShopNow}</Link> */}
                 </div>
                 <div className="HeroImg">
                     <img src={img1} alt="" />

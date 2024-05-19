@@ -239,9 +239,10 @@ const ManageProducts = ({ api, languageText }) => {
                 <td>{seller.userPhoneNo}</td>
                 <td className={`${product.pStatus === "Valid" ? "StatusGreen" : 'StatusRed'}`}>{product.pStatus}
 
-                    <button className="StatusButton" onClick={(e) => handleStatusUpdate({ e, product })}>
-                        {product.pStatus != "Valid" ? "Activate" : "Deactivate"}
-                    </button>
+                    {(product.pStatus === "Valid" || product.pStatus === "Invalid") &&
+                        <button className="StatusButton" onClick={(e) => handleStatusUpdate({ e, product })}>
+                            {product.pStatus != "Valid" ? "Activate" : "Deactivate"}
+                        </button>}
                 </td>
 
                 {/* <td className={`${status ? "StatusGreen" : 'StatusRed'}`}>
