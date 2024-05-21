@@ -5,7 +5,7 @@ import { faPenToSquare, faStar, faTrash } from '@fortawesome/free-solid-svg-icon
 import { Link, useLocation } from 'react-router-dom';
 import './ProductCard.css'
 import PurchaseForm from '../PurhcaseForm/PurchaseForm';
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useItemsContext } from '../../hooks/useItemsContext'
 import { ToastContainer, toast } from 'react-toastify';
@@ -15,7 +15,10 @@ const ProductCard = ({ edit, product, languageText, api }) => {
     const { user } = useAuthContext()
     const [isPurchaseFormOpen, setPurchaseFormOpen] = useState(false);
     const [updating, setUpdating] = useState(false)
-    const { users = [], products = [], dispatch } = useItemsContext()
+    const { users = [], products = [], reviews = [], dispatch } = useItemsContext()
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null);
+    const [averageRating, setAverageRating] = useState(0);
 
     const handleTrashButtonClick = (event) => {
         event.preventDefault();
@@ -32,6 +35,47 @@ const ProductCard = ({ edit, product, languageText, api }) => {
         setPurchaseFormOpen(false);
     };
 
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const reviewsResponse = await fetch(`${api}/api/reviews`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                });
+                if (!reviewsResponse.ok) {
+                    console.error(`Error fetching Items. Status: ${reviewsResponse.status}, ${reviewsResponse.statusText}`);
+                    setError('Failed to fetch data');
+                    return;
+                }
+                const reviewJson = await reviewsResponse.json();
+                const reviewFilter = reviewJson.filter((review) => review.sellerID === product.userID);
+
+
+                dispatch({
+                    type: 'SET_ITEM',
+                    collection: "reviews",
+                    payload: reviewFilter,
+                });
+
+                const totalRating = reviewFilter.reduce((acc, review) => acc + review.reviewRating, 0);
+                const avgRating = reviewFilter.length ? (totalRating / reviewFilter.length) : 0;
+                setAverageRating(avgRating);
+
+            } catch (error) {
+                console.error('An error occurred while fetching form data:', error);
+            } finally {
+                // Set loading to false once the data is fetched (success or error)
+                setLoading(false);
+            }
+        };
+
+        if (user) {
+            fetchData();
+        }
+    }, [api, dispatch, user, product.userID]);
 
     const handleDelete = async (e) => {
         setUpdating(true);
@@ -167,12 +211,24 @@ const ProductCard = ({ edit, product, languageText, api }) => {
                         </ul>
                     </div>
                 </div> */}
-                <div class="SellerRatings">
+                {/* <div class="SellerRatings">
                     <FontAwesomeIcon icon={faStar} className="Rating" />
                     <FontAwesomeIcon icon={faStar} className="Rating" />
                     <FontAwesomeIcon icon={faStar} className="Rating" />
                     <FontAwesomeIcon icon={faStar} className="Rating" />
                     <FontAwesomeIcon icon={faStar} />
+                </div> */}
+
+                <div className="SellerRatings">
+                    {[...Array(5)].map((_, i) => (
+                        <FontAwesomeIcon
+                            key={i}
+                            icon={faStar}
+                            className={i < averageRating ? 'Rating' : ''}
+                        />
+                    ))}
+
+
                 </div>
             </div>
 

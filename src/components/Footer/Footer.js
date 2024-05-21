@@ -26,7 +26,7 @@ const Footer = ({ children }) => {
                                 <h4>{languageText.About}</h4>
 
                                 <Link to="FAQ.php" className='FooterLinks'>{languageText.FAQ}</Link>
-                                <Link to="AboutUs.php" className='FooterLinks'>{languageText.AboutUs}</Link>
+                                <Link to="/report" className='FooterLinks'>{languageText.CreateAReport}</Link>
                                 <Link to="privacy.html" className='FooterLinks'>{languageText.PrivacyPolicy}</Link>
                                 <Link to="terms.html" className='FooterLinks' >{languageText.TermsConditions}</Link>
 

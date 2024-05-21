@@ -32,6 +32,7 @@ import { useChatState } from "./context/ChatContext";
 import EditProfile from './pages/Profile/EditProfile';
 import EditProduct from './pages/Products/EditProduct';
 import CheckoutSuccess from './pages/Payment/CheckoutSuccess';
+import Report from './pages/Details/Report';
 
 
 
@@ -173,6 +174,15 @@ function App() {
               <Navigate to='/profile' />
             ) : (
               <NavBar api={api}><Footer><Donate api={api} languageText={languageText} /></Footer></NavBar>
+            )
+          } />
+
+          <Route path="/report" element={
+            !user ? (<Navigate to='/SignIn' />
+            ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" || user.userStatus === "Inactive" ? (
+              <Navigate to='/profile' />
+            ) : (
+              <NavBar api={api}><Footer><Report api={api} languageText={languageText} /></Footer></NavBar>
             )
           } />
           {/* <Route path="/payment" element={

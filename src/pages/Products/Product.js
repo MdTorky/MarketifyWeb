@@ -20,7 +20,7 @@ import axios from 'axios';
 
 const Product = ({ api, languageText }) => {
     const { id } = useParams();
-    const { products = [], dispatch } = useItemsContext();
+    const { products = [], reviews = [], dispatch } = useItemsContext();
     const [productData, setProductData] = useState(null);
 
     const [isChatOpen, setChatOpen] = useState(false);
@@ -28,8 +28,10 @@ const Product = ({ api, languageText }) => {
 
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(true)
+    const [reviewLoading, setReviewLoading] = useState(false)
     // const { user, selectedChat, setSelectedChat, chats, setChats } = useAuthContext()
     const { user } = useAuthContext()
+    const [averageRating, setAverageRating] = useState(0);
 
 
     const [userTwoError, setUserTwoError] = useState(null);
@@ -70,6 +72,7 @@ const Product = ({ api, languageText }) => {
 
 
     useEffect(() => {
+
         // Fetch form data based on type and formId
         const fetchData = async () => {
             try {
@@ -91,6 +94,30 @@ const Product = ({ api, languageText }) => {
                 });
                 setProductData(data);
 
+                const reviewsResponse = await fetch(`${api}/api/reviews`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                });
+                if (!reviewsResponse.ok) {
+                    console.error(`Error fetching Items. Status: ${reviewsResponse.status}, ${reviewsResponse.statusText}`);
+                    setError('Failed to fetch data');
+                    return;
+                }
+                const reviewJson = await reviewsResponse.json();
+                const reviewFilter = reviewJson.filter((review) => review.sellerID === productData.userID);
+
+
+                dispatch({
+                    type: 'SET_ITEM',
+                    collection: "reviews",
+                    payload: reviewFilter,
+                });
+
+                const totalRating = reviewFilter.reduce((acc, review) => acc + review.reviewRating, 0);
+                const avgRating = reviewFilter.length ? (totalRating / reviewFilter.length) : 0;
+                setAverageRating(avgRating);
+
             } catch (error) {
                 console.error('An error occurred while fetching form data:', error);
             } finally {
@@ -102,7 +129,7 @@ const Product = ({ api, languageText }) => {
         if (user) {
             fetchData();
         }
-    }, [api, id, dispatch, user]);
+    }, [api, id, dispatch, user, productData]);
 
 
 
@@ -177,12 +204,14 @@ const Product = ({ api, languageText }) => {
                                     </Link>
                                     <h3 className="ProductCondition">{productData?.pCondition}</h3>
                                     <h2 className="ProductName">{productData?.pTitle}</h2>
-                                    <div class="SellerRatings">
-                                        <FontAwesomeIcon icon={faStar} className="Rating" />
-                                        <FontAwesomeIcon icon={faStar} className="Rating" />
-                                        <FontAwesomeIcon icon={faStar} className="Rating" />
-                                        <FontAwesomeIcon icon={faStar} className="Rating" />
-                                        <FontAwesomeIcon icon={faStar} />
+                                    <div className="SellerRatings">
+                                        {[...Array(5)].map((_, i) => (
+                                            <FontAwesomeIcon
+                                                key={i}
+                                                icon={faStar}
+                                                className={i < averageRating ? 'Rating' : ''}
+                                            />
+                                        ))}
                                     </div>
                                     <p className="ProductDescription">{productData?.pDescription}</p>
 

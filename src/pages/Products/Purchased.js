@@ -21,7 +21,7 @@ const Purchased = ({ languageText, api }) => {
     const [activeFilter, setActiveFilter] = useState('all');
     const [activeSoldFilter, setActiveSoldFilter] = useState('all');
     const [showReviewPopup, setShowReviewPopup] = useState(false);
-    const { products = [], transactions = [], users = [], dispatch } = useItemsContext();
+    const { products = [], transactions = [], users = [], reviews = [], dispatch } = useItemsContext();
     const { user } = useAuthContext()
     const { accessChat, chatError } = useChat(api, toast);
     const [isChatOpen, setChatOpen] = useState(false);
@@ -43,19 +43,20 @@ const Purchased = ({ languageText, api }) => {
         setActiveSoldFilter(filter);
     };
 
-    const handleReviewButtonClick = () => {
+    const handleReviewButtonClick = (useSeller) => {
         setShowReviewPopup(true);
+        setSeller(useSeller)
     };
 
     const handleCloseReviewPopup = () => {
         setShowReviewPopup(false);
     };
 
-    const handleReviewSubmit = (reviewData) => {
-        // Handle the review submission logic (e.g., send to the server)
-        console.log('Review submitted:', reviewData);
-        handleCloseReviewPopup();
-    };
+    // const handleReviewSubmit = (reviewData) => {
+    //     // Handle the review submission logic (e.g., send to the server)
+    //     console.log('Review submitted:', reviewData);
+    //     handleCloseReviewPopup();
+    // };
 
 
 
@@ -102,8 +103,8 @@ const Purchased = ({ languageText, api }) => {
                         'Authorization': `Bearer ${user.token}`
                     }
                 })
-                if (!response.ok) {
-                    console.error(`Error fetching Items. Status: ${response.status}, ${response.statusText}`);
+                if (!userResponse.ok) {
+                    console.error(`Error fetching Items. Status: ${userResponse.status}, ${userResponse.statusText}`);
                     setError('Failed to fetch data');
 
                     return;
@@ -122,8 +123,8 @@ const Purchased = ({ languageText, api }) => {
                         'Authorization': `Bearer ${user.token}`
                     }
                 })
-                if (!response.ok) {
-                    console.error(`Error fetching Items. Status: ${response.status}, ${response.statusText}`);
+                if (!productResponse.ok) {
+                    console.error(`Error fetching Items. Status: ${productResponse.status}, ${productResponse.statusText}`);
                     setError('Failed to fetch data');
 
                     return;
@@ -134,6 +135,28 @@ const Purchased = ({ languageText, api }) => {
                     type: 'SET_ITEM',
                     collection: "products",
                     payload: productJson,
+                });
+
+
+
+
+                const reviewsResponse = await fetch(`${api}/api/reviews`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                if (!reviewsResponse.ok) {
+                    console.error(`Error fetching Items. Status: ${reviewsResponse.status}, ${reviewsResponse.statusText}`);
+                    setError('Failed to fetch data');
+
+                    return;
+                }
+                const reviewJson = await reviewsResponse.json()
+
+                dispatch({
+                    type: 'SET_ITEM',
+                    collection: "reviews",
+                    payload: reviewJson,
                 });
 
 
@@ -293,6 +316,7 @@ const Purchased = ({ languageText, api }) => {
     const PurchasedItem = ({ transaction, index }) => {
         const productFilter = products.find(productOne => transaction.productID === productOne._id)
         const sellerFilter = users.find(seller => transaction.sellerID === seller._id)
+        const reviewFilter = reviews.find(review => (transaction.buyerID === review.reviewerID && transaction.sellerID === review.sellerID))
         let productType
         if (productFilter?.pType === "Sell") {
             productType = true
@@ -313,9 +337,14 @@ const Purchased = ({ languageText, api }) => {
                     {productFilter?.pType === "Sell" ? <td>{productFilter?.pPrice} RM</td> : <td>{languageText.Donation}</td>}
                     <td>{sellerFilter?.userFname}</td>
                     <td>{sellerFilter?.userPhoneNo}</td>
-                    <button className="ReviewButton" onClick={handleReviewButtonClick}>
-                        <FontAwesomeIcon icon={faStar} />
-                    </button>
+                    {!reviewFilter ? (
+                        <button className="ReviewButton" onClick={() => handleReviewButtonClick(transaction.sellerID)}>
+                            <FontAwesomeIcon icon={faStar} />
+                        </button>
+                    ) : (
+                        <b><td>{languageText.LeftReviewAlready}</td></b>
+                    )
+                    }
 
                     <td>{formatDate(transaction.createdAt)}</td>
                     {productType ?
@@ -446,14 +475,6 @@ const Purchased = ({ languageText, api }) => {
                             ))}
                         </div>
                     </table>
-                    {showReviewPopup && (
-                        <ReviewPopup
-                            onClose={handleCloseReviewPopup}
-                            onSubmit={handleReviewSubmit}
-                            showReviewPopup={showReviewPopup}
-                            languageText={languageText}
-                        />
-                    )}
                     {/* {isChatOpen && <Chat onClose={closeChat} languageText={languageText} />} */}
 
                 </div>
@@ -520,9 +541,11 @@ const Purchased = ({ languageText, api }) => {
                         {showReviewPopup && (
                             <ReviewPopup
                                 onClose={handleCloseReviewPopup}
-                                onSubmit={handleReviewSubmit}
+                                // onSubmit={handleReviewSubmit}
                                 showReviewPopup={showReviewPopup}
                                 languageText={languageText}
+                                userSeller={seller}
+                                api={api}
                             />
                         )}
                         {isChatOpen && <Chat onClose={closeChat} languageText={languageText} userSeller={seller} api={api} />}

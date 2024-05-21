@@ -19,7 +19,7 @@ const Profile = ({ languageText, api }) => {
     const handleLogout = () => {
         logout()
     }
-    const { users = [], dispatch } = useItemsContext()
+    const { users = [], reviews = [], dispatch } = useItemsContext()
 
     const [userAddress, setUserAddress] = useState('')
     const [selectedUserImageText, setSelectedUserImageText] = useState(null);
@@ -89,6 +89,45 @@ const Profile = ({ languageText, api }) => {
                 });
                 setUserData(data);
 
+                const reviewsResponse = await fetch(`${api}/api/reviews`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                })
+                if (!reviewsResponse.ok) {
+                    console.error(`Error fetching Items. Status: ${reviewsResponse.status}, ${reviewsResponse.statusText}`);
+                    setError('Failed to fetch data');
+
+                    return;
+                }
+                const reviewJson = await reviewsResponse.json()
+                const reviewFilter = reviewJson.filter((review) => review.sellerID === user.userId)
+
+
+                dispatch({
+                    type: 'SET_ITEM',
+                    collection: "reviews",
+                    payload: reviewFilter,
+                });
+
+
+                const userResponse = await fetch(`${api}/api/user/`, {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                });
+                if (!userResponse.ok) {
+                    console.error(`Error fetching form data. Status: ${userResponse.status}, ${userResponse.statusText}`);
+                    return;
+                }
+
+                const userData = await userResponse.json();
+                dispatch({
+                    type: 'SET_ITEM',
+                    collection: "users",
+                    payload: userData,
+                });
+
             } catch (error) {
                 console.error('An error occurred while fetching form data:', error);
             } finally {
@@ -103,25 +142,38 @@ const Profile = ({ languageText, api }) => {
     }, [api, dispatch, user, userData]);
 
 
-    const ReviewCard = () => {
 
+    const ReviewCard = ({ review, index }) => {
+        const userFilter = users.find(reviewer => reviewer._id === review.reviewerID)
         return (
             <div className="ReviewCard">
                 <div className="ReviewCardLeft">
                     {/* <div className="ReviewCardImg"> */}
-                    <img src={profile} alt="" />
+                    <img src={userFilter?.userImage} alt="" />
 
                     {/* </div> */}
-                    <p>Mohamed</p>
+                    <p>{userFilter?.userFname}</p>
                 </div>
                 <div className="ReviewCardRight">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti saepe fuga hic, reprehenderit pariatur optio eos ducimus molestiae exercitationem est.</p>
-                    <div className="SellerRatings">
+                    <p>{review.reviewComment}</p>
+                    {/* <div className="SellerRatings">
                         <FontAwesomeIcon icon={faStar} className="Rating" />
                         <FontAwesomeIcon icon={faStar} className="Rating" />
                         <FontAwesomeIcon icon={faStar} className="Rating" />
                         <FontAwesomeIcon icon={faStar} className="Rating" />
                         <FontAwesomeIcon icon={faStar} />
+                    </div> */}
+
+                    <div className="SellerRatings">
+                        {[...Array(5)].map((_, i) => (
+                            <FontAwesomeIcon
+                                key={i}
+                                icon={faStar}
+                                className={i < review.reviewRating ? 'Rating' : ''}
+                            />
+                        ))}
+
+
                     </div>
                 </div>
             </div>
@@ -395,8 +447,18 @@ const Profile = ({ languageText, api }) => {
                         <div className="ProfileRight">
                             <h1>{languageText.Reviews}</h1>
 
-                            {ReviewCard()}
-                            {ReviewCard()}
+
+                            {reviews && reviews.map((review) => (
+                                <ReviewCard review={review} />
+
+                            ))}
+
+                            {reviews.length <= 0 && (
+                                <div className="NoProductsContainer">
+                                    <p><Icon icon="material-symbols:preview-off" />{languageText.NoReviews}</p>
+                                </div>
+                            )}
+
 
                         </div>
 

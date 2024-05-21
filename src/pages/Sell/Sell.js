@@ -164,7 +164,7 @@ const Sell = ({ api, languageText }) => {
                     collection: "products",
                     payload: json
                 });
-                toast.success("Added Successfully", {
+                toast.success(languageText.ProductAddedSuccessfully, {
                     position: "bottom-center",
                     autoClose: 5000,
                     hideProgressBar: true,

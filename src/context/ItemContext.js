@@ -78,7 +78,9 @@ export const ItemsContextProvider = ({ children }) => {
         users: [],
         message: [],
         notifications: [],
-        transactions: []
+        transactions: [],
+        reviews: [],
+        reports: []
     })
 
 

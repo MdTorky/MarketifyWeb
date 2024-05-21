@@ -72,6 +72,7 @@
     "Malay": "Malay",
 
     "About": "About",
+    "CreateAReport": "Create A Report",
     "FAQ": "FAQ",
     "AboutUs": "About Us",
     "PrivacyPolicy": "Privacy Policy",
@@ -166,6 +167,7 @@
     "PayFine": "Pay Fine",
     "InformationAddedSuccessfully": "Information Added Successfully",
     "ProfileUpdatedSuccessfully": "Profile Updated Successfully",
+    "ProductAddedSuccessfully": "Product Added Successfully",
     "ProductChangedSuccessfullyTo": "Product Changed Successfully to",
     "ProductUpdateSuccessfully": "Product Updated Successfully",
     "UnderEvaluation": "Your account is still under evaluation",
@@ -187,7 +189,16 @@
     "SubmitPurchase": "Submit Purchase",
     "PurchasedSuccessfully": "Purchased Successfully",
     "AreYouSure": "Are You Sure",
-    "PaidForTheProduct": "Paid for the Product?"
+    "PaidForTheProduct": "Paid for the Product?",
+
+    "ReviewAddedSuccessfully": "Review Added Successfully",
+    "LeftReviewAlready": "Left Review Already",
+    "NoReviews": "No Reviews",
+
+    "ExplainTheIssue": "Explain The Issue",
+    "ReportForm": "Report Form",
+    "ReportAddedSuccessfully": "Report Added Successfully",
+    "AreYouSureReport": "Are You Sure You Want to Delete This Report?"
   },
   "ar": {
     "BrowseProducts": "تصفح المنتجات"
