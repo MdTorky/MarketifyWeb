@@ -161,3 +161,47 @@
 .type1:hover::before {
     transform: translateY(-50px) scale(0) rotate(120deg);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 768px) {
+
+
+
+
+
+
+
+
+
+    .Notifications {
+        min-width: 350px;
+        padding: 15px;
+        right: -160px;
+        margin: auto;
+
+    }
+
+    .Notifications h2 {
+        font-size: 1.2em;
+    }
+
+    .NotificationMessage {
+        font-size: 0.8em;
+    }
+
+
+}

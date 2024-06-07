@@ -24,27 +24,48 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 // }
 
 
-const Categories = ({ text, status, onChange, type }) => {
+// const Categories = ({ text, status, onChange, type }) => {
 
+//     return (
+//         <div className="CategoriesCheckbox">
+//             <input
+//                 id={text}
+//                 className="CheckBoxInput"
+//                 type="checkbox"
+//                 checked={status}
+//                 onChange={() => onChange(type)}
+//                 disabled={status === "true" ? "disabled" : ""}
+//             />
+//             <label htmlFor={text} className="CheckBoxLabel">
+//                 {!status && <span className="CheckBoxSpan"></span>}
+//                 <div className="CheckBoxText">{text}</div>
+//             </label>
+//         </div>
+//     );
+// };
+
+
+const Categories = ({ availableCategories, selectedCategories, onChange }) => {
     return (
         <div className="CategoriesCheckbox">
-            <input
-                id={text}
-                className="CheckBoxInput"
-                type="checkbox"
-                checked={status}
-                onChange={() => onChange(type)}
-                disabled={status === "true" ? "disabled" : ""}
-            />
-            <label htmlFor={text} className="CheckBoxLabel">
-                {!status && <span className="CheckBoxSpan"></span>}
-                <div className="CheckBoxText">{text}</div>
-            </label>
+            {availableCategories.map(category => (
+                <div key={category}>
+                    <input
+                        id={category}
+                        className="CheckBoxInput"
+                        type="checkbox"
+                        checked={selectedCategories.includes(category)}
+                        onChange={() => onChange(category)}
+                    />
+                    <label htmlFor={category} className="CheckBoxLabel">
+                        {!selectedCategories.includes(category) && <span className="CheckBoxSpan"></span>}
+                        <div className="CheckBoxText">{category}</div>
+                    </label>
+                </div>
+            ))}
         </div>
     );
 };
-
-
 
 
 
@@ -94,6 +115,7 @@ const Browse = ({ api, languageText }) => {
     const [selectedConditions, setSelectedConditions] = useState([]);
     const [selectedDonations, setSelectedDonations] = useState([]);
     const [showCategories, setShowCategories] = useState(false);
+    const availableCategories = [...new Set(products.flatMap(product => product.pCategory))];
     useEffect(() => {
         const fetchItems = async () => {
             try {
@@ -216,7 +238,6 @@ const Browse = ({ api, languageText }) => {
                                     <div class="button-wrapper">
                                         <div class="text">{languageText.ShowCategories}</div>
                                         <span class="icon">
-                                            {/* <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"></path></svg> */}
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m12 20l6-6m-6 6l-6-6m6 6V9.5M12 4v2.5" /></svg>
                                         </span>
                                     </div>
@@ -238,17 +259,17 @@ const Browse = ({ api, languageText }) => {
                                     </div>
                                 </div>
                             }
-                            <div className={`${showCategories ? "Category" : "Disabled"}`}>
+                            {/* {categories({ text: languageText.WomenBags })} */}
+                            {/* {categories({ text: languageText.MenClothing, status: selectedCategories.includes(languageText.MenClothing) })} */}
+                            {/* {categories({ text: languageText.WomenClothing })} */}
+                            {/* <div className={`${showCategories ? "Category" : "Disabled"}`}>
                                 {Categories({ text: languageText.AllCategories, status: selectedCategories.includes(languageText.AllCategories), onChange: handleCategoryChange, type: "All Categories" })}
-                                {/* {categories({ text: languageText.MenClothing, status: selectedCategories.includes(languageText.MenClothing) })} */}
-                                {/* {categories({ text: languageText.WomenClothing })} */}
                                 {Categories({ text: languageText.MenClothing, status: selectedCategories.includes(languageText.MenClothing), onChange: handleCategoryChange, type: "Men's Clothing" })}
                                 {Categories({ text: languageText.WomenClothing, status: selectedCategories.includes(languageText.WomenClothing), onChange: handleCategoryChange, type: "Women's Clothing" })}
                                 {Categories({ text: languageText.MenShoes, status: selectedCategories.includes(languageText.MenShoes), onChange: handleCategoryChange, type: "Men's Shoes" })}
                                 {Categories({ text: languageText.WomenShoes, status: selectedCategories.includes(languageText.WomenShoes), onChange: handleCategoryChange, type: "Women's Shoes" })}
                                 {Categories({ text: languageText.MenBags, status: selectedCategories.includes(languageText.MenBags), onChange: handleCategoryChange, type: "Men's Bags" })}
                                 {Categories({ text: languageText.WomenBags, status: selectedCategories.includes(languageText.WomenBags), onChange: handleCategoryChange, type: "Women's Bags" })}
-                                {/* {categories({ text: languageText.WomenBags })} */}
                                 {Categories({ text: "-----------", status: "true", onChange: handleCategoryChange })}
                                 {Categories({ text: languageText.FoodBeverages, status: selectedCategories.includes(languageText.FoodBeverages), onChange: handleCategoryChange, type: "Food & Beverages" })}
                                 {Categories({ text: languageText.Groceries, status: selectedCategories.includes(languageText.Groceries), onChange: handleCategoryChange, type: "Groceries" })}
@@ -270,6 +291,16 @@ const Browse = ({ api, languageText }) => {
                                 {Categories({ text: languageText.GamesHobbies, status: selectedCategories.includes(languageText.GamesHobbies), onChange: handleCategoryChange, type: "Games & Hobbies" })}
                                 {Categories({ text: languageText.SportsOutdoor, status: selectedCategories.includes(languageText.SportsOutdoor), onChange: handleCategoryChange, type: "Sports & Outdoor" })}
                                 {Categories({ text: languageText.Tickets, status: selectedCategories.includes(languageText.Tickets), onChange: handleCategoryChange, type: "Tickets" })}
+                            </div> */}
+                            <div className={`${showCategories ? "Category" : "Disabled"}`}>
+
+                                <Categories
+                                    availableCategories={availableCategories}
+                                    selectedCategories={selectedCategories}
+                                    onChange={handleCategoryChange}
+                                />
+
+
                             </div>
                         </div>
                         <div className="Categories">

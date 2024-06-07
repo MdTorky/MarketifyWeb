@@ -25,7 +25,9 @@ const EditProfile = ({ languageText, api }) => {
     const [loading, setLoading] = useState(true)
     const [updating, setUpdating] = useState(false)
     const [userImg, setUserImg] = useState(null);
+    const [userQrImg, setUserQrImg] = useState(null);
     const [selectedImageText, setSelectedImageText] = useState(null);
+    const [selectedQrImageText, setSelectedQrImageText] = useState(null);
 
 
     useEffect(() => {
@@ -104,6 +106,10 @@ const EditProfile = ({ languageText, api }) => {
         if (userImg) {
             userImgUrl = await uploadFile('image', userData.userImage)
         }
+        let userQrImgUrl = userData.userQrImage
+        if (userQrImg) {
+            userQrImgUrl = await uploadFile('image', userData.userQrImage)
+        }
 
         try {
 
@@ -116,7 +122,10 @@ const EditProfile = ({ languageText, api }) => {
                     userAddress: userData.userAddress,
                     userImage: userImgUrl,
                     userFname: userData.userFname,
-                    userPhoneNo: userData.userPhoneNo
+                    userPhoneNo: userData.userPhoneNo,
+                    userBankAccount: userData.userBankAccount,
+                    userBankType: userData.userBankType,
+                    userQrImage: userQrImgUrl
                 }),
             });
 
@@ -184,13 +193,41 @@ const EditProfile = ({ languageText, api }) => {
         }
     };
 
-    const handleRemoveImage = () => {
+
+
+    const handleQrImgChange = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            setUserData((prevForm) => ({
+                ...prevForm,
+                userQrImage: file,
+            }));
+            console.log(userQrImg)
+            setSelectedQrImageText(file.name);
+            setUserQrImg(file)
+        }
+    };
+
+    const handleRemoveImage = (e) => {
+        e.preventDefault();
+
         setUserData((prevForm) => ({
             ...prevForm,
             userImage: null,
         }));
         setSelectedImageText(null);
     }
+
+    const handleRemoveQrImage = (e) => {
+        e.preventDefault();
+        setUserData((prevForm) => ({
+            ...prevForm,
+            userQrImage: null,
+        }));
+        setSelectedQrImageText(null);
+    }
+
 
 
     const fullNameRegex = /^[a-zA-Z\s'-]{2,}$/;
@@ -309,7 +346,107 @@ const EditProfile = ({ languageText, api }) => {
                                 // value={form.eventImg}
                                 />
                             </div>
+
+
+
+                            <div className="InputField">
+                                <div className="InputLabelField">
+                                    <input
+                                        type="text"
+                                        className={`input ${(userData.userBankAccount) ? 'valid' : ''}`}
+                                        required
+                                        value={userData.userBankAccount}
+                                        id="userBankAccount"
+                                        name="userBankAccount"
+                                        onChange={handleInputChange}
+                                        style={{
+                                            direction: "ltr"
+                                        }}
+
+                                    />
+                                    {!userData.userBankAccount && <label htmlFor="userBankAccount" className={`LabelInput ${(userData.userBankAccount) ? 'valid' : ''}`}><Icon icon="mdi:bank" />{languageText.BankAccount}</label>}
+                                </div>
+                            </div>
+
+                            <div className="InputField">
+                                <select
+                                    className={`input ${(userData.userBankType) ? 'valid' : ''}`}
+                                    name="userBankType"
+                                    required
+                                    value={userData.userBankType}
+                                    onChange={handleInputChange}
+                                >
+                                    <option value="" disabled selected hidden>{languageText.BankType}</option>
+                                    <option value="AEON Bank">AEON Bank</option>
+                                    <option value="Affin Bank Berhad">Affin Bank Berhad</option>
+                                    <option value="Al-Rajhi Banking">Al-Rajhi Banking</option>
+                                    <option value="Alliance Bank">Alliance Bank</option>
+                                    <option value="AmBank/AmFinance">AmBank/AmFinance</option>
+                                    <option value="BNP Paribas">BNP Paribas</option>
+                                    <option value="Bangkok Bank">Bangkok Bank</option>
+                                    <option value="Bank Islam">Bank Islam</option>
+                                    <option value="Bank Kerjasama">Bank Kerjasama</option>
+                                    <option value="Bank Muamalat">Bank Muamalat</option>
+                                    <option value="Bank Pertanian">Bank Pertanian</option>
+                                    <option value="Bank Simpanan">Bank Simpanan</option>
+                                    <option value="Bank of America">Bank of America</option>
+                                    <option value="Bank of China">Bank of China</option>
+                                    <option value="BigPay">BigPay</option>
+                                    <option value="Boost Bank">Boost Bank</option>
+                                    <option value="China Construction Bank">China Construction Bank</option>
+                                    <option value="CIMB Bank">CIMB Bank</option>
+                                    <option value="CitiBank">CitiBank</option>
+                                    <option value="Deutshe Bank">Deutshe Bank</option>
+                                    <option value="Finexus Cards">Finexus Cards</option>
+                                    <option value="GXBank">GXBank</option>
+                                    <option value="HSBC Bank">HSBC Bank</option>
+                                    <option value="Hong Leong Bank">Hong Leong Bank</option>
+                                    <option value="Industrial and Commercial Bank of China">Industrial and Commercial Bank of China</option>
+                                    <option value="J.P. Morgan Chase Bank">J.P. Morgan Chase Bank</option>
+                                    <option value="Kuwait Finance House">Kuwait Finance House</option>
+                                    <option value="MBSB Bank">MBSB Bank</option>
+                                    <option value="MUFG Bank">MUFG Bank</option>
+                                    <option value="MayBank">MayBank</option>
+                                    <option value="Merchantrade">Merchantrade</option>
+                                    <option value="Mizhuo Corporate Bank">Mizhuo Corporate Bank</option>
+                                    <option value="OCBC Bank">OCBC Bank</option>
+                                    <option value="Public Bank">Public Bank</option>
+                                    <option value="RHB Bank">RHB Bank</option>
+                                    <option value="ShopeePay">ShopeePay</option>
+                                    <option value="Standard Chartered Bank">Standard Chartered Bank</option>
+                                    <option value="Sumitomo Mitsui Banking">Sumitomo Mitsui Banking</option>
+                                    <option value="Touch N Go eWallet (TnG)">Touch N Go eWallet (TnG)</option>
+                                    <option value="United Overseas Bank">United Overseas Bank</option>
+                                </select>
+                            </div>
+
+
+
+                            <div className="InputField">
+
+                                <label for="qrImage" className={`LabelInputImg ${(userData.userQrImage) ? 'valid' : ''}`}>
+                                    <div style={{ gap: "8px", display: "flex", alignItems: "center" }}><Icon icon="iconamoon:profile-circle-duotone" />{selectedQrImageText || languageText.QrCode}</div>
+                                    {(userData.userQrImage)
+                                        ? <button className="XImgButton" onClick={handleRemoveQrImage}>
+                                            <Icon icon="line-md:close-circle" />
+                                        </button>
+                                        : <Icon icon="line-md:upload-loop" />}
+                                </label>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    id="qrImage"
+                                    className={`input ${(userData.userQrImage) ? 'valid' : ''}`}
+                                    style={{ display: 'none' }}
+                                    onChange={handleQrImgChange}
+                                />
+                            </div>
+
                             {phoneRegex.test(userData.userPhoneNo) && fullNameRegex.test(userData.userFname) && <button className='SubmitButton'>{languageText.Submit}</button>}
+
+
+
+
 
                         </form>
                     </div>

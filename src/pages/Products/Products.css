@@ -934,6 +934,9 @@
     background: white;
     bottom: 300px;
     padding: 20px;
+    /* left: 40%; */
+    /* display: flex; */
+    margin: auto;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 20px;
     justify-content: space-around;
@@ -944,6 +947,29 @@
     border: 1px solid rgba(255, 255, 255, 0.125);
     z-index: 0;
     animation: ScaleCenter 1s ease 0s 1 normal forwards;
+}
+
+.CooldownMessage {
+    padding: 10px;
+    background: var(--theme);
+    border-radius: 6px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.ClockItem {
+    color: var(--bg);
+    font-size: 3em;
+}
+
+.CoolDownError {
+    padding: 10px;
+    color: var(--bg);
+    width: 80%;
+    text-align: center;
 }
 
 
@@ -1183,11 +1209,13 @@ select:focus {
 /* Purchased Products */
 
 
+
+
 .SoldTable {
     width: 100%;
     display: flex;
     /* flex-direction: ; */
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     justify-content: center;
     position: relative;
 
@@ -1195,11 +1223,6 @@ select:focus {
 
 .SoldTable table {
     width: 100%;
-    /* padding: -100px; */
-    /* margin-right: -100px; */
-    /* width: min-content; */
-    /* display: flex; */
-    /* flex-direction: column; */
 }
 
 
@@ -1260,9 +1283,15 @@ select:focus {
 
 }
 
+.PurchasedProducts .TableContainer {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+
 .PurchasedTitles {
     display: flex;
-    width: 80%;
+    width: 100%;
     /* gap: 90px; */
     /* justify-content: space-evenly; */
     align-items: center;
@@ -1273,6 +1302,10 @@ select:focus {
     padding: 5px 0;
     position: relative;
     /* font-weight: 700; */
+}
+
+.SoldProducts .PurchasedTitles {
+    width: 80%;
 }
 
 .PurchasedTitles td, .PurchasedTitles th {
@@ -1347,6 +1380,24 @@ select:focus {
 }
 
 .PayButton {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg);
+    border-radius: 10px;
+    padding: 5px 10px;
+    /* width: fit-content; */
+    text-decoration: none;
+    background: var(--text);
+    left: 0;
+    right: 0;
+    /* margin: auto; */
+    top: 30px;
+    transition: 0.7s;
+}
+
+.BankAccount {
     position: absolute;
     display: flex;
     align-items: center;
@@ -1444,4 +1495,401 @@ select:focus {
     flex-wrap: wrap;
     margin: auto;
     justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 768px) {
+
+    .Browse {
+        /* padding: 20px; */
+        font-family: 'Poppins', sans-serif;
+        margin-bottom: 5%;
+        display: flex;
+        overflow: hidden;
+        flex-direction: column;
+
+    }
+
+
+    .Browse h2 {
+        margin: 0;
+        color: var(--text);
+        text-transform: uppercase;
+        font-weight: 800;
+        margin: 100px 0 0 0;
+        font-size: 3em;
+        text-align: center;
+    }
+
+
+    .Browse .AllBrowse {
+        gap: 100px;
+        flex-direction: column;
+        margin: 20px 0;
+    }
+
+    .Browse .Categories {
+        padding: 10px;
+        margin-left: 0;
+        gap: 10px;
+        /* margin: auto; */
+    }
+
+    .Browse .Category {
+        margin-left: 0;
+    }
+
+    .Browse .Categories p {
+        font-size: 1em;
+    }
+
+    .CheckBoxLabel {
+        font-size: 0.9em;
+    }
+
+    .Browse .RightSide {
+        display: flex;
+        margin-bottom: 90px;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+
+
+
+
+
+    .PurchasedProducts {
+        padding: 20px;
+        font-family: 'Poppins', sans-serif;
+        margin-bottom: -100px;
+        display: flex;
+        overflow: hidden;
+        flex-direction: column;
+        z-index: 0;
+
+    }
+
+
+
+
+
+
+
+
+    .PurchasedFilter {
+        margin: 10px auto;
+        z-index: 0;
+
+    }
+
+
+
+    .PurchasedProducts .TableContainer {
+        overflow: auto;
+        justify-content: flex-start;
+        z-index: 0;
+
+    }
+
+
+
+    .SoldProducts .PurchasedTitles {
+        width: 100%;
+        z-index: 0;
+
+    }
+
+
+    .SoldTable {
+        margin-top: 10px;
+        margin-bottom: 100%;
+        width: 100%;
+        overflow: auto;
+        /* overflow-y: auto; */
+        height: fit-content;
+        /* background: red; */
+        height: 100%;
+        justify-content: flex-start;
+        z-index: 0;
+
+    }
+
+
+
+
+    .TotalPrice {
+        position: relative;
+        right: 0;
+        height: 100%;
+        z-index: -1;
+    }
+
+    .TotalPrice p {
+        margin: 0;
+        color: var(--bg);
+        font-weight: 800;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .TotalPrice .Total {
+        background: var(--bg);
+        padding: 5px;
+        border-radius: 10px;
+        text-align: center;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .MyProducts {
+        padding: 20px;
+        font-family: 'Poppins', sans-serif;
+        /* margin-bottom: 900px; */
+        display: flex;
+        overflow: hidden;
+        flex-direction: column;
+        margin-bottom: 10%;
+    }
+
+    .MyProducts h2 {
+        margin: 100px 0 0 0;
+        text-align: center;
+    }
+
+    .MyProductsCards {
+        display: flex;
+        width: 100%;
+        gap: 30px;
+        flex-wrap: wrap;
+        margin: auto;
+        justify-content: center;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .PurchaseFormPopup {
+        position: absolute;
+        flex-direction: column;
+        display: flex;
+        background: white;
+        bottom: 30%;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border-radius: 20px;
+        justify-content: space-around;
+        backdrop-filter: blur(4px) saturate(180%);
+        -webkit-backdrop-filter: blur(8px) saturate(180%);
+        background-color: rgba(255, 255, 255, 0.79);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.125);
+        z-index: 9999;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .Product {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        margin-bottom: 5%;
+    }
+
+    .ProductBackground {
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: column;
+        width: 100%;
+        box-sizing: border-box;
+
+    }
+
+
+    .ProductTop {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+    }
+
+    .ProductLeft {
+        margin: 100px auto 0 auto;
+    }
+
+    .ProductLeft .ProductImg img {
+        width: 300px;
+    }
+
+    .ProductDetails {
+        margin: auto;
+        /* background: red; */
+
+    }
+
+    .SellerRatings {
+        justify-content: center;
+    }
+
+    .ProductCondition {
+        text-align: center;
+    }
+
+    .ProductName {
+        text-align: center;
+
+    }
+
+    .ProductDescription {
+        font-size: 0.8em;
+    }
+
+    .ProductRight {
+        margin: 100px auto 30px auto;
+        align-items: center;
+    }
+
+
+
+    .NoProductsContainer p {
+        font-size: 1em;
+
+    }
+
+
+
+
+
+    .ProductPop {
+        width: 100%;
+        margin: auto;
+        /* left: 0; */
+        /* right: 0; */
+    }
+
+    .ProductPopLeft {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .ProductPopLeft img {
+        width: 50px;
+        height: 50px;
+        margin: auto;
+    }
+
+    .ProductPopText {
+        line-height: inherit;
+    }
+
+    .ProductPopText .ProductName {
+        font-size: 1.3em;
+        text-align: start;
+    }
+
+    .ProductPopText .ProductDescription {
+        font-size: 0.7em;
+    }
+
+    .ProductPopRight .ProductPrice {
+        font-size: 1em;
+    }
+
+
+    .PopButton {
+        width: 35px;
+        height: 35px;
+        font-size: 0.8em;
+
+    }
+
+
+
 }

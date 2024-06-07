@@ -31,6 +31,10 @@ const Profile = ({ languageText, api }) => {
     const [submitting, setSubmitting] = useState(false)
     const [userData, setUserData] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [userBankAccount, setUserBankAccount] = useState(null)
+    const [userBankType, setUserBankType] = useState(null)
+    const [userQrImage, setUserQrImage] = useState(null);
+    const [selectedQrImageText, setSelectedQrImageText] = useState(null);
 
     const handleUserImgChange = (e) => {
         const file = e.target.files[0];
@@ -63,8 +67,41 @@ const Profile = ({ languageText, api }) => {
         setSelectedPassportImageText(null);
     }
 
+    const handleQrImgChange = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            setUserQrImage(file);
+            setSelectedQrImageText(file.name);
+        }
+    };
+
+    const handleRemoveQrImage = (e) => {
+        e.preventDefault();
+        setUserQrImage(null);
+        setSelectedQrImageText(null);
+    }
 
 
+
+    const handleCheckout = (user) => {
+        const payload = {
+            users: [user],
+            userId: user.userId,
+        };
+
+        console.log('Payload:', payload);
+
+        axios.post(`${api}/api/stripe/create-checkout-session`, payload)
+            .then((res) => {
+                if (res.data.url) {
+                    window.location.href = res.data.url;
+                }
+            })
+            .catch((err) => {
+                console.error('Error:', err.response?.data || err.message);
+            });
+    };
 
 
     useEffect(() => {
@@ -213,6 +250,7 @@ const Profile = ({ languageText, api }) => {
 
         let userImgUrl = await uploadFile('image', userImg)
         let userPassportUrl = await uploadFile('image', userPassportImg)
+        let userQrUrl = await uploadFile('image', userQrImage)
 
         try {
 
@@ -225,7 +263,11 @@ const Profile = ({ languageText, api }) => {
                     userAddress: userAddress,
                     userImage: userImgUrl,
                     userPassportImage: userPassportUrl,
-                    userStatus: "Waiting"
+                    userStatus: "Waiting",
+                    userQrImage: userQrUrl,
+                    user: userQrUrl,
+                    userBankAccount: userBankAccount,
+                    userBankType: userBankType,
                 }),
             });
 
@@ -349,6 +391,92 @@ const Profile = ({ languageText, api }) => {
 
                                 />
                             </div>
+
+                            <div className="InputField ">
+
+                                <div className="InputLabelField">
+                                    <input
+                                        type="number"
+                                        className={`input ${(userBankAccount) ? 'valid' : ''}`}
+                                        onChange={(e) => { setUserBankAccount(e.target.value) }}
+                                        required
+                                        id="account"
+                                        name="account"
+                                    />
+                                    {!userBankAccount && <label for="name" className={`LabelInput ${(userBankAccount) ? 'valid' : ''}`}><Icon icon="mdi:bank" />{languageText.BankAccount}</label>}
+                                </div>
+                            </div>
+                            <div className="InputField">
+                                <select
+                                    className={`input ${(userBankType) ? 'valid' : ''}`}
+                                    name="userBankType"
+                                    required
+                                    onChange={(e) => { setUserBankType(e.target.value) }}
+                                >
+                                    <option value="" disabled selected hidden>{languageText.BankType}</option>
+                                    <option value="AEON Bank">AEON Bank</option>
+                                    <option value="Affin Bank Berhad">Affin Bank Berhad</option>
+                                    <option value="Al-Rajhi Banking">Al-Rajhi Banking</option>
+                                    <option value="Alliance Bank">Alliance Bank</option>
+                                    <option value="AmBank/AmFinance">AmBank/AmFinance</option>
+                                    <option value="BNP Paribas">BNP Paribas</option>
+                                    <option value="Bangkok Bank">Bangkok Bank</option>
+                                    <option value="Bank Islam">Bank Islam</option>
+                                    <option value="Bank Kerjasama">Bank Kerjasama</option>
+                                    <option value="Bank Muamalat">Bank Muamalat</option>
+                                    <option value="Bank Pertanian">Bank Pertanian</option>
+                                    <option value="Bank Simpanan">Bank Simpanan</option>
+                                    <option value="Bank of America">Bank of America</option>
+                                    <option value="Bank of China">Bank of China</option>
+                                    <option value="BigPay">BigPay</option>
+                                    <option value="Boost Bank">Boost Bank</option>
+                                    <option value="China Construction Bank">China Construction Bank</option>
+                                    <option value="CIMB Bank">CIMB Bank</option>
+                                    <option value="CitiBank">CitiBank</option>
+                                    <option value="Deutshe Bank">Deutshe Bank</option>
+                                    <option value="Finexus Cards">Finexus Cards</option>
+                                    <option value="GXBank">GXBank</option>
+                                    <option value="HSBC Bank">HSBC Bank</option>
+                                    <option value="Hong Leong Bank">Hong Leong Bank</option>
+                                    <option value="Industrial and Commercial Bank of China">Industrial and Commercial Bank of China</option>
+                                    <option value="J.P. Morgan Chase Bank">J.P. Morgan Chase Bank</option>
+                                    <option value="Kuwait Finance House">Kuwait Finance House</option>
+                                    <option value="MBSB Bank">MBSB Bank</option>
+                                    <option value="MUFG Bank">MUFG Bank</option>
+                                    <option value="MayBank">MayBank</option>
+                                    <option value="Merchantrade">Merchantrade</option>
+                                    <option value="Mizhuo Corporate Bank">Mizhuo Corporate Bank</option>
+                                    <option value="OCBC Bank">OCBC Bank</option>
+                                    <option value="Public Bank">Public Bank</option>
+                                    <option value="RHB Bank">RHB Bank</option>
+                                    <option value="ShopeePay">ShopeePay</option>
+                                    <option value="Standard Chartered Bank">Standard Chartered Bank</option>
+                                    <option value="Sumitomo Mitsui Banking">Sumitomo Mitsui Banking</option>
+                                    <option value="Touch N Go eWallet (TnG)">Touch N Go eWallet (TnG)</option>
+                                    <option value="United Overseas Bank">United Overseas Bank</option>
+                                </select>
+                            </div>
+                            <div className="InputField">
+
+                                <label for="userQrImage" className={`LabelInputImg ${(userQrImage) ? 'valid' : ''}`}>
+                                    <div style={{ gap: "8px", display: "flex", alignItems: "center" }}><Icon icon="clarity:qr-code-line" />{selectedQrImageText || languageText.QrCode}</div>
+                                    {(userQrImage)
+                                        ? <button className="XImgButton" onClick={handleRemoveQrImage}>
+                                            <Icon icon="line-md:close-circle" />
+                                        </button>
+                                        : <Icon icon="line-md:upload-loop" />}
+                                </label>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    id="userQrImage"
+                                    className={`input ${(userQrImage) ? 'valid' : ''}`}
+                                    style={{ display: 'none' }}
+                                    onChange={handleQrImgChange}
+                                    required
+
+                                />
+                            </div>
                             <button className='SubmitButton'>{languageText.Submit}</button>
                         </form>
                     </div>
@@ -410,6 +538,10 @@ const Profile = ({ languageText, api }) => {
                                 <img src={userData?.userImage} alt="" />
                                 <div className="ProfileImgText">
                                     <h2>{userData?.userFname}</h2>
+                                    <button onClick={() => { window.open(userData?.userQrImage, "_blank") }} className="PopButton ProductBuyButton">
+                                        <span className="ProductToolTip ProductTip" >{languageText.QrCode}</span>
+                                        <span><Icon icon="f7:qrcode-viewfinder" /></span>
+                                    </button>
                                     <Link to="/editProfile" className="PopButton ProductBuyButton">
                                         <span className="ProductToolTip ProductTip" >{languageText.Edit}</span>
                                         <span><Icon icon="mingcute:user-edit-fill" /></span>
@@ -442,6 +574,16 @@ const Profile = ({ languageText, api }) => {
                                     <p className="ProfileInfoAddress">{userData?.userAddress}</p>
 
                                 </div>
+                                <div className="ProfileInfoField">
+                                    <p><Icon icon="icon-park-outline:bank" /> {languageText.BankType}: </p>
+                                    <p>{userData?.userBankType}</p>
+
+                                </div>
+                                <div className="ProfileInfoField">
+                                    <p><Icon icon="mdi:bank" /> {languageText.BankAccount}: </p>
+                                    <p>{userData?.userBankAccount}</p>
+
+                                </div>
                             </div>
                         </div>
                         <div className="ProfileRight">
@@ -463,7 +605,7 @@ const Profile = ({ languageText, api }) => {
                         </div>
 
                         {userData?.userFine > 0 && (
-                            <button className='PayFineButton'><Icon icon="fa6-regular:money-bill-1" />{languageText.PayFine}: {userData?.userFine} {languageText.RM}</button>
+                            <button className='PayFineButton' onClick={() => handleCheckout(userData)}><Icon icon="fa6-regular:money-bill-1" />{languageText.PayFine}: {userData?.userFine} {languageText.RM}</button>
                         )}
                     </div>
                 )}

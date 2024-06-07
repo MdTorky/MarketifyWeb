@@ -23,9 +23,9 @@ const Footer = ({ children }) => {
                         <div className="FooterItems">
 
                             <div className="Footers">
-                                <h4>{languageText.About}</h4>
+                                <h4>{languageText.Help}</h4>
 
-                                <Link to="FAQ.php" className='FooterLinks'>{languageText.FAQ}</Link>
+                                {/* <Link to="FAQ.php" className='FooterLinks'>{languageText.FAQ}</Link> */}
                                 <Link to="/report" className='FooterLinks'>{languageText.CreateAReport}</Link>
                                 <Link to="privacy.html" className='FooterLinks'>{languageText.PrivacyPolicy}</Link>
                                 <Link to="terms.html" className='FooterLinks' >{languageText.TermsConditions}</Link>
@@ -38,7 +38,7 @@ const Footer = ({ children }) => {
                                 <Link to="/browse" className='FooterLinks'>{languageText.BrowseProducts}</Link>
                                 <Link to="/purchased" className='FooterLinks'>{languageText.PurchasedProducts}</Link>
                                 <Link to="/myProducts" className='FooterLinks'>{languageText.MyProducts}</Link>
-                                <Link to="/sell" className='FooterLinks'>{languageText.Sell}</Link>
+                                <Link to="/sell" className='FooterLinks'>{languageText.Sell} / {languageText.Donate} </Link>
 
                             </div>
                         </div>

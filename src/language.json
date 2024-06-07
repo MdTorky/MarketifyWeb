@@ -13,11 +13,15 @@
     "ChatNow": "Chat Now",
     "BuyNow": "Buy Now",
     "Review": "Review",
+    "View": "View",
+    "Upload": "Upload",
     "Notification": "Notification",
     "Categories": "Categories",
     "Condition": "Condition",
     "Donations": "Donations",
     "Donation": "Donation",
+    "NoNeed": "No Need",
+    "DidntUploadYet": "Didn't Upload Yet",
     "EmailUs": "Email Us",
     "Id": "Id",
     "ProductName": "Product Name",
@@ -33,6 +37,7 @@
     "BuyerPhone": "Buyer Phone",
     "Date": "Date",
     "Status": "Status",
+    "Proof": "Proof",
     "Method": "Method",
     "Total": "Total",
     "Recommendations": "Recommendations",
@@ -46,6 +51,10 @@
     "PhoneNo": "Phone No",
     "Passport": "Passport",
     "Address": "Address",
+    "BankAccount": "Bank Account",
+    "BankType": "Bank Type",
+    "Transfer": "Transfer",
+    "QrCode": "DuitNow Qr Code",
     "ProfileImage": "Profile Image",
     "PassportImage": "Passport Image",
     "ChangeToSell": "Change to Sell",
@@ -72,6 +81,7 @@
     "Malay": "Malay",
 
     "About": "About",
+    "Help": "Help",
     "CreateAReport": "Create A Report",
     "FAQ": "FAQ",
     "AboutUs": "About Us",
@@ -137,6 +147,7 @@
     "AllProducts": "All Products",
     "Paid": "Paid",
     "Unpaid": "Unpaid",
+    "Pending": "Pending",
     "Pay": "Pay",
     "Confirm": "Confirm",
 
@@ -198,7 +209,9 @@
     "ExplainTheIssue": "Explain The Issue",
     "ReportForm": "Report Form",
     "ReportAddedSuccessfully": "Report Added Successfully",
-    "AreYouSureReport": "Are You Sure You Want to Delete This Report?"
+    "AreYouSureReport": "Are You Sure You Want to Delete This Report?",
+    "CheckoutSuccess": "Checkout Successfully",
+    "SubmitProof": "Submit Proof"
   },
   "ar": {
     "BrowseProducts": "تصفح المنتجات"

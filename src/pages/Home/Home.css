@@ -35,12 +35,12 @@
 .Home .Hero .HeroText h3 {
     margin: 0;
     color: var(--theme);
-    font-size: 1.5em;
+    /* font-size: 1.6vw; */
+    font-size: clamp(16px, calc(20px + (36–20) * (100vw - 768px)/(1920–768)), 48px);
+    /* font-size: 30px; */
     font-weight: bold;
     font-family: 'Varela Round', sans-serif;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
-
 
 }
 
@@ -264,7 +264,8 @@
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    flex-wrap: wrap;
+
+    /* flex-wrap: wrap; */
     font-family: "Mukta", sans-serif;
     text-shadow: 2px 3px 0px rgba(255, 255, 255, 0.15);
 }
@@ -278,6 +279,7 @@
     background: linear-gradient(rgba(0, 0, 0, 0.7),
             rgba(0, 0, 0, 0.7)), url("../../images/BG1.jpg");
     min-width: 800px;
+    /* width: 50%; */
     height: 50vh;
     background-size: cover;
     background-position: center;
@@ -422,4 +424,251 @@
     transform: translateY(3px);
     box-shadow: none;
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width:1500px) {
+    .Home .Hero {
+        flex-direction: column;
+        justify-content: center;
+        gap: 3vw;
+    }
+
+
+    .Home .Hero .HeroText {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+    }
+
+
+    .Home .Hero .HeroText h3 {
+        margin: 0 auto;
+    }
+
+    .Home .Hero .HeroText h1 {
+        font-size: 5em;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .Home .Hero .HeroText .HeroButton {
+        margin: 0 auto;
+    }
+
+
+    .Home .HeroImg img {
+        width: 80%;
+        margin: auto;
+    }
+
+
+
+
+
+
+
+
+
+    .Banners {
+        width: 90%;
+        justify-content: center;
+        align-items: center;
+        /* background: red */
+    }
+
+    .Banners .Banner1 {
+        display: flex;
+        justify-content: space-evenly;
+        gap: 10px;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .Banners .Banner1 .banner-box {
+
+        min-width: 610px;
+    }
+
+    .Banners .Banner1 h4 {
+        font-size: 15px;
+    }
+
+    .Banners .Banner1 h2 {
+        font-size: 70px;
+    }
+
+    .Banners .Banner2 {
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+    }
+
+    .Banners .Banner2 h2 {
+        font-size: 20px;
+    }
+
+    .Banners .Banner2 h4 {
+        font-size: 10px;
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+@media screen and (max-width:700px) {
+
+    .Home .Hero {
+        height: 700px;
+    }
+
+    .Home .Hero .HeroText {
+        gap: 10px;
+    }
+
+    .Home .Hero .HeroText h1 {
+        font-size: 2.5em;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .Home .Hero .HeroText .HeroButton {
+        margin: 0 auto;
+    }
+
+
+    .Home .HeroImg img {
+        width: 80%;
+        margin: auto;
+    }
+
+    .HomeTitle {
+        font-size: 2em;
+    }
+
+
+
+
+    .Services {
+        display: flex;
+        margin-bottom: 30px;
+        width: 100%;
+        flex-direction: column;
+        gap: 50px;
+        padding: 10px;
+        align-items: center;
+    }
+
+
+
+
+
+
+
+
+
+    .Banners {
+        width: 90%;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .Banners .Banner1 {
+        display: flex;
+        justify-content: space-evenly;
+        gap: 10px;
+        flex-wrap: wrap;
+        width: 100%;
+        height: 50%;
+    }
+
+
+    .Banners .Banner1 .banner-box {
+
+        min-width: 100%;
+        height: 30vh;
+
+    }
+
+    .Banners .Banner1 h4 {
+        font-size: 0.7em;
+    }
+
+    .Banners .Banner1 h2 {
+        font-size: 2.4em;
+    }
+
+    .Banners .Banner2 {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .Banners .Banner2 h4 {
+        font-size: 0.7em;
+        text-align: start;
+    }
+
+    .Banners .Banner2 h2 {
+        font-size: 2em;
+        text-align: start;
+    }
+
+
+
+
+
+
+
+
+
+    .EmailUs {
+        width: 90%;
+        gap: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .EmailUs h4 {
+        font-size: 1.5em;
+        margin: 5px auto;
+        width: 100%;
+
+    }
+
+    .EmailUs p {
+        font-size: 0.9em;
+        margin: 5px 0 10px 0;
+        text-align: center;
+
+    }
+
+
+    .EmailUs .normal {
+        font-size: 0.8em;
+        margin: auto;
+    }
 }

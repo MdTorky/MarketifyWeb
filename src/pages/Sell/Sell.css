@@ -187,3 +187,19 @@ input[type="checkbox"]:checked::before {
     background: var(--text);
     box-shadow: 0 0 0 1px #000;
 }
+
+
+
+@media screen and (max-width: 768px) {
+
+    .Sell {
+        padding: 20px;
+
+    }
+
+    .SellFormContainer {
+        width: 100%;
+
+
+    }
+}

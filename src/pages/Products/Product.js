@@ -38,13 +38,6 @@ const Product = ({ api, languageText }) => {
     const [product, setProduct] = useState(null);
     const { accessChat, chatError } = useChat(api, toast);
 
-    const {
-        setSelectedChat,
-        notification,
-        setNotification,
-        chats,
-        setChats,
-    } = useChatState();
 
     const openChat = (userSeller) => {
         setUserTwoError(userSeller)
@@ -175,7 +168,7 @@ const Product = ({ api, languageText }) => {
 
     // const recommendations = productData ? products.filter(product => product.pCategories.includes(productData.pCategories[0])) : [];
     // const recommendations = productData ? products.filter(product => productData.pCategory && productData.pCategory.length > 0 && product.pCategory.includes(productData.pCategory[0]) && product._id != productData._id) : [];
-    const recommendations = productData ? products.filter(product => productData.pCategory && productData.pCategory.length > 0 && product.pCategory.includes(productData.pCategory[0]) && product._id !== productData._id).slice(0, 6) : [];
+    const recommendations = productData ? products.filter(product => productData.pCategory && productData.pCategory.length > 0 && product.pCategory.includes(productData.pCategory[0]) && product._id !== productData._id && product.pStatus === "Valid").slice(0, 6) : [];
 
 
 

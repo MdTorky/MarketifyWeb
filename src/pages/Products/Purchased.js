@@ -12,6 +12,7 @@ import { useChat } from '../../hooks/useChat';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useItemsContext } from '../../hooks/useItemsContext'
 import Loader from '../../components/Loader/Loader'
+import Proof from '../../components/Proof/Proof';
 import { Icon } from '@iconify/react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -33,8 +34,19 @@ const Purchased = ({ languageText, api }) => {
     const [userLoading, setUserLoading] = useState(false)
     const [seller, setSeller] = useState(null)
     const [error, setError] = useState(null)
+    const [isProofFormOpen, setProofFormOpen] = useState(false);
 
+    const [proofImg, setProofImg] = useState(null)
+    const [transactionUser, setTransaction] = useState(null)
 
+    const openProofForm = (transaction) => {
+        setTransaction(transaction);
+        setProofFormOpen(true);
+    };
+
+    const CloseProofForm = () => {
+        setProofFormOpen(false);
+    };
 
     const handleFilterClick = (filter) => {
         setActiveFilter(filter);
@@ -51,12 +63,6 @@ const Purchased = ({ languageText, api }) => {
     const handleCloseReviewPopup = () => {
         setShowReviewPopup(false);
     };
-
-    // const handleReviewSubmit = (reviewData) => {
-    //     // Handle the review submission logic (e.g., send to the server)
-    //     console.log('Review submitted:', reviewData);
-    //     handleCloseReviewPopup();
-    // };
 
 
 
@@ -173,7 +179,7 @@ const Purchased = ({ languageText, api }) => {
         if (user) {
             fetchItems()
         }
-    }, [api, dispatch, user])
+    }, [api, dispatch])
 
 
 
@@ -278,40 +284,36 @@ const Purchased = ({ languageText, api }) => {
         }
     };
 
-
-
-
-
     // const handleCheckout = (product) => {
-    //     axios.post(`${api}/api/stripe/create-checkout-session`, {
-    //         product,
+    //     const payload = {
+    //         products: [product],  // Wrap product in an array
     //         userId: user.userId,
-    //     }).then((res) => {
-    //         if (res.data.url) {
-    //             window.location.href = res.data.url
-    //         }
-    //     }).catch((err) => { console.log(err.message) })
-    // }
+    //     };
 
+    //     console.log('Payload:', payload);
 
-    const handleCheckout = (product) => {
-        const payload = {
-            products: [product],  // Wrap product in an array
-            userId: user.userId,
-        };
+    //     axios.post(`${api}/api/stripe/create-checkout-session`, payload)
+    //         .then((res) => {
+    //             if (res.data.url) {
+    //                 window.location.href = res.data.url;
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.error('Error:', err.response?.data || err.message);
+    //         });
+    // };
 
-        console.log('Payload:', payload);
+    const handleImgChange = (e) => {
+        console.log("HELLO2")
+        const file = e.target.files[0];
 
-        axios.post(`${api}/api/stripe/create-checkout-session`, payload)
-            .then((res) => {
-                if (res.data.url) {
-                    window.location.href = res.data.url;
-                }
-            })
-            .catch((err) => {
-                console.error('Error:', err.response?.data || err.message);
-            });
+        if (file) {
+            setProofImg(file);
+            console.log("Hello")
+        }
     };
+
+
 
     const PurchasedItem = ({ transaction, index }) => {
         const productFilter = products.find(productOne => transaction.productID === productOne._id)
@@ -325,7 +327,7 @@ const Purchased = ({ languageText, api }) => {
             productType = false
 
         }
-        if (activeFilter === 'all' || (activeFilter === 'paid' && transaction.transactionStatus === "Paid") || (activeFilter === 'unpaid' && transaction.transactionStatus === "Not Paid")) {
+        if (activeFilter === 'all' || (activeFilter === 'paid' && transaction.transactionStatus === "Paid") || (activeFilter === 'unpaid' && transaction.transactionStatus === "Not Paid") || (activeFilter === 'pending' && transaction.transactionStatus === "Pending")) {
             return (
                 <tr className={`PurchasedTitles PurchasedItems`} style={{ marginBottom: transaction.transactionStatus === "Not Paid" ? '20px' : '0' }} key={transaction._id} index={index}>
 
@@ -347,15 +349,22 @@ const Purchased = ({ languageText, api }) => {
                     }
 
                     <td>{formatDate(transaction.createdAt)}</td>
+                    <td>{sellerFilter?.userBankAccount}</td>
+
+                    {/* Status */}
                     {productType ?
                         <td className={`statusButton ${transaction.transactionStatus === "Paid" ? "StatusPaid" : "StatusNotPaid"}`}>{transaction.transactionStatus}
-                            {/* {transaction.transactionStatus === "Not Paid" && transaction.paymentMethod === "Credit Card" && <Link to={`/payment/${transaction.productID}`} className='PayButton'>{languageText.Pay}</Link>}</td> : */}
-                            {transaction.transactionStatus === "Not Paid" && transaction.paymentMethod === "Credit Card" && <Link onClick={() => handleCheckout(productFilter)} className='PayButton'>{languageText.Pay}</Link>}</td> :
-                        //  <td className={`statusButton ${transaction.transactionStatus === "Paid" ? "StatusPaid" : "StatusNotPaid"}`}>{transaction.transactionStatus}
-                        //  {transaction.transactionStatus === "Not Paid" && transaction.paymentMethod === "Credit Card" && <Link to="/payment" className='PayButton'>{languageText.Pay}</Link>}</td>
+                            {transaction.transactionStatus === "Not Paid" && transaction.paymentMethod === "Qr Code" && <Link onClick={() => { window.open(sellerFilter?.userQrImage, "_blank") }} className='PayButton'>{languageText.Pay}</Link>}
+                        </td> :
                         <td className='statusButton'>{languageText.Donations}</td>
 
                     }
+                    {productType && (transaction.paymentMethod == "Qr Code" || transaction.paymentMethod == "Transfer") && transaction.transactionStatus == "Not Paid" ? <td>
+                        <button className='TableButton' onClick={() => openProofForm(transaction)}>{languageText.Upload}</button>
+
+
+
+                    </td> : <td className='statusButton'>{languageText.NoNeed}</td>}
                     {productType ? <td>{transaction.paymentMethod}</td> : <td className='statusButton'>{languageText.Donations}</td>}
                     <button className="PopButton PurchasedChatButton" onClick={() => openChat(transaction.sellerID)}>
                         <span className="ProductToolTip" >{languageText.ChatNow}</span>
@@ -364,6 +373,7 @@ const Purchased = ({ languageText, api }) => {
                 </tr>
             )
         }
+
         return null;
     }
 
@@ -373,7 +383,6 @@ const Purchased = ({ languageText, api }) => {
 
         const productFilter = products.find(productOne => transaction.productID === productOne._id)
         const buyer = users.find(seller => transaction.buyerID === seller._id)
-        // setTotalPrice(totalPrice + productFilter.pPrice)
         const [totalPrice, setTotalPrice] = useState(0);
         let productType
         if (productFilter?.pType === "Sell") {
@@ -383,11 +392,8 @@ const Purchased = ({ languageText, api }) => {
             productType = false
 
         }
-        // useEffect(() => {
-        //     setTotalPrice(prevTotalPrice => prevTotalPrice + productFilter.pPrice);
-        // }, [transaction, productFilter]);
 
-        if (activeSoldFilter === 'all' || (activeSoldFilter === 'paid' && transaction.transactionStatus === "Paid") || (activeSoldFilter === 'unpaid' && transaction.transactionStatus === "Not Paid")) {
+        if (activeSoldFilter === 'all' || (activeSoldFilter === 'paid' && transaction.transactionStatus === "Paid") || (activeSoldFilter === 'unpaid' && transaction.transactionStatus === "Not Paid") || (activeSoldFilter === 'pending' && transaction.transactionStatus === "Pending")) {
             return (
                 <tr className={`PurchasedTitles PurchasedItems`} style={{ marginBottom: transaction.transactionStatus === "Not Paid" ? '20px' : '0' }} key={transaction._id} index={index}>
                     <td>{index + 1}</td>
@@ -398,16 +404,31 @@ const Purchased = ({ languageText, api }) => {
                     {productFilter?.pType === "Sell" ? <td>{productFilter?.pPrice} RM</td> : <td>{languageText.Donation}</td>}
                     <td>{buyer.userFname}</td>
                     <td>{buyer.userPhoneNo}</td>
-                    {/* <button className="ReviewButton" onClick={handleReviewButtonClick}>
-                        <FontAwesomeIcon icon={faStar} />
-                    </button> */}
+
 
                     <td>{formatDate(transaction.createdAt)}</td>
+                    {productType ?
+                        <td>
+                            {transaction.transactionStatus === "Pending" ? (
+                                <button onClick={() => { window.open(transaction?.proof, "_blank") }} className='TableButton'>
+                                    {languageText.View}
+                                </button>
+                            ) : transaction.transactionStatus === "Paid" ? (
+                                "Paid"
+                            ) : (
+                                languageText.DidntUploadYet
+                            )}
+                        </td> :
+                        <td className='statusButton'>{languageText.Donations}</td>
+
+                    }
+
+
 
                     {productType ? <td className={`statusButton ${transaction.transactionStatus === "Paid" ? "StatusPaid" : "StatusNotPaid"}`}>{transaction.transactionStatus}</td> : <td className='statusButton'>{languageText.Donations}</td>}
 
                     {productType ? <td className='statusButton'>{transaction.paymentMethod}
-                        {transaction.paymentMethod === "Cash" && transaction.transactionStatus === "Not Paid" && <Link onClick={(e) => handleStatusUpdate({ e, transaction, buyer: buyer.userFname })} className='PayButton ConfirmButton'>{languageText.Confirm}</Link>}</td> :
+                        {(transaction.transactionStatus === "Not Paid" || transaction.transactionStatus === "Pending") && <Link onClick={(e) => handleStatusUpdate({ e, transaction, buyer: buyer.userFname })} className='PayButton ConfirmButton'>{languageText.Confirm}</Link>}</td> :
                         <td className='statusButton'>{languageText.Donations}</td>}
                     <button className="PopButton PurchasedChatButton" onClick={() => openChat(transaction.buyerID)}>
                         <span className="ProductToolTip" >{languageText.ChatNow}</span>
@@ -454,27 +475,44 @@ const Purchased = ({ languageText, api }) => {
                         >
                             {languageText.Unpaid}
                         </button>
+                        <button
+                            className={`FilterButton ${activeFilter === 'pending' ? 'active' : ''}`}
+                            onClick={() => handleFilterClick('pending')}
+                        >
+                            {languageText.Pending}
+                        </button>
                     </div>
-                    <table >
-                        <tr className="PurchasedTitles">
-                            <th>{languageText.Id}</th>
-                            <th>{languageText.ProductName}</th>
-                            <th>{languageText.Price}</th>
-                            <th>{languageText.SellerName}</th>
-                            <th>{languageText.SellerPhone}</th>
-                            <th>{languageText.Review}</th>
-                            <th>{languageText.Date}</th>
-                            <th>{languageText.Status}</th>
-                            <th>{languageText.Method}</th>
-                        </tr>
-                        {/* <p>Method</p> */}
+                    <div className="TableContainer">
+                        <table >
+                            <tr className="PurchasedTitles">
+                                <th>{languageText.Id}</th>
+                                <th>{languageText.ProductName}</th>
+                                <th>{languageText.Price}</th>
+                                <th>{languageText.SellerName}</th>
+                                <th>{languageText.SellerPhone}</th>
+                                <th>{languageText.Review}</th>
+                                <th>{languageText.Date}</th>
+                                <th>{languageText.BankAccount}</th>
+                                <th>{languageText.Status}</th>
+                                <th>{languageText.Proof} (PNG)</th>
+                                <th>{languageText.Method}</th>
+                            </tr>
+                            {/* <p>Method</p> */}
 
-                        <div className='ProductColumn'>
-                            {boughtFilter && boughtFilter.map((transaction, index) => (
-                                <PurchasedItem transaction={transaction} index={index} />
-                            ))}
-                        </div>
-                    </table>
+                            <div className='ProductColumn'>
+                                {boughtFilter && boughtFilter.map((transaction, index) => (
+                                    <PurchasedItem transaction={transaction} index={index} />
+                                ))}
+                            </div>
+
+                        </table>
+                        {
+                            isProofFormOpen && (
+
+                                <Proof CloseProofForm={CloseProofForm} transaction={transactionUser} languageText={languageText} api={api} />
+                            )
+                        }
+                    </div>
                     {/* {isChatOpen && <Chat onClose={closeChat} languageText={languageText} />} */}
 
                 </div>
@@ -503,6 +541,12 @@ const Purchased = ({ languageText, api }) => {
                         >
                             {languageText.Unpaid}
                         </button>
+                        <button
+                            className={`FilterButton ${activeFilter === 'pending' ? 'active' : ''}`}
+                            onClick={() => handleSoldFilterClick('pending')}
+                        >
+                            {languageText.Pending}
+                        </button>
                     </div>
                     <div className="SoldTable">
                         <table >
@@ -513,6 +557,7 @@ const Purchased = ({ languageText, api }) => {
                                 <th>{languageText.BuyerName}</th>
                                 <th>{languageText.BuyerPhone}</th>
                                 <th>{languageText.Date}</th>
+                                <th>{languageText.Proof}</th>
                                 <th>{languageText.Status}</th>
                                 <th>{languageText.Method}</th>
                             </tr>
@@ -548,6 +593,8 @@ const Purchased = ({ languageText, api }) => {
                                 api={api}
                             />
                         )}
+
+
                         {isChatOpen && <Chat onClose={closeChat} languageText={languageText} userSeller={seller} api={api} />}
 
                         {/* {isChatOpen && <Chat onClose={closeChat} languageText={languageText} />} */}

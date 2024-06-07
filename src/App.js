@@ -96,7 +96,7 @@ function App() {
             }
           />
           <Route path="/forgotPassword" element={<ForgotPassword api={api} />} />
-          <Route path="/checkoutSuccess" element={<CheckoutSuccess api={api} />} />
+          <Route path="/checkoutSuccess" element={<CheckoutSuccess api={api} languageText={languageText} />} />
           <Route path="/resetPassword/:id" element={<ResetPassword api={api} languageText={languageText} />} />
 
 

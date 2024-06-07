@@ -272,6 +272,10 @@ const ManageAccounts = ({ api, languageText }) => {
                     {userOne.userPassportImage && <button className="StatusButton" onClick={() => { window.open(userOne.userPassportImage, "_blank") }}>View Proof</button>}
                 </td>
                 <td>{userOne.userAddress}</td>
+                <td>{userOne.userBankType}</td>
+                <td>{userOne.userBankAccount}
+                    {userOne.userQrImage && <button className="StatusButton" onClick={() => { window.open(userOne.userQrImage, "_blank") }}>View Qr</button>}
+                </td>
                 {updating ? (<td></td>) : (
                     <td className={`${userOne.userStatus === "Active" ? "StatusGreen" : 'StatusRed'}`}>
                         {userOne.userStatus}
@@ -367,6 +371,8 @@ const ManageAccounts = ({ api, languageText }) => {
                                 <th>Phone No</th>
                                 <th>Passport</th>
                                 <th>Address</th>
+                                <th>Bank Type</th>
+                                <th>Bank Account</th>
                                 <th>Status</th>
                                 <th>Add Fine</th>
                                 <th>Chat</th>

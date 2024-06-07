@@ -1,48 +1,101 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faStar, faCommentDots, faMoneyBill, faEnvelope, faPhone, faAddressBook, faLocation, faLocationPin, faLocationDot, faClose } from '@fortawesome/free-solid-svg-icons';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { useAuthContext } from '../../hooks/useAuthContext';
-import { useItemsContext } from '../../hooks/useItemsContext'
+import { useItemsContext } from '../../hooks/useItemsContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Loader from "../Loader/Loader";
 import { useNavigate } from 'react-router-dom';
+import { Icon } from '@iconify-icon/react';
 
 const PurchaseForm = ({ closePurchaseForm, api, product, languageText }) => {
     const navigate = useNavigate();
-    const { user } = useAuthContext()
-    const [paymentMethod, setPaymentMethod] = useState('')
-    const { products = [], transactions = [], dispatch } = useItemsContext();
-    const [error, setError] = useState(null)
+    const { user } = useAuthContext();
+    const [paymentMethod, setPaymentMethod] = useState('');
+    const { dispatch } = useItemsContext();
+    const [error, setError] = useState(null);
+    const [cooldown, setCooldown] = useState(null);
+    const [updating, setUpdating] = useState(false);
 
+    useEffect(() => {
+        if (user) {
+            checkCooldown();
+        }
+    }, [user]);
+
+    const checkCooldown = async () => {
+        const response = await fetch(`${api}/api/user/${user.userId}`);
+        const userData = await response.json();
+
+        if (userData.lastDonation) {
+            const lastDonationDate = new Date(userData.lastDonation);
+            const currentTime = new Date();
+            const timeDiff = currentTime - lastDonationDate;
+            const remainingTime = 24 * 60 * 60 * 1000 - timeDiff;
+
+            if (remainingTime > 0) {
+                const hours = Math.floor(remainingTime / (60 * 60 * 1000));
+                const minutes = Math.floor((remainingTime % (60 * 60 * 1000)) / (60 * 1000));
+                setCooldown(remainingTime);
+                setError(`You have to wait ${hours} hours and ${minutes} minutes to get another donation item.`);
+            }
+        }
+    };
 
     const handlePurchaseSubmit = async (e) => {
         e.preventDefault();
-
+        setUpdating(true);
 
         if (!user) {
-            setError(languageText.YouMustBeLoggedIn)
+            setError(languageText.YouMustBeLoggedIn);
+            return;
         }
-        else {
 
-            const item = {
-                sellerID: product.userID,
-                buyerID: user.userId,
-                productID: product._id,
-                paymentMethod
+        if (product.pType === "Donations" && cooldown > 0) {
+            const hours = Math.floor(cooldown / (60 * 60 * 1000));
+            const minutes = Math.floor((cooldown % (60 * 60 * 1000)) / (60 * 1000));
+            setError(`You have to wait ${hours} hours and ${minutes} minutes to get another donation item.`);
+            setUpdating(false);
+            return;
+        }
+
+        const item = {
+            sellerID: product.userID,
+            buyerID: user.userId,
+            productID: product._id,
+            paymentMethod
+        };
+
+        const response = await fetch(`${api}/api/transactions`, {
+            method: "POST",
+            body: JSON.stringify(item),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
+        });
 
-            const response = await fetch(`${api}/api/transactions`, {
-                method: "POST",
-                body: JSON.stringify(item),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`
+        const json = await response.json();
 
-                }
-            })
-            const json = await response.json()
+        if (response.ok) {
+            if (product.pType === "Donations") {
+                const userCoolDown = await fetch(`${api}/api/user/${user.userId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${user.token}`
+                    },
+                    body: JSON.stringify({ lastDonation: new Date() })
+                });
+                const updatedDataCoolDown = await userCoolDown.json();
 
+                dispatch({
+                    type: 'UPDATE_ITEM',
+                    collection: 'users',
+                    payload: { id: user.userId, changes: updatedDataCoolDown },
+                });
+            }
 
             const statusResponse = await fetch(`${api}/api/products/${product._id}`, {
                 method: 'PATCH',
@@ -50,18 +103,10 @@ const PurchaseForm = ({ closePurchaseForm, api, product, languageText }) => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user.token}`
                 },
-                body: JSON.stringify({
-                    pStatus: "Unavailable"
-                }),
+                body: JSON.stringify({ pStatus: "Unavailable" })
             });
             const updatedData = await statusResponse.json();
-            dispatch({
-                type: 'UPDATE_ITEM',
-                collection: 'products',
-                payload: { id: product._id, changes: updatedData },
-            });
-
-
+            dispatch({ type: 'UPDATE_ITEM', collection: 'products', payload: { id: product._id, changes: updatedData } });
 
             const notificationItem = {
                 type: 'purchase',
@@ -70,7 +115,7 @@ const PurchaseForm = ({ closePurchaseForm, api, product, languageText }) => {
                 product: product._id,
                 content: "has been Purchased",
                 status: 'unseen'
-            }
+            };
 
             const notificationResponse = await fetch(`${api}/api/notification`, {
                 method: "POST",
@@ -78,160 +123,141 @@ const PurchaseForm = ({ closePurchaseForm, api, product, languageText }) => {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user.token}`
-
                 }
-            })
-            const notificationJson = await notificationResponse.json()
+            });
+            const notificationJson = await notificationResponse.json();
 
-            if (!notificationResponse.ok) {
-                setError(notificationJson.error);
-            } else {
-                setError(null);
-                dispatch({
-                    type: 'CREATE_FORM',
-                    collection: "notifications",
-                    payload: notificationJson
-                });
+            if (notificationResponse.ok) {
+                dispatch({ type: 'CREATE_FORM', collection: "notifications", payload: notificationJson });
             }
 
-
-            if (!response.ok) {
-                setError(json.error);
-            } else {
-                setError(null);
-                dispatch({
-                    type: 'CREATE_FORM',
-                    collection: "transactions",
-                    payload: json
-                });
-                toast.success(languageText.PurchasedSuccessfully, {
-                    position: "bottom-center",
-                    autoClose: 5000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                    style: {
-                        // fontFamily: language === 'ar' ?
-                        //     'Noto Kufi Arabic, sans-serif' :
-                        //     'Poppins, sans-serif',
-                    },
-                });
-                navigate("/purchased")
-
-
-            }
+            dispatch({ type: 'CREATE_FORM', collection: "transactions", payload: json });
+            toast.success(languageText.PurchasedSuccessfully, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                style: {}
+            });
+            setUpdating(false);
+            navigate("/purchased");
+        } else {
+            setError(json.error);
         }
-
-
 
         closePurchaseForm();
     };
 
-
     return (
         <div className="PurchaseFormPopup">
-            <h3>{languageText.EnterYourInformation}</h3>
-            <form className='Form' onSubmit={handlePurchaseSubmit}>
-                <div className="InputRow">
-                    <div className="InputField">
-                        <div className="InputLabelField">
-                            <input
-                                type="text"
-                                className="input disabled"
-                                value={user.userFname}
-                                required
-                                disabled
-                                id="name"
-                                name="name"
-                            />
-                            {/* {!buyerInfo.name && <label for="name" className={`LabelInput ${(buyerInfo.name) ? 'valid' : ''}`}><FontAwesomeIcon icon={faStar} />{languageText.FullName}</label>} */}
+            {updating ? (
+                <div className="Loader">
+                    <Loader />
+                    <p className="LoaderText">{languageText.Submitting}</p>
+                </div>
+            ) : cooldown > 0 ? (
+                <div className="CooldownMessage">
+                    <Icon className="ClockItem" icon="fluent:clock-lock-24-filled" />
+                    <p className="CoolDownError">{error}</p>
+                    <button className="PopButton ClosePurchaseForm" onClick={closePurchaseForm}>
+                        <span className="ProductToolTip">{languageText.Close}</span>
+                        <span><FontAwesomeIcon icon={faClose} /></span>
+                    </button>
+                </div>
+            ) : (
+                <>
+                    <h3>{languageText.EnterYourInformation}</h3>
+                    <form className='Form' onSubmit={handlePurchaseSubmit}>
+                        <div className="InputRow">
+                            <div className="InputField">
+                                <div className="InputLabelField">
+                                    <input
+                                        type="text"
+                                        className="input disabled"
+                                        value={user.userFname}
+                                        required
+                                        disabled
+                                        id="name"
+                                        name="name"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="InputField">
+                                <div className="InputLabelField">
+                                    <input
+                                        type="email"
+                                        className="input disabled"
+                                        value={user.userEmail}
+                                        disabled
+                                        required
+                                        id="email"
+                                        name="email"
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div className="InputField">
-                        <div className="InputLabelField">
-                            <input
-                                type="email"
-                                // className={`input ${(buyerInfo.email) ? 'valid' : ''}`}
-                                className="input disabled"
-
-                                value={user.userEmail}
-                                disabled
-
-                                required
-                                id="email"
-                                name="email"
-                            />
-                            {/* {!buyerInfo.email && <label for="email" className={`LabelInput ${(buyerInfo.email) ? 'valid' : ''}`}><FontAwesomeIcon icon={faEnvelope} />{languageText.Email}</label>} */}
+                        <div className="InputRow">
+                            <div className="InputLabelField">
+                                <input
+                                    type="number"
+                                    className="input disabled"
+                                    value={user.userPhoneNo}
+                                    disabled
+                                    required
+                                    id="phone"
+                                    name="phone"
+                                />
+                            </div>
+                            {product.pType === "Sell" && (
+                                <div className="InputField">
+                                    <select
+                                        className={`input ${paymentMethod ? 'valid' : ''}`}
+                                        name="paymentMethod"
+                                        onChange={(e) => setPaymentMethod(e.target.value)}
+                                        required
+                                    >
+                                        <option value="" disabled selected hidden>{languageText.PaymentMethod}</option>
+                                        <option value="Qr Code">{languageText.QrCode}</option>
+                                        <option value="Transfer">{languageText.Transfer}</option>
+                                        <option value="Cash">{languageText.Cash}</option>
+                                    </select>
+                                </div>
+                            )}
                         </div>
-                    </div>
-                </div>
-                <div className="InputRow">
-                    <div className="InputLabelField">
-                        <input
-                            type="number"
-                            // className={`input ${(buyerInfo.phone) ? 'valid' : ''}`}
-                            className="input disabled"
 
-                            value={user.userPhoneNo}
-                            disabled
-                            required
-                            id="phone"
-                            name="phone"
-                        />
-                        {/* {!buyerInfo.phone && <label for="phone" className={`LabelInput ${(buyerInfo.phone) ? 'valid' : ''}`}><FontAwesomeIcon icon={faPhone} />{languageText.Phone}</label>} */}
-                    </div>
-                    {product.pType === "Sell" && <div className="InputField">
-                        <select
-                            className={`input ${(paymentMethod) ? 'valid' : ''}`}
-                            name="paymentMethod"
-                            onChange={(e) => setPaymentMethod(e.target.value)}
-                            required
+                        <div className="InputField WholeWidth">
+                            <div className="InputLabelField">
+                                <textarea
+                                    className="input disabled"
+                                    rows="1"
+                                    columns="20"
+                                    required
+                                    value={user.userAddress}
+                                    id="address"
+                                    name='address'
+                                    disabled
+                                />
+                            </div>
+                        </div>
 
-                        >
-                            <option value="" disabled selected hidden>{languageText.PaymentMethod}</option>
-                            <option value="Cash">{languageText.Cash}</option>
-                            <option value="Credit Card">{languageText.CreditCard}</option>
-                        </select>
-                    </div>}
-                </div>
-
-                <div className="InputField WholeWidth">
-                    <div className="InputLabelField">
-                        <textarea
-                            className="input disabled"
-
-                            rows="1"
-                            // className={`input ${(buyerInfo.address) ? 'valid' : ''}`}
-                            columns="20"
-                            required
-                            value={user.userAddress}
-                            id="address"
-                            name='address'
-                            disabled
-
-                        />
-                        {/* {!buyerInfo.address && <label for="address" className={`LabelInput ${(buyerInfo.address) ? 'valid' : ''}`}><FontAwesomeIcon icon={faLocationDot} /> {languageText.Address}</label>} */}
-                    </div>
-                </div>
-
-
-                <button className='Submit'>
-                    {languageText.SubmitPurchase}
-                </button>
-
-            </form>
+                        {error && <div className="error">{error}</div>}
+                        <button className='Submit'>
+                            {languageText.SubmitPurchase}
+                        </button>
+                    </form>
+                </>
+            )}
             <button className="PopButton ClosePurchaseForm" onClick={closePurchaseForm}>
-                <span className="ProductToolTip" >{languageText.Close}</span>
+                <span className="ProductToolTip">{languageText.Close}</span>
                 <span><FontAwesomeIcon icon={faClose} /></span>
             </button>
-
         </div>
-
     );
-}
+};
 
 export default PurchaseForm;
