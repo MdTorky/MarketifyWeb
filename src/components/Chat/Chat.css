@@ -13,6 +13,11 @@
     animation: SlideBottom 1s ease 0s 1 normal forwards;
 }
 
+.arabic .Chat {
+    left: 10px;
+    right: inherit;
+}
+
 .ChatHeader {
     background-color: white;
     border: 3px solid var(--theme);

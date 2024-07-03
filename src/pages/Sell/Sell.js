@@ -103,7 +103,6 @@ const Sell = ({ api, languageText }) => {
 
         try {
             let cloudName = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
-            // console.log('Cloud Name:', process.env.REACT_APP_CLOUDINARY_CLOUD_NAME);
             let resourceType = type === 'image' ? 'image' : 'video';
             let api = `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`;
 

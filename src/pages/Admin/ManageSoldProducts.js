@@ -153,7 +153,13 @@ const ManageSoldProducts = ({ api, languageText }) => {
                 <td>{seller?.userPhoneNo}</td>
                 <td>{buyer?.userFname}</td>
                 <td>{buyer?.userPhoneNo}</td>
-                <td>{transaction?.paymentMethod}</td>
+                <td>{transaction?.paymentMethod ? transaction?.paymentMethod : "Donations"}
+                    {((transaction?.paymentMethod === "Transfer" || transaction?.paymentMethod === "Qr Code") && transaction?.transactionStatus === "Paid") &&
+                        <button className="StatusButton" onClick={() => { window.open(transaction?.proof, "_blank") }}>
+                            View Proof
+                        </button>}
+
+                </td>
                 {/* <td>{transaction?.transactionStatus}</td> */}
 
                 <td className={`${transaction?.transactionStatus === "Paid" ? "StatusBoxGreen" : 'StatusBoxRed'}`}>

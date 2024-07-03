@@ -8,6 +8,10 @@
 
 }
 
+.arabic .Sell {
+    font-family: 'Noto Kufi Arabic', sans-serif !important;
+
+}
 
 .SellFormContainer {
     padding: 20px;
@@ -148,6 +152,8 @@ input[type="checkbox"]:checked::before {
     -moz-user-select: none;
     -ms-user-select: none;
 }
+
+
 
 .CategoryInput input[type="checkbox"]:hover+label:hover {
     color: var(--text);

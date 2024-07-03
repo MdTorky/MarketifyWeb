@@ -279,7 +279,7 @@ const ManageProducts = ({ api, languageText }) => {
                 <div className="InfoCard">
                     <Icon icon="fluent-mdl2:product-variant" className='InfoCardIcon' />
                     <div className="InfoCardText">
-                        <h3>2</h3>
+                        <h3>{filteredProducts.length}</h3>
                         <p>Total Products</p>
                     </div>
                 </div>

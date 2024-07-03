@@ -3,6 +3,8 @@
     background: var(--theme);
     padding: 10px;
     font-family: 'Poppins', sans-serif;
+    /* font-family: 'Noto Kufi Arabic', sans-serif; */
+    /* font-size: 10px; */
     width: fit-content;
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
@@ -19,6 +21,7 @@
     left: 50%;
     right: 50%; */
 }
+
 
 .NavBar .logo img {
     width: 20%;

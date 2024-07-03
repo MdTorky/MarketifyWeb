@@ -32,7 +32,6 @@ const SignUp = ({ api, languageText }) => {
     const fullNameRegex = /^[a-zA-Z\s'-]{2,}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^(?:\+60|60)(?:(1[0-9])|(?:3[2-9]|4[2-9]|5[4-9]|6[2-9]|7[3-9]|8[2-9]|9[2-9]))\d{7,8}$/;
-    // const passportRegex = /^[A-Za-z][2][0-4][A-Za-z]{2}\d{4}$/;
     const passportRegex = /^[a-zA-Z0-9]+$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
 
@@ -71,78 +70,6 @@ const SignUp = ({ api, languageText }) => {
 
 
 
-    // const handleChange = (errorText, regex, setter, field) => (e) => {
-    //     const newInput = e.target.value;
-    //     setter(newInput);
-
-    //     if (newInput.trim() === '') {
-    //         setErrors((prevErrors) => ({ ...prevErrors, [field]: null }));
-    //     } else if (regex.test(newInput)) {
-    //         setErrors((prevErrors) => ({ ...prevErrors, [field]: null }));
-    //     } else {
-    //         setErrors((prevErrors) => ({ ...prevErrors, [field]: errorText }));
-    //     }
-    // };
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-
-    //     // Check for invalid fields
-    //     const fieldErrors = {
-    //         name: !fullNameRegex.test(name) ? 'Please enter a valid Full name!' : null,
-    //         email: !emailRegex.test(email) ? 'Please enter a valid Email!' : null,
-    //         phone: !phoneRegex.test(phone) ? 'Please enter a valid Phone Number! (+60 11-111 1111)' : null,
-    //         passport: !passportRegex.test(passport) ? 'Please enter a valid Passport Number' : null,
-    //         password: !passwordRegex.test(password) ? (
-    //             <>
-    //                 - It has to be at least 8 characters long
-    //                 <br />
-    //                 - Contains both upper and lowercase letters
-    //                 <br />
-    //                 - Contains at least one digit
-    //                 <br />
-    //                 - Contains at least one special character
-    //             </>
-    //         ) : null,
-    //     };
-
-    //     setErrors(fieldErrors);
-
-    //     if (Object.values(fieldErrors).some((value) => value !== null)) {
-    //         MySwal.fire({
-    //             title: 'Make sure every field is Correct',
-    //             showDenyButton: true,
-    //             icon: 'error',
-    //             showConfirmButton: false,
-    //             denyButtonText: 'Ok',
-    //             showClass: {
-    //                 popup: 'animate__animated animate__fadeInUp animate__faster',
-    //             },
-    //             hideClass: {
-    //                 popup: 'animate__animated animate__fadeOutDown animate__faster',
-    //             },
-    //         });
-
-
-    //         return;
-    //     }
-
-    //     else {
-    //         toast.success('Account Created Successfully', {
-    //             position: "bottom-right",
-    //             autoClose: 3000,
-    //             hideProgressBar: true,
-    //             closeOnClick: true,
-    //             pauseOnHover: true,
-    //             draggable: true,
-    //             progress: undefined,
-    //             theme: "colored",
-    //         });
-    //     }
-    // };
-
-
-
     return (
         <div className="Sign">
             <div className="logo">
@@ -162,10 +89,8 @@ const SignUp = ({ api, languageText }) => {
                                 placeholder=" &#xF007; &nbsp; Full Name"
                                 type="text"
                                 className={`input ${fullNameRegex.test(name) ? 'valid' : 'invalid'}`}
-                                // onChange={handleChange('Please enter a valid Full name!', fullNameRegex, setName, 'name')}
                                 onChange={(e) => { setName(e.target.value) }}
                             />
-                            {/* {errors.name && <span className="InputError">{errors.name}</span>} */}
                             {!fullNameRegex.test(name) && name && <div className={`PasswordCheckBack 
                         ${fullNameRegex.test(name) ? "PasswordCheckBackValid" : ""
                                 }`}>
@@ -179,10 +104,8 @@ const SignUp = ({ api, languageText }) => {
                                 placeholder=" &#xf0e0; &nbsp; Email"
                                 type="email"
                                 className={`input ${emailRegex.test(email) ? 'valid' : 'invalid'}`}
-                                // onChange={handleChange('Please enter a valid Email!', emailRegex, setEmail, 'email')}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
-                            {/* {errors.email && <span className="InputError">{errors.email}</span>} */}
                             {!emailRegex.test(email) && email && <div className={`PasswordCheckBack 
                         ${emailRegex.test(email) ? "PasswordCheckBackValid" : ""
                                 }`}>
@@ -226,21 +149,6 @@ const SignUp = ({ api, languageText }) => {
                                     placeholder=" &#xf023; &nbsp; Password"
                                     type={showPassword ? 'text' : 'password'}
                                     className={`input ${passwordRegex.test(password) ? 'valid' : 'invalid'}`}
-                                    // onChange={handleChange(
-                                    //     <>
-                                    //         - It has to be at least 8 characters long
-                                    //         <br />
-                                    //         - Contains both upper and lowercase letters
-                                    //         <br />
-                                    //         - Contains at least one digit
-                                    //         <br />
-                                    //         - Contains at least one special character
-                                    //     </>,
-                                    //     passwordRegex,
-                                    //     setPassword,
-                                    //     'password',
-                                    // )}
-
                                     onChange={(e) => setPassword(e.target.value)}
 
                                 />
@@ -248,7 +156,6 @@ const SignUp = ({ api, languageText }) => {
                                     {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
                                 </span>
                             </div>
-                            {/* {errors.password && <span className="InputError password">{errors.password}</span>} */}
 
                             {password && <div className={`PasswordCheckBack 
                         ${charRegex.test(password) &&

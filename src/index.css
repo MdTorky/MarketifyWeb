@@ -12,7 +12,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lemonada:wght@300&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
 /* font-family: 'Noto Kufi Arabic', sans-serif; */
 
 :root {
@@ -50,11 +50,20 @@ body {
   padding: 0;
 }
 
+.arabic * {
+  font-family: 'Noto Kufi Arabic', sans-serif;
+
+}
 
 .arabic {
   direction: rtl;
   font-family: 'Noto Kufi Arabic', sans-serif !important;
 }
+
+/* * .arabic {
+  font-family: 'Noto Kufi Arabic', sans-serif !important;
+
+} */
 
 .ErrorMessage {
   text-align: center;

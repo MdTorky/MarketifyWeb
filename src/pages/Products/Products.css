@@ -1,9 +1,4 @@
 /* Browse */
-* {
-    font-family: 'Poppins', sans-serif;
-
-}
-
 .Browse {
     /* padding: 20px; */
     font-family: 'Poppins', sans-serif;
@@ -13,6 +8,7 @@
     flex-direction: column;
 
 }
+
 
 
 .PurchasedProducts {
@@ -39,6 +35,10 @@
 }
 
 
+.arabic .Browse h2 {
+    margin: 200px 30px 0 0;
+}
+
 .Browse .AllBrowse {
     display: flex;
     gap: 200px;
@@ -58,6 +58,13 @@
     gap: 10px;
     /* background: red; */
 }
+
+.arabic .Browse .Categories {
+    margin-left: 0;
+    margin-right: 30px;
+    /* background: red; */
+}
+
 
 .Browse .Category {
     display: flex;
@@ -1031,6 +1038,10 @@
     white-space: nowrap;
 }
 
+.arabic .Form .LabelInput {
+    left: 0;
+    right: 16px;
+}
 
 .Form .InputField .InputError {
     margin-bottom: 10px;
@@ -1073,6 +1084,15 @@
     background: white;
     position: relative;
     font-weight: 700;
+}
+
+.arabic select {
+    font-family: 'Noto Kufi Arabic', sans-serif;
+
+}
+
+.arabic option:checked {
+    font-family: 'Noto Kufi Arabic', sans-serif;
 
 }
 
@@ -1241,6 +1261,12 @@ select:focus {
     margin-top: 10px;
     position: absolute;
     right: 4%;
+    z-index: -1;
+}
+
+.arabic .TotalPrice {
+    right: inherit;
+    left: 4%;
     z-index: -1;
 }
 

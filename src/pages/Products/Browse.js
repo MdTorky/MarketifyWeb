@@ -307,10 +307,10 @@ const Browse = ({ api, languageText }) => {
                             {/* <p>Condition</p> */}
                             <p>{languageText.Condition}</p>
 
-                            {condition({ text: languageText.AllConditions, status: selectedConditions.includes(languageText.AllConditions), onChange: handleConditionChange, type: "All Conditions" })}
-                            {condition({ text: languageText.BrandNew, status: selectedConditions.includes(languageText.BrandNew), onChange: handleConditionChange, type: "Brand New" })}
-                            {condition({ text: languageText.New, status: selectedConditions.includes(languageText.New), onChange: handleConditionChange, type: "New" })}
-                            {condition({ text: languageText.Used, status: selectedConditions.includes(languageText.Used), onChange: handleConditionChange, type: "Used" })}
+                            {condition({ text: languageText.AllConditions, status: selectedConditions.includes("All Conditions"), onChange: handleConditionChange, type: "All Conditions" })}
+                            {condition({ text: languageText.BrandNew, status: selectedConditions.includes("Brand New"), onChange: handleConditionChange, type: "Brand New" })}
+                            {condition({ text: languageText.New, status: selectedConditions.includes("New"), onChange: handleConditionChange, type: "New" })}
+                            {condition({ text: languageText.Used, status: selectedConditions.includes("Used"), onChange: handleConditionChange, type: "Used" })}
                         </div>
                         <div className="Categories Donation">
                             <p>{languageText.Donations}</p>

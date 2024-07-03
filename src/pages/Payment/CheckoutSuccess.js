@@ -30,7 +30,6 @@ const CheckoutSuccess = ({ api, languageText }) => {
                 }),
             });
 
-            // console.log('API Response:', response);
 
             if (!response.ok) {
                 console.error(`Error updating form status. Status: ${response.status}, ${response.statusText}`);
