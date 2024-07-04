@@ -1,388 +1,356 @@
 /* Browse */
 .Browse {
-    /* padding: 20px; */
-    font-family: 'Poppins', sans-serif;
-    margin-bottom: 5%;
-    display: flex;
-    overflow: hidden;
-    flex-direction: column;
-
+  /* padding: 20px; */
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 5%;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
 }
 
-
-
 .PurchasedProducts {
-    padding: 20px;
-    font-family: 'Poppins', sans-serif;
-    margin-bottom: -100px;
-    display: flex;
-    overflow: hidden;
-    flex-direction: column;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: -100px;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
 }
 
 .SoldProducts {
-    margin-bottom: 70px;
+  margin-bottom: 70px;
 }
-
 
 .Browse h2 {
-    margin: 0;
-    color: var(--text);
-    text-transform: uppercase;
-    font-weight: 800;
-    margin: 200px 0 0 30px;
-    font-size: 3em;
+  margin: 0;
+  color: var(--text);
+  text-transform: uppercase;
+  font-weight: 800;
+  margin: 200px 0 0 30px;
+  font-size: 3em;
 }
 
-
 .arabic .Browse h2 {
-    margin: 200px 30px 0 0;
+  margin: 200px 30px 0 0;
 }
 
 .Browse .AllBrowse {
-    display: flex;
-    gap: 200px;
-    /* justify-content: space-around; */
+  display: flex;
+  gap: 200px;
+  /* justify-content: space-around; */
 }
 
 .Browse .AllBrowse .LeftSide {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 }
 
 .Browse .Categories {
-    display: flex;
-    flex-direction: column;
-    margin-left: 30px;
-    gap: 10px;
-    /* background: red; */
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  gap: 10px;
+  /* background: red; */
 }
 
 .arabic .Browse .Categories {
-    margin-left: 0;
-    margin-right: 30px;
-    /* background: red; */
+  margin-left: 0;
+  margin-right: 30px;
+  /* background: red; */
 }
 
-
 .Browse .Category {
-    display: flex;
-    flex-direction: column;
-    margin-left: 30px;
-    gap: 10px;
-    animation: BounceTop 1s ease 0s 1 normal forwards;
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  gap: 10px;
+  animation: BounceTop 1s ease 0s 1 normal forwards;
 }
 
 .Disabled {
-    display: none !important;
+  display: none !important;
 }
 
-
-
-
-
 .ShowCategoriesButton {
-    --width: 150px;
-    --height: 35px;
-    --tooltip-height: 35px;
-    --tooltip-width: 90px;
-    --gap-between-tooltip-to-button: 18px;
-    --button-color: var(--text);
-    --tooltip-color: #fff;
-    width: var(--width);
-    height: var(--height);
-    background: var(--button-color);
-    position: relative;
-    text-align: center;
-    border-radius: 0.45em;
-    /* font-family: "Arial"; */
-    transition: background 0.3s;
-    cursor: pointer;
-    margin: auto;
+  --width: 150px;
+  --height: 35px;
+  --tooltip-height: 35px;
+  --tooltip-width: 90px;
+  --gap-between-tooltip-to-button: 18px;
+  --button-color: var(--text);
+  --tooltip-color: #fff;
+  width: var(--width);
+  height: var(--height);
+  background: var(--button-color);
+  position: relative;
+  text-align: center;
+  border-radius: 0.45em;
+  /* font-family: "Arial"; */
+  transition: background 0.3s;
+  cursor: pointer;
+  margin: auto;
 }
 
 .ShowCategoriesButton::before {
-    position: absolute;
-    content: attr(data-tooltip);
-    width: var(--tooltip-width);
-    height: var(--tooltip-height);
-    background-color: var(--tooltip-color);
-    font-size: 0.9rem;
-    color: #111;
-    border-radius: .25em;
-    line-height: var(--tooltip-height);
-    bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) + 10px);
-    left: calc(50% - var(--tooltip-width) / 2);
+  position: absolute;
+  content: attr(data-tooltip);
+  width: var(--tooltip-width);
+  height: var(--tooltip-height);
+  background-color: var(--tooltip-color);
+  font-size: 0.9rem;
+  color: #111;
+  border-radius: 0.25em;
+  line-height: var(--tooltip-height);
+  bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) + 10px);
+  left: calc(50% - var(--tooltip-width) / 2);
 }
 
 .ShowCategoriesButton::after {
-    position: absolute;
-    content: '';
-    width: 0;
-    height: 0;
-    border: 10px solid transparent;
-    border-top-color: var(--tooltip-color);
-    left: calc(50% - 10px);
-    bottom: calc(100% + var(--gap-between-tooltip-to-button) - 10px);
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: var(--tooltip-color);
+  left: calc(50% - 10px);
+  bottom: calc(100% + var(--gap-between-tooltip-to-button) - 10px);
 }
 
-.ShowCategoriesButton::after, .ShowCategoriesButton::before {
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.5s;
-}
-
-.ShowCategoriesButton .text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-transform: uppercase;
-    font-size: 0.8em;
-}
-
-.ShowCategoriesButton .button-wrapper, .text, .icon {
-    overflow: hidden;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    color: #fff;
+.ShowCategoriesButton::after,
+.ShowCategoriesButton::before {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s;
 }
 
 .ShowCategoriesButton .text {
-    top: 0
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-size: 0.8em;
 }
 
-.ShowCategoriesButton .text, .icon {
-    transition: top 0.5s;
+.ShowCategoriesButton .button-wrapper,
+.text,
+.icon {
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  color: #fff;
+}
+
+.ShowCategoriesButton .text {
+  top: 0;
+}
+
+.ShowCategoriesButton .text,
+.icon {
+  transition: top 0.5s;
 }
 
 .ShowCategoriesButton .icon {
-    color: #fff;
-    top: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  color: #fff;
+  top: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ShowCategoriesButton .icon svg {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 .ShowCategoriesButton:hover {
-    background: var(--text2);
+  background: var(--text2);
 }
 
 .ShowCategoriesButton:hover .text {
-    top: -100%;
+  top: -100%;
 }
 
 .ShowCategoriesButton:hover .icon {
-    top: 0;
+  top: 0;
 }
 
-.ShowCategoriesButton:hover:before, .ShowCategoriesButton:hover:after {
-    opacity: 1;
-    visibility: visible;
+.ShowCategoriesButton:hover:before,
+.ShowCategoriesButton:hover:after {
+  opacity: 1;
+  visibility: visible;
 }
 
 .ShowCategoriesButton:hover:after {
-    bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) - 20px);
+  bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) - 20px);
 }
 
 .ShowCategoriesButton:hover:before {
-    bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
+  bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
 }
-
-
-
-
-
-
-
 
 .Browse .Categories p {
-    font-size: 1.2em;
-    font-weight: 900;
-    background: var(--theme2);
-    color: var(--bg);
-    padding: 2px 10px;
-    /* border-radius: 10px 0 10px 0; */
-    border-radius: 5px;
-    text-transform: uppercase;
-    width: fit-content
+  font-size: 1.2em;
+  font-weight: 900;
+  background: var(--theme2);
+  color: var(--bg);
+  padding: 2px 10px;
+  /* border-radius: 10px 0 10px 0; */
+  border-radius: 5px;
+  text-transform: uppercase;
+  width: fit-content;
 }
 
-
-
 .CategoriesCheckbox {
-    display: inline-block;
-    position: relative;
-    cursor: pointer;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
 }
 
 .CheckBoxInput {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .CheckBoxLabel {
-    display: flex;
-    align-items: center;
-    margin-left: 30px;
-    position: relative;
-    font-weight: 900;
-    font-size: 1em;
-    text-transform: uppercase;
-    color: var(--theme);
-    cursor: pointer;
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
-    /* background: white; */
-    border-radius: 20px;
-    padding: 5px;
-    width: 300px;
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+  position: relative;
+  font-weight: 900;
+  font-size: 1em;
+  text-transform: uppercase;
+  color: var(--theme);
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  /* background: white; */
+  border-radius: 20px;
+  padding: 5px;
+  width: 300px;
 }
 
-
 .CheckBoxText {
-    text-align: center;
-    margin: auto;
-    background: white;
-    padding: 0 5px;
-    border-radius: 20px;
-    width: 80%;
-    color: var(--text);
-    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+  text-align: center;
+  margin: auto;
+  background: white;
+  padding: 0 5px;
+  border-radius: 20px;
+  width: 80%;
+  color: var(--text);
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
 }
 
 .CheckBoxSpan {
-    width: 15px;
-    height: 15px;
-    border-radius: 90px;
-    background: linear-gradient(#212121, #212121) padding-box,
-        linear-gradient(145deg, var(--theme), var(--text)) border-box;
-    border: 2px solid transparent;
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+  width: 15px;
+  height: 15px;
+  border-radius: 90px;
+  background: linear-gradient(#212121, #212121) padding-box,
+    linear-gradient(145deg, var(--theme), var(--text)) border-box;
+  border: 2px solid transparent;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.CheckBoxInput:checked+.CheckBoxLabel .CheckBoxSpan {
-    background-image: linear-gradient(145deg, var(--theme), var(--theme));
-    transform: rotate(45deg) scale(1.8);
+.CheckBoxInput:checked + .CheckBoxLabel .CheckBoxSpan {
+  background-image: linear-gradient(145deg, var(--theme), var(--theme));
+  transform: rotate(45deg) scale(1.8);
 }
 
-.CheckBoxInput:checked+.CheckBoxLabel .CheckBoxText {
-    background: var(--theme);
-    color: var(--bg)
+.CheckBoxInput:checked + .CheckBoxLabel .CheckBoxText {
+  background: var(--theme);
+  color: var(--bg);
 }
 
 .CheckBoxLabel:hover .CheckBoxSpan {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
-
 
 .Browse .RightSide {
-    display: flex;
-    /* margin-left: 90px; */
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+  display: flex;
+  /* margin-left: 90px; */
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
-
-
-
-
-
-
 .categories {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin: 10px auto 0 auto;
-    width: 200px;
-    flex-wrap: wrap;
-    box-sizing: border-box;
-    white-space: wrap;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 10px auto 0 auto;
+  width: 200px;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  white-space: wrap;
 }
 
 .categories.Disabled {
-    display: none;
+  display: none;
 }
 
 .categoryDropdown {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .categorySelect {
-    /* background-color: var(--theme); */
-    /* color: var(--bg); */
-    /* border: none; */
-    border-radius: 10px 0 10px 0;
-    padding: 5px;
-    transition: 0.5s ease all;
-    cursor: pointer;
+  /* background-color: var(--theme); */
+  /* color: var(--bg); */
+  /* border: none; */
+  border-radius: 10px 0 10px 0;
+  padding: 5px;
+  transition: 0.5s ease all;
+  cursor: pointer;
 }
-
-
 
 .category {
-    background: var(--theme);
-    padding: 4px;
-    color: var(--bg);
-    border-radius: 10px;
-    font-size: 0.7em;
+  background: var(--theme);
+  padding: 4px;
+  color: var(--bg);
+  border-radius: 10px;
+  font-size: 0.7em;
 }
 
-
-
-
-
-
 .categoryFilter {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .categoryFilter select {
-    background: var(--theme);
-    color: var(--bg);
-    /* border: none; */
-    border-radius: 20px;
-    padding: 5px;
-    cursor: pointer;
+  background: var(--theme);
+  color: var(--bg);
+  /* border: none; */
+  border-radius: 20px;
+  padding: 5px;
+  cursor: pointer;
 }
 
-
 .categoryFilter option.selected-option {
-    background-color: var(--text);
-    color: white;
+  background-color: var(--text);
+  color: white;
 }
 
 .categoryFilter.locationFilter option.selected-option {
-    background-color: mediumseagreen;
-    color: white;
+  background-color: mediumseagreen;
+  color: white;
 }
 
-
 .categoryFilter option {
-    background: none;
-    color: var(--bg);
-    border: none;
-    border-radius: 20px;
-    padding: 5px;
+  background: none;
+  color: var(--bg);
+  border: none;
+  border-radius: 20px;
+  padding: 5px;
 }
 
 .icon.filter {
-    background: var(--theme);
-    color: var(--bg);
+  background: var(--theme);
+  color: var(--bg);
 }
 
 /* .internships .selectedCategories {
@@ -391,278 +359,101 @@
 } */
 
 .rowCategories {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    background: var(--bg2);
-    background: linear-gradient(to right, var(--bg), var(--bg2));
-    color: var(--theme);
-    font-weight: 700;
-    padding: 10px;
-    background: linear-gradient(to right, var(--bg2), var(--bg));
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    border-radius: 10px;
-    flex-wrap: wrap;
-    margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  background: var(--bg2);
+  background: linear-gradient(to right, var(--bg), var(--bg2));
+  color: var(--theme);
+  font-weight: 700;
+  padding: 10px;
+  background: linear-gradient(to right, var(--bg2), var(--bg));
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
 }
 
 .rowCategories.rowLocations {
-    color: mediumseagreen
+  color: mediumseagreen;
 }
-
-
-
-
-
 
 .NoProductsContainer {
-    /* margin: auto; */
-    display: flex;
-    /* margin-left: 90px; */
-    gap: 20px;
-    /* justify-content: center; */
-
+  /* margin: auto; */
+  display: flex;
+  /* margin-left: 90px; */
+  gap: 20px;
+  /* justify-content: center; */
 }
-
 
 .NoProductsContainer p {
-    background: var(--text2);
-    color: var(--bg);
-    height: fit-content;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-radius: 10px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    text-transform: uppercase;
-    font-size: 2em;
-
+  background: var(--text2);
+  color: var(--bg);
+  height: fit-content;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  text-transform: uppercase;
+  font-size: 2em;
 }
-
-/* .ProductCard .favorite {
-    position: absolute;
-    width: 19px;
-    height: 19px;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
-}
-
-.ProductCard .favorite input {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.ProductCard .favorite input:checked~svg {
-    animation: bouncing 0.5s;
-    fill: rgb(255, 95, 95);
-    filter: drop-shadow(0px 3px 1px rgba(53, 53, 53, 0.14));
-}
-
-.ProductCard .favorite svg {
-    fill: #a8a8a8;
-} */
-
-
-
-
-
-
-
-
-/* .ProductCard .ProductContent .color-size-container {
-    display: flex;
-    justify-content: space-between;
-    text-transform: uppercase;
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: #a8a8a8;
-    gap: 2rem;
-    margin-bottom: 1.5rem;
-}
-
-.ProductCard .ProductContent .color-size-container>* {
-    flex: 1;
-}
-
-.ProductCard .ProductContent .color-size-container .colors .colors-container {
-    list-style-type: none;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.3rem;
-    font-size: 0.5rem;
-    margin-top: 0.2rem;
-}
-
-.ProductCard .ProductContent .color-size-container .colors .colors-container .color {
-    height: 14px;
-    position: relative;
-}
-
-.ProductCard .ProductContent .color-size-container .colors .colors-container .color:hover .color-name {
-    display: block;
-}
-
-.ProductCard .ProductContent .color-size-container .colors .colors-container .color a {
-    display: inline-block;
-    height: 100%;
-    aspect-ratio: 1;
-    border: 3px solid black;
-    border-radius: 50%;
-}
-
-.ProductCard .ProductContent .color-size-container .colors .colors-container .color .color-name {
-    display: none;
-    position: absolute;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 99;
-    background: black;
-    padding: 0.2rem 1rem;
-    border-radius: 1rem;
-    text-align: center;
-}
-
-
-.ProductCard .ProductContent .color-size-container .sizes .size-container {
-    list-style-type: none;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 0.2rem;
-}
-
-.ProductCard .ProductContent .color-size-container .sizes .size-container .size {
-    height: 14px;
-}
-
-.ProductCard .ProductContent .color-size-container .sizes .size-container .size .size-radio {
-    cursor: pointer;
-}
-
-.ProductCard .ProductContent .color-size-container .sizes .size-container .size .size-radio input {
-    display: none;
-}
-
-.ProductCard .ProductContent .color-size-container .sizes .size-container .size .size-radio input:checked~.name {
-    background: var(--accent-color);
-    border-radius: 2rem 2rem 1.5rem 1.5rem;
-    color: white;
-}
-
-.ProductCard .ProductContent .color-size-container .sizes .size-container .size .size-radio .name {
-    display: grid;
-    place-content: center;
-    height: 100%;
-    aspect-ratio: 1.2/1;
-    text-decoration: none;
-    color: #484848;
-    font-size: 0.5rem;
-    text-align: center;
-} */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Single Product */
 
-
 .Product {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 5%;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 5%;
+  font-family: "Poppins", sans-serif;
+}
+
+.arabic .Product {
 }
 
 .ProductBackground {
-    display: flex;
-    justify-content: space-evenly;
-    width: 100%;
-    /* background: red; */
-
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  /* background: red; */
 }
 
-
 .ProductTop {
-    display: flex;
-    /* justify-content: space-between; */
-    /* width: 80%; */
-    gap: 30px;
-    align-items: center;
-    /* background: blue; */
-
+  display: flex;
+  /* justify-content: space-between; */
+  /* width: 80%; */
+  gap: 30px;
+  align-items: center;
+  /* background: blue; */
 }
 
 .ProductLeft {
-    /* background: var(--text); */
-    margin: 200px 0 30px 30px;
-    display: flex;
-    padding: 10px;
-    border-radius: 20px;
-    /* height: fit-content */
+  /* background: var(--text); */
+  margin: 200px 0 30px 30px;
+  display: flex;
+  padding: 10px;
+  border-radius: 20px;
+  /* height: fit-content */
 }
 
 .ProductLeft .ProductImg img {
-    width: 400px;
-    border-radius: 20px;
-    border: 3px double var(--theme);
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  width: 400px;
+  border-radius: 20px;
+  border: 3px double var(--theme);
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 .ProductLeft .ProductName {
-    text-align: center;
-    color: var(--bg);
-    text-transform: uppercase;
+  text-align: center;
+  color: var(--bg);
+  text-transform: uppercase;
 }
 
 .ProductDetails {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* .ProductDetails .ProductInfo {
@@ -681,114 +472,106 @@
 
 } */
 
-
 .ProductDetails .BackButton {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    color: var(--text);
-    font-weight: 700;
-    font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 0.8em;
 }
 
 .ProductCondition {
-    opacity: 0.6;
-    font-size: 0.9em;
-    text-transform: uppercase;
-    margin-top: 30px;
+  opacity: 0.6;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  margin-top: 30px;
 }
 
 .ProductName {
-    font-weight: 900;
-    font-size: 2em;
-    margin: 0;
+  font-weight: 900;
+  font-size: 2em;
+  margin: 0;
 }
 
 .ProductDescription {
-    margin-top: 10px;
-
+  margin-top: 10px;
 }
 
 .ProductRight {
-    margin: 200px 0 30px 0;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    border-radius: 20px;
-    /* background: red; */
+  margin: 200px 0 30px 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 20px;
+  /* background: red; */
 }
 
 .ProductRecommendationTitle {
-    font-size: 1.6em;
-    color: var(--text);
-    /* text-align: center; */
-    font-weight: 900;
-    margin-bottom: 20px;
+  font-size: 1.6em;
+  color: var(--text);
+  /* text-align: center; */
+  font-weight: 900;
+  margin-bottom: 20px;
 }
 
 .ProductRecommendation {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-
-
-
-
-
 .ProductPop {
-    position: fixed;
-    display: flex;
-    background: white;
-    bottom: 100px;
-    padding: 20px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border-radius: 20px;
-    justify-content: space-around;
-    width: 40%;
+  position: fixed;
+  display: flex;
+  background: white;
+  bottom: 100px;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 20px;
+  justify-content: space-around;
+  width: 40%;
 }
 
 .ProductPopLeft {
-
-    display: flex;
-    gap: 10px;
-    width: 80%;
+  display: flex;
+  gap: 10px;
+  width: 80%;
 }
 
 .ProductPopLeft img {
-    width: 20%;
-    background: var(--bg);
-    border-radius: 10px;
+  width: 20%;
+  background: var(--bg);
+  border-radius: 10px;
 }
 
 .ProductPopText {
-    display: flex;
-    flex-direction: column;
-    /* align-items: center; */
-    justify-content: center;
-    line-height: 25px;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  line-height: 25px;
 }
 
 .ProductPopText .ProductDescription {
-    margin: 0;
-    opacity: 0.6;
+  margin: 0;
+  opacity: 0.6;
 }
 
 .ProductPopRight {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .ProductPopRight .ProductPrice {
-    font-weight: 700;
-    font-size: 1.3em;
-    color: var(--text)
+  font-weight: 700;
+  font-size: 1.3em;
+  color: var(--text);
 }
 
 /* .ProductPopButton, .ChatPopButton {
@@ -828,122 +611,782 @@
     box-shadow: none
 } */
 
-
 .PopButton {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    font-size: 1em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    flex-direction: column;
-    cursor: pointer;
-    /* box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px; */
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    border: none;
-    border-radius: 30px;
-    color: var(--bg);
-    background: linear-gradient(to right, var(--theme), var(--theme2));
-
+  position: relative;
+  width: 40px;
+  height: 40px;
+  font-size: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  cursor: pointer;
+  /* box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px; */
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  border: none;
+  border-radius: 30px;
+  color: var(--bg);
+  background: linear-gradient(to right, var(--theme), var(--theme2));
 }
 
 .ProductBuyButton {
-    background: linear-gradient(to right, var(--text), var(--text2));
+  background: linear-gradient(to right, var(--text), var(--text2));
 }
 
 .ProductToolTip {
-    position: absolute;
-    top: 0;
-    font-size: 14px;
-    padding: 5px 8px;
-    border-radius: 5px;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    font-family: "Poppins", sans-serif;
-    font-weight: 500;
-    white-space: nowrap;
+  position: absolute;
+  top: 0;
+  font-size: 14px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .ProductToolTip::before {
-    position: absolute;
-    content: "";
-    height: 8px;
-    width: 8px;
-    bottom: -3px;
-    left: 50%;
-    transform: translate(-50%) rotate(45deg);
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  position: absolute;
+  content: "";
+  height: 8px;
+  width: 8px;
+  bottom: -3px;
+  left: 50%;
+  transform: translate(-50%) rotate(45deg);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .PopButton:hover {
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-    transform: translateY(3px);
-    background: linear-gradient(to right, var(--text2), var(--text));
-    color: var(--bg);
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  transform: translateY(3px);
+  background: linear-gradient(to right, var(--text2), var(--text));
+  color: var(--bg);
 }
 
 .ProductBuyButton:hover {
-    background: linear-gradient(to right, var(--theme), var(--theme2));
-
+  background: linear-gradient(to right, var(--theme), var(--theme2));
 }
 
 .PopButton:hover .ProductToolTip {
-    top: -45px;
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    white-space: nowrap;
+  top: -45px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  white-space: nowrap;
 }
 
 .PopButton:hover span,
 .PopButton:hover .ProductToolTip {
-    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
-    white-space: nowrap;
-
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
 }
 
 .PopButton:hover .ProductToolTip,
 .PopButton:hover .ProductToolTip::before {
-    background: var(--text);
-    color: var(--bg);
-    white-space: nowrap;
-
+  background: var(--text);
+  color: var(--bg);
+  white-space: nowrap;
 }
 
 .PopButton:hover .ProductTip,
 .PopButton:hover .ProductTip::before {
-    background: var(--theme);
+  background: var(--theme);
 }
-
-
 
 /* button click effect*/
 /* .ChatPopButtons button:active {
     transform: translate(2px, 10px);
 } */
 
-
-
-
-
-
-
 /* Purchase Form */
 .PurchaseFormPopup {
+  position: absolute;
+  flex-direction: column;
+  display: flex;
+  background: white;
+  bottom: 300px;
+  padding: 20px;
+  /* left: 40%; */
+  /* display: flex; */
+  margin: auto;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 20px;
+  justify-content: space-around;
+  backdrop-filter: blur(4px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0.79);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  z-index: 0;
+  animation: ScaleCenter 1s ease 0s 1 normal forwards;
+}
+
+.CooldownMessage {
+  padding: 10px;
+  background: var(--theme);
+  border-radius: 6px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ClockItem {
+  color: var(--bg);
+  font-size: 3em;
+}
+
+.CoolDownError {
+  padding: 10px;
+  color: var(--bg);
+  width: 80%;
+  text-align: center;
+}
+
+.PurchaseFormPopup h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 1.4em;
+  color: var(--text);
+}
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* justify-content: space-around; */
+  width: 100%;
+  position: relative;
+}
+
+.Form .InputRow {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+}
+
+/* Input fields */
+.Form .InputField {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.Form .InputLabelField {
+  display: flex;
+  width: 100%;
+  position: relative;
+  white-space: nowrap;
+}
+
+.Form .InputField.WholeWidth {
+  width: 100% !important;
+}
+
+.Form .LabelInput {
+  position: absolute;
+  z-index: 99;
+  top: 15px;
+  left: 16px;
+  font-size: 0.9em;
+  cursor: text;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.arabic .Form .LabelInput {
+  left: 0;
+  right: 16px;
+}
+
+.Form .InputField .InputError {
+  margin-bottom: 10px;
+  text-align: center;
+  background: transparent;
+  border-radius: 20px;
+  padding: 5px;
+  border: 3px solid var(--text);
+  color: var(--bg);
+  transition: 0.5s ease-in-out;
+  width: 300px;
+  max-width: 420px;
+  padding: 12px;
+}
+
+.Form .LabelInputImg {
+  cursor: pointer;
+  margin: 0;
+  font-size: 0.9em;
+  color: var(--hover);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  white-space: nowrap;
+}
+
+.Form .input,
+.Form select,
+.Form .LabelInputImg {
+  width: 100%;
+  max-width: 100%;
+  padding: 12px;
+  border-radius: 15px;
+  border: 3px solid lightgrey;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0px 0px 20px -18px;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 10px;
+  background: white;
+  position: relative;
+  font-weight: 700;
+}
+
+.arabic select {
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+.arabic option:checked {
+  font-family: "Noto Kufi Arabic", sans-serif;
+}
+
+.Form select option:checked {
+  background-color: var(--theme);
+  color: var(--bg);
+  font-weight: 700;
+}
+
+select:focus {
+  border: 3px solid mediumaquamarine;
+  color: var(--hover);
+}
+
+/* Matric Number */
+
+.Form .input::placeholder {
+  font-family: "FontAwesome", sans-serif;
+}
+
+.Form .input.valid,
+.Form .LabelInputImg.valid {
+  border: 3px solid mediumaquamarine;
+  box-shadow: 0px 0px 20px -17px;
+  color: mediumseagreen;
+}
+
+.Form .input.disabled {
+  border: 3px solid var(--theme);
+  box-shadow: 0px 0px 20px -17px;
+  color: var(--theme);
+}
+
+.Form .input.invalid,
+.Form .LabelInputImg.invalid {
+  border: 3px solid var(--text);
+  box-shadow: 0px 0px 20px -17px;
+  color: var(--text);
+}
+
+.Form .input:active {
+  transform: scale(0.95);
+}
+
+.Form .input:placeholder-shown {
+  border: 3px solid lightgrey;
+  text-transform: none;
+}
+
+.ClosePurchaseForm {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  background: var(--text);
+}
+
+.ClosePurchaseForm:hover {
+  transform: scale(1.2);
+}
+
+.Form button.XImgButton {
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  box-shadow: none;
+  cursor: pointer;
+  display: flex;
+}
+
+.Form .Submit {
+  background: var(--text);
+  border: 0;
+  border-radius: 10px;
+  color: var(--bg);
+  width: fit-content;
+  padding: 10px;
+  margin: auto;
+  cursor: pointer;
+  transition: 0.5s all ease;
+  font-size: 1em;
+}
+
+.Form .Submit:hover {
+  border-radius: 20px;
+  letter-spacing: 1.2px;
+}
+
+.multiselect {
+  width: 100%;
+}
+
+.selectBox {
+  position: relative;
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#checkboxes {
+  display: none;
+  border: 1px #dadada solid;
+}
+
+#checkboxes label {
+  display: block;
+}
+
+#checkboxes label:hover {
+  background-color: #1e90ff;
+}
+
+/* Purchased Products */
+
+.SoldTable {
+  width: 100%;
+  display: flex;
+  /* flex-direction: ; */
+  /* box-sizing: border-box; */
+  justify-content: center;
+  position: relative;
+}
+
+.SoldTable table {
+  width: 100%;
+}
+
+.TotalPrice {
+  background: var(--theme);
+  padding: 10px;
+  border-radius: 20px;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  justify-content: space-between;
+  /* height: 150px; */
+  /* margin-left: -170px; */
+  margin-top: 10px;
+  position: absolute;
+  right: 4%;
+  z-index: -1;
+}
+
+.arabic .TotalPrice {
+  right: inherit;
+  left: 4%;
+  z-index: -1;
+}
+
+.TotalPrice p {
+  margin: 0;
+  color: var(--bg);
+  font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.TotalPrice .Total {
+  background: var(--bg);
+  padding: 5px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.PurchasedFilter {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0 0 40px;
+  gap: 10px;
+}
+
+.PurchasedFilter .FilterButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 900;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.PurchasedFilter .FilterButton.active {
+  border-bottom: 2px solid var(--theme);
+  opacity: 1;
+}
+
+.PurchasedProducts .TableContainer {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
+.PurchasedTitles {
+  display: flex;
+  width: 100%;
+  /* gap: 90px; */
+  /* justify-content: space-evenly; */
+  align-items: center;
+  background: var(--text);
+  margin: 10px auto;
+  color: var(--bg);
+  border-radius: 20px;
+  padding: 5px 0;
+  position: relative;
+  /* font-weight: 700; */
+}
+
+.SoldProducts .PurchasedTitles {
+  width: 80%;
+}
+
+.PurchasedTitles td,
+.PurchasedTitles th {
+  width: 150px;
+  /* justify-content: center; */
+  margin: auto;
+  text-align: center;
+  /* font-weight: 800; */
+}
+
+.PurchasedTitles tr td {
+  /* width: 100px; */
+  /* font-weight: 900; */
+  position: relative;
+}
+
+.PurchasedItems {
+  padding: 10px 0;
+  background: var(--theme);
+}
+
+.ProductColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.PurchasedItems .ProductInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.PurchasedItems .ProductInfo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}
+
+.ReviewButton {
+  font-size: 2em;
+  width: 150px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--bg);
+  transition: 0.5s all;
+}
+
+.ReviewButton:hover {
+  color: gold;
+}
+
+.statusButton {
+  position: relative;
+}
+
+.StatusPaid {
+  color: #00bf63;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.StatusNotPaid {
+  color: var(--text);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.PayButton {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg);
+  border-radius: 10px;
+  padding: 5px 10px;
+  /* width: fit-content; */
+  text-decoration: none;
+  background: var(--text);
+  left: 0;
+  right: 0;
+  /* margin: auto; */
+  top: 30px;
+  transition: 0.7s;
+}
+
+.BankAccount {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg);
+  border-radius: 10px;
+  padding: 5px 10px;
+  /* width: fit-content; */
+  text-decoration: none;
+  background: var(--text);
+  left: 0;
+  right: 0;
+  /* margin: auto; */
+  top: 30px;
+  transition: 0.7s;
+}
+
+.PayButton.ConfirmButton {
+  background: #00bf63;
+  font-size: 0.9em;
+  width: fit-content;
+  left: 25%;
+}
+
+.PayButton:hover {
+  transform: scale(0.8);
+}
+
+.PurchasedChatButton {
+  position: absolute;
+  right: 0;
+  top: 30px;
+  background: none;
+  box-shadow: none;
+}
+
+.PurchasedChatButton:hover {
+  background: none;
+  box-shadow: none;
+  transform: scale(1.3);
+}
+
+.PurchasedChatButton:hover .ProductToolTip,
+.PurchasedChatButton:hover .ProductToolTip::before {
+  background: var(--bg);
+  color: var(--theme);
+  white-space: nowrap;
+}
+
+/* My Products */
+
+.MyProducts {
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  /* margin-bottom: 900px; */
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  margin-bottom: 10%;
+}
+
+.MyProducts h2 {
+  margin: 0;
+  color: var(--text);
+  text-transform: uppercase;
+  font-weight: 800;
+  margin: 200px 0 0 30px;
+  font-size: 3em;
+}
+
+.MyProductsCards {
+  display: flex;
+  width: 100%;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin: auto;
+  justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  .Browse {
+    /* padding: 20px; */
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 5%;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+  }
+
+  .Browse h2 {
+    margin: 0;
+    color: var(--text);
+    text-transform: uppercase;
+    font-weight: 800;
+    margin: 100px 0 0 0;
+    font-size: 3em;
+    text-align: center;
+  }
+
+  .Browse .AllBrowse {
+    gap: 100px;
+    flex-direction: column;
+    margin: 20px 0;
+  }
+
+  .Browse .Categories {
+    padding: 10px;
+    margin-left: 0;
+    gap: 10px;
+    /* margin: auto; */
+  }
+
+  .Browse .Category {
+    margin-left: 0;
+  }
+
+  .Browse .Categories p {
+    font-size: 1em;
+  }
+
+  .CheckBoxLabel {
+    font-size: 0.9em;
+  }
+
+  .Browse .RightSide {
+    display: flex;
+    margin-bottom: 90px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .PurchasedProducts {
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
+    margin-bottom: -100px;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    z-index: 0;
+  }
+
+  .PurchasedFilter {
+    margin: 10px auto;
+    z-index: 0;
+  }
+
+  .PurchasedProducts .TableContainer {
+    overflow: auto;
+    justify-content: flex-start;
+    z-index: 0;
+  }
+
+  .SoldProducts .PurchasedTitles {
+    width: 100%;
+    z-index: 0;
+  }
+
+  .SoldTable {
+    margin-top: 10px;
+    margin-bottom: 100%;
+    width: 100%;
+    overflow: auto;
+    /* overflow-y: auto; */
+    height: fit-content;
+    /* background: red; */
+    height: 100%;
+    justify-content: flex-start;
+    z-index: 0;
+  }
+
+  .TotalPrice {
+    position: relative;
+    right: 0;
+    height: 100%;
+    z-index: -1;
+  }
+
+  .TotalPrice p {
+    margin: 0;
+    color: var(--bg);
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .TotalPrice .Total {
+    background: var(--bg);
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .MyProducts {
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
+    /* margin-bottom: 900px; */
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    margin-bottom: 10%;
+  }
+
+  .MyProducts h2 {
+    margin: 100px 0 0 0;
+    text-align: center;
+  }
+
+  .MyProductsCards {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin: auto;
+    justify-content: center;
+  }
+
+  .PurchaseFormPopup {
     position: absolute;
     flex-direction: column;
     display: flex;
     background: white;
-    bottom: 300px;
+    bottom: 30%;
+    left: 0;
+    right: 0;
     padding: 20px;
-    /* left: 40%; */
-    /* display: flex; */
-    margin: auto;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 20px;
     justify-content: space-around;
@@ -952,970 +1395,107 @@
     background-color: rgba(255, 255, 255, 0.79);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.125);
-    z-index: 0;
-    animation: ScaleCenter 1s ease 0s 1 normal forwards;
-}
+    z-index: 9999;
+  }
 
-.CooldownMessage {
-    padding: 10px;
-    background: var(--theme);
-    border-radius: 6px;
-    align-items: center;
+  .Product {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-}
+    justify-content: space-around;
+    margin-bottom: 5%;
+  }
 
-
-.ClockItem {
-    color: var(--bg);
-    font-size: 3em;
-}
-
-.CoolDownError {
-    padding: 10px;
-    color: var(--bg);
-    width: 80%;
-    text-align: center;
-}
-
-
-.PurchaseFormPopup h3 {
-    text-align: center;
-    margin-bottom: 10px;
-    font-weight: 900;
-    text-transform: uppercase;
-    font-size: 1.4em;
-    color: var(--text)
-}
-
-.Form {
+  .ProductBackground {
     display: flex;
+    justify-content: space-evenly;
     flex-direction: column;
-    align-items: stretch;
-    /* justify-content: space-around; */
     width: 100%;
-    position: relative;
-
-}
-
-.Form .InputRow {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    align-items: center;
-}
-
-/* Input fields */
-.Form .InputField {
-    display: flex;
-    width: 100%;
-    position: relative;
-}
-
-.Form .InputLabelField {
-    display: flex;
-    width: 100%;
-    position: relative;
-    white-space: nowrap;
-
-}
-
-.Form .InputField.WholeWidth {
-    width: 100% !important;
-}
-
-.Form .LabelInput {
-    position: absolute;
-    z-index: 99;
-    top: 15px;
-    left: 16px;
-    font-size: 0.9em;
-    cursor: text;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-}
-
-.arabic .Form .LabelInput {
-    left: 0;
-    right: 16px;
-}
-
-.Form .InputField .InputError {
-    margin-bottom: 10px;
-    text-align: center;
-    background: transparent;
-    border-radius: 20px;
-    padding: 5px;
-    border: 3px solid var(--text);
-    color: var(--bg);
-    transition: 0.5s ease-in-out;
-    width: 300px;
-    max-width: 420px;
-    padding: 12px;
-}
-
-
-.Form .LabelInputImg {
-    cursor: pointer;
-    margin: 0;
-    font-size: 0.9em;
-    color: var(--hover);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    white-space: nowrap;
-
-}
-
-.Form .input, .Form select, .Form .LabelInputImg {
-    width: 100%;
-    max-width: 100%;
-    padding: 12px;
-    border-radius: 15px;
-    border: 3px solid lightgrey;
-    outline: none;
-    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-    box-shadow: 0px 0px 20px -18px;
-    font-family: 'Poppins', sans-serif;
-    margin-bottom: 10px;
-    background: white;
-    position: relative;
-    font-weight: 700;
-}
-
-.arabic select {
-    font-family: 'Noto Kufi Arabic', sans-serif;
-
-}
-
-.arabic option:checked {
-    font-family: 'Noto Kufi Arabic', sans-serif;
-
-}
-
-.Form select option:checked {
-    background-color: var(--theme);
-    color: var(--bg);
-    font-weight: 700;
-}
-
-select:focus {
-    border: 3px solid mediumaquamarine;
-    color: var(--hover)
-}
-
-/* Matric Number */
-
-.Form .input::placeholder {
-    font-family: 'FontAwesome', sans-serif;
-}
-
-.Form .input.valid, .Form .LabelInputImg.valid {
-
-    border: 3px solid mediumaquamarine;
-    box-shadow: 0px 0px 20px -17px;
-    color: mediumseagreen;
-
-}
-
-.Form .input.disabled {
-
-    border: 3px solid var(--theme);
-    box-shadow: 0px 0px 20px -17px;
-    color: var(--theme);
-
-}
-
-.Form .input.invalid, .Form .LabelInputImg.invalid {
-    border: 3px solid var(--text);
-    box-shadow: 0px 0px 20px -17px;
-    color: var(--text);
-}
-
-.Form .input:active {
-    transform: scale(0.95);
-}
-
-.Form .input:placeholder-shown {
-    border: 3px solid lightgrey;
-    text-transform: none;
-}
-
-
-.ClosePurchaseForm {
-    position: absolute;
-    top: 5px;
-    right: 0;
-    width: 30px;
-    height: 30px;
-    background: var(--text);
-}
-
-.ClosePurchaseForm:hover {
-    transform: scale(1.2);
-}
-
-
-.Form button.XImgButton {
-    padding: 0;
-    border: none;
-    background: none;
-    color: inherit;
-    box-shadow: none;
-    cursor: pointer;
-    display: flex;
-}
-
-.Form .Submit {
-    background: var(--text);
-    border: 0;
-    border-radius: 10px;
-    color: var(--bg);
-    width: fit-content;
-    padding: 10px;
-    margin: auto;
-    cursor: pointer;
-    transition: 0.5s all ease;
-    font-size: 1em;
-}
-
-
-.Form .Submit:hover {
-    border-radius: 20px;
-    letter-spacing: 1.2px;
-}
-
-.multiselect {
-    width: 100%;
-}
-
-.selectBox {
-    position: relative;
-
-}
-
-.overSelect {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-
-#checkboxes {
-    display: none;
-    border: 1px #dadada solid;
-}
-
-#checkboxes label {
-    display: block;
-
-}
-
-#checkboxes label:hover {
-    background-color: #1e90ff;
-}
-
-
-
-
-
-
-
-
-/* Purchased Products */
-
-
-
-
-.SoldTable {
-    width: 100%;
-    display: flex;
-    /* flex-direction: ; */
-    /* box-sizing: border-box; */
-    justify-content: center;
-    position: relative;
-
-}
-
-.SoldTable table {
-    width: 100%;
-}
-
-
-
-.TotalPrice {
-    background: var(--theme);
-    padding: 10px;
-    border-radius: 20px;
-    width: 100px;
-    display: flex;
-    flex-direction: column;
-    align-content: space-between;
-    justify-content: space-between;
-    /* height: 150px; */
-    /* margin-left: -170px; */
-    margin-top: 10px;
-    position: absolute;
-    right: 4%;
-    z-index: -1;
-}
-
-.arabic .TotalPrice {
-    right: inherit;
-    left: 4%;
-    z-index: -1;
-}
-
-.TotalPrice p {
-    margin: 0;
-    color: var(--bg);
-    font-weight: 800;
-    text-transform: uppercase;
-    text-align: center;
-}
-
-.TotalPrice .Total {
-    background: var(--bg);
-    padding: 5px;
-    border-radius: 10px;
-    text-align: center;
-
-}
-
-.PurchasedFilter {
-    display: flex;
-    flex-direction: row;
-    margin: 20px 0 0 40px;
-    gap: 10px;
-}
-
-.PurchasedFilter .FilterButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 900;
-    text-transform: uppercase;
-    opacity: 0.6;
-}
-
-.PurchasedFilter .FilterButton.active {
-    border-bottom: 2px solid var(--theme);
-    opacity: 1;
-
-}
-
-.PurchasedProducts .TableContainer {
     box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-}
+  }
 
-.PurchasedTitles {
-    display: flex;
-    width: 100%;
-    /* gap: 90px; */
-    /* justify-content: space-evenly; */
-    align-items: center;
-    background: var(--text);
-    margin: 10px auto;
-    color: var(--bg);
-    border-radius: 20px;
-    padding: 5px 0;
-    position: relative;
-    /* font-weight: 700; */
-}
-
-.SoldProducts .PurchasedTitles {
-    width: 80%;
-}
-
-.PurchasedTitles td, .PurchasedTitles th {
-    width: 150px;
-    /* justify-content: center; */
-    margin: auto;
-    text-align: center;
-    /* font-weight: 800; */
-
-}
-
-.PurchasedTitles tr td {
-    /* width: 100px; */
-    /* font-weight: 900; */
-    position: relative;
-}
-
-.PurchasedItems {
-    padding: 10px 0;
-    background: var(--theme);
-
-}
-
-.ProductColumn {
+  .ProductTop {
     display: flex;
     flex-direction: column;
-
-}
-
-.PurchasedItems .ProductInfo {
-    display: flex;
-    align-items: center;
     gap: 10px;
-}
+  }
 
-.PurchasedItems .ProductInfo img {
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-}
+  .ProductLeft {
+    margin: 100px auto 0 auto;
+  }
 
-.ReviewButton {
-    font-size: 2em;
-    width: 150px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--bg);
-    transition: 0.5s all;
-}
+  .ProductLeft .ProductImg img {
+    width: 300px;
+  }
 
-.ReviewButton:hover {
-    color: gold
-}
-
-.statusButton {
-    position: relative;
-}
-
-
-
-.StatusPaid {
-    color: #00BF63;
-    text-transform: uppercase;
-    font-weight: 700;
-}
-
-.StatusNotPaid {
-    color: var(--text);
-    text-transform: uppercase;
-    font-weight: 700;
-}
-
-.PayButton {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--bg);
-    border-radius: 10px;
-    padding: 5px 10px;
-    /* width: fit-content; */
-    text-decoration: none;
-    background: var(--text);
-    left: 0;
-    right: 0;
-    /* margin: auto; */
-    top: 30px;
-    transition: 0.7s;
-}
-
-.BankAccount {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--bg);
-    border-radius: 10px;
-    padding: 5px 10px;
-    /* width: fit-content; */
-    text-decoration: none;
-    background: var(--text);
-    left: 0;
-    right: 0;
-    /* margin: auto; */
-    top: 30px;
-    transition: 0.7s;
-}
-
-.PayButton.ConfirmButton {
-    background: #00BF63;
-    font-size: 0.9em;
-    width: fit-content;
-    left: 25%;
-
-}
-
-.PayButton:hover {
-    transform: scale(0.8);
-}
-
-
-.PurchasedChatButton {
-    position: absolute;
-    right: 0;
-    top: 30px;
-    background: none;
-    box-shadow: none;
-}
-
-
-.PurchasedChatButton:hover {
-    background: none;
-    box-shadow: none;
-    transform: scale(1.3)
-}
-
-.PurchasedChatButton:hover .ProductToolTip,
-.PurchasedChatButton:hover .ProductToolTip::before {
-    background: var(--bg);
-    color: var(--theme);
-    white-space: nowrap;
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* My Products */
-
-.MyProducts {
-    padding: 20px;
-    font-family: 'Poppins', sans-serif;
-    /* margin-bottom: 900px; */
-    display: flex;
-    overflow: hidden;
-    flex-direction: column;
-    margin-bottom: 10%;
-}
-
-.MyProducts h2 {
-    margin: 0;
-    color: var(--text);
-    text-transform: uppercase;
-    font-weight: 800;
-    margin: 200px 0 0 30px;
-    font-size: 3em;
-}
-
-.MyProductsCards {
-    display: flex;
-    width: 100%;
-    gap: 30px;
-    flex-wrap: wrap;
+  .ProductDetails {
     margin: auto;
+    /* background: red; */
+  }
+
+  .SellerRatings {
     justify-content: center;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@media screen and (max-width: 768px) {
-
-    .Browse {
-        /* padding: 20px; */
-        font-family: 'Poppins', sans-serif;
-        margin-bottom: 5%;
-        display: flex;
-        overflow: hidden;
-        flex-direction: column;
-
-    }
-
-
-    .Browse h2 {
-        margin: 0;
-        color: var(--text);
-        text-transform: uppercase;
-        font-weight: 800;
-        margin: 100px 0 0 0;
-        font-size: 3em;
-        text-align: center;
-    }
-
-
-    .Browse .AllBrowse {
-        gap: 100px;
-        flex-direction: column;
-        margin: 20px 0;
-    }
-
-    .Browse .Categories {
-        padding: 10px;
-        margin-left: 0;
-        gap: 10px;
-        /* margin: auto; */
-    }
-
-    .Browse .Category {
-        margin-left: 0;
-    }
-
-    .Browse .Categories p {
-        font-size: 1em;
-    }
-
-    .CheckBoxLabel {
-        font-size: 0.9em;
-    }
-
-    .Browse .RightSide {
-        display: flex;
-        margin-bottom: 90px;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-
-
-
-
-
-
-    .PurchasedProducts {
-        padding: 20px;
-        font-family: 'Poppins', sans-serif;
-        margin-bottom: -100px;
-        display: flex;
-        overflow: hidden;
-        flex-direction: column;
-        z-index: 0;
-
-    }
-
-
-
-
-
-
-
-
-    .PurchasedFilter {
-        margin: 10px auto;
-        z-index: 0;
-
-    }
-
-
-
-    .PurchasedProducts .TableContainer {
-        overflow: auto;
-        justify-content: flex-start;
-        z-index: 0;
-
-    }
-
-
-
-    .SoldProducts .PurchasedTitles {
-        width: 100%;
-        z-index: 0;
-
-    }
-
-
-    .SoldTable {
-        margin-top: 10px;
-        margin-bottom: 100%;
-        width: 100%;
-        overflow: auto;
-        /* overflow-y: auto; */
-        height: fit-content;
-        /* background: red; */
-        height: 100%;
-        justify-content: flex-start;
-        z-index: 0;
-
-    }
-
-
-
-
-    .TotalPrice {
-        position: relative;
-        right: 0;
-        height: 100%;
-        z-index: -1;
-    }
-
-    .TotalPrice p {
-        margin: 0;
-        color: var(--bg);
-        font-weight: 800;
-        text-transform: uppercase;
-        text-align: center;
-    }
-
-    .TotalPrice .Total {
-        background: var(--bg);
-        padding: 5px;
-        border-radius: 10px;
-        text-align: center;
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    .MyProducts {
-        padding: 20px;
-        font-family: 'Poppins', sans-serif;
-        /* margin-bottom: 900px; */
-        display: flex;
-        overflow: hidden;
-        flex-direction: column;
-        margin-bottom: 10%;
-    }
-
-    .MyProducts h2 {
-        margin: 100px 0 0 0;
-        text-align: center;
-    }
-
-    .MyProductsCards {
-        display: flex;
-        width: 100%;
-        gap: 30px;
-        flex-wrap: wrap;
-        margin: auto;
-        justify-content: center;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    .PurchaseFormPopup {
-        position: absolute;
-        flex-direction: column;
-        display: flex;
-        background: white;
-        bottom: 30%;
-        left: 0;
-        right: 0;
-        padding: 20px;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-        border-radius: 20px;
-        justify-content: space-around;
-        backdrop-filter: blur(4px) saturate(180%);
-        -webkit-backdrop-filter: blur(8px) saturate(180%);
-        background-color: rgba(255, 255, 255, 0.79);
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.125);
-        z-index: 9999;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    .Product {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        margin-bottom: 5%;
-    }
-
-    .ProductBackground {
-        display: flex;
-        justify-content: space-evenly;
-        flex-direction: column;
-        width: 100%;
-        box-sizing: border-box;
-
-    }
-
-
-    .ProductTop {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-
-    }
-
-    .ProductLeft {
-        margin: 100px auto 0 auto;
-    }
-
-    .ProductLeft .ProductImg img {
-        width: 300px;
-    }
-
-    .ProductDetails {
-        margin: auto;
-        /* background: red; */
-
-    }
-
-    .SellerRatings {
-        justify-content: center;
-    }
-
-    .ProductCondition {
-        text-align: center;
-    }
-
-    .ProductName {
-        text-align: center;
-
-    }
-
-    .ProductDescription {
-        font-size: 0.8em;
-    }
-
-    .ProductRight {
-        margin: 100px auto 30px auto;
-        align-items: center;
-    }
-
-
-
-    .NoProductsContainer p {
-        font-size: 1em;
-
-    }
-
-
-
-
-
-    .ProductPop {
-        width: 100%;
-        margin: auto;
-        /* left: 0; */
-        /* right: 0; */
-    }
-
-    .ProductPopLeft {
-        display: flex;
-        gap: 10px;
-        width: 100%;
-    }
-
-    .ProductPopLeft img {
-        width: 50px;
-        height: 50px;
-        margin: auto;
-    }
-
-    .ProductPopText {
-        line-height: inherit;
-    }
-
-    .ProductPopText .ProductName {
-        font-size: 1.3em;
-        text-align: start;
-    }
-
-    .ProductPopText .ProductDescription {
-        font-size: 0.7em;
-    }
-
-    .ProductPopRight .ProductPrice {
-        font-size: 1em;
-    }
-
-
-    .PopButton {
-        width: 35px;
-        height: 35px;
-        font-size: 0.8em;
-
-    }
-
-
-
+  }
+
+  .ProductCondition {
+    text-align: center;
+  }
+
+  .ProductName {
+    text-align: center;
+  }
+
+  .ProductDescription {
+    font-size: 0.8em;
+  }
+
+  .ProductRight {
+    margin: 100px auto 30px auto;
+    align-items: center;
+  }
+
+  .NoProductsContainer p {
+    font-size: 1em;
+  }
+
+  .ProductPop {
+    width: 100%;
+    margin: auto;
+    /* left: 0; */
+    /* right: 0; */
+  }
+
+  .ProductPopLeft {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .ProductPopLeft img {
+    width: 50px;
+    height: 50px;
+    margin: auto;
+  }
+
+  .ProductPopText {
+    line-height: inherit;
+  }
+
+  .ProductPopText .ProductName {
+    font-size: 1.3em;
+    text-align: start;
+  }
+
+  .ProductPopText .ProductDescription {
+    font-size: 0.7em;
+  }
+
+  .ProductPopRight .ProductPrice {
+    font-size: 1em;
+  }
+
+  .PopButton {
+    width: 35px;
+    height: 35px;
+    font-size: 0.8em;
+  }
 }
