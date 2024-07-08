@@ -1,694 +1,608 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-
 .Home {
-    font-family: 'Poppins', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    overflow: hidden;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .arabic .Home {
-    font-family: 'Noto Kufi Arabic', sans-serif !important;
-
+  font-family: "Noto Kufi Arabic", sans-serif !important;
 }
 
 .Home .Hero {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    padding: 10px;
-    height: 1000px;
-    background: var(--bg2);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px;
+  height: 1000px;
+  background: var(--bg2);
 }
-
 
 .Home .Hero .HeroText {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
 }
 
-
 .Home .Hero .HeroText h3 {
-    margin: 0;
-    color: var(--theme);
-    /* font-size: 1.6vw; */
-    font-size: clamp(16px, calc(20px + (36–20) * (100vw - 768px)/(1920–768)), 48px);
-    /* font-size: 30px; */
-    font-weight: bold;
-    font-family: 'Varela Round', sans-serif;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin: 0;
+  color: var(--theme);
+  /* font-size: 1.6vw; */
+  font-size: clamp(
+    16px,
+    calc(20px + (36–20) * (100vw - 768px) / (1920–768)),
+    48px
+  );
+  /* font-size: 30px; */
+  font-weight: bold;
+  font-family: "Varela Round", sans-serif;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
 
+.arabic .Home .Hero .HeroText h3 {
+  font-family: "Noto Kufi Arabic", sans-serif !important;
 }
 
 .Home .Hero .HeroText h1 {
-    font-size: 5em;
-    text-transform: uppercase;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: transparent;
-    -webkit-text-stroke: 1px var(--theme);
-    background: url(../../images/back.png);
-    -webkit-background-clip: text;
-    background-position: 0 0;
-    animation: back 20s linear infinite;
-    visibility: visible;
-    margin: 0;
+  font-size: 5em;
+  text-transform: uppercase;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--theme);
+  background: url(../../images/back.png);
+  -webkit-background-clip: text;
+  background-position: 0 0;
+  animation: back 20s linear infinite;
+  visibility: visible;
+  margin: 0;
+}
+
+.arabic .Home .Hero .HeroText h1 {
+  font-family: "Noto Kufi Arabic", sans-serif !important;
 }
 
 @keyframes back {
-    100% {
-        background-position: 2000px 0;
-    }
+  100% {
+    background-position: 2000px 0;
+  }
 }
-
 
 .Home .Hero .HeroText .HeroButton {
-    margin: 0;
-    text-decoration: none;
-    width: fit-content;
-    padding: 8px 10px;
-    border-radius: 30px;
-    background: var(--theme);
-    color: var(--bg);
-    transition: 0.5s ease;
+  margin: 0;
+  text-decoration: none;
+  width: fit-content;
+  padding: 8px 10px;
+  border-radius: 30px;
+  background: var(--theme);
+  color: var(--bg);
+  transition: 0.5s ease;
 }
 
-
 .Home .Hero .HeroText .HeroButton:hover {
-    background: var(--theme2);
-    font-size: 1.2em;
-    animation: shakeRotate 2s ease 0s infinite normal forwards;
+  background: var(--theme2);
+  font-size: 1.2em;
+  animation: shakeRotate 2s ease 0s infinite normal forwards;
 }
 
 @keyframes shakeRotate {
+  0%,
+  100% {
+    transform: rotate(0deg);
+    transform-origin: 50% 50%;
+  }
 
-    0%,
-    100% {
-        transform: rotate(0deg);
-        transform-origin: 50% 50%;
-    }
+  10% {
+    transform: rotate(8deg);
+  }
 
-    10% {
-        transform: rotate(8deg);
-    }
+  20%,
+  40%,
+  60% {
+    transform: rotate(-10deg);
+  }
 
-    20%,
-    40%,
-    60% {
-        transform: rotate(-10deg);
-    }
+  30%,
+  50%,
+  70% {
+    transform: rotate(10deg);
+  }
 
-    30%,
-    50%,
-    70% {
-        transform: rotate(10deg);
-    }
+  80% {
+    transform: rotate(-8deg);
+  }
 
-    80% {
-        transform: rotate(-8deg);
-    }
-
-    90% {
-        transform: rotate(8deg);
-    }
+  90% {
+    transform: rotate(8deg);
+  }
 }
 
 .Home .HeroImg {
-    display: flex;
+  display: flex;
 }
 
 .Home .HeroImg img {
-    width: 80%;
+  width: 80%;
 }
-
-
 
 .HomeTitle {
-
-    font-size: 3em;
-    text-align: center;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    text-shadow: 4px 3px 0px #fff, 9px 8px 0px rgba(0, 0, 0, 0.15);
-    color: var(--text);
-    text-transform: uppercase;
-    margin: 50px 0;
+  font-size: 3em;
+  text-align: center;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-shadow: 4px 3px 0px #fff, 9px 8px 0px rgba(0, 0, 0, 0.15);
+  color: var(--text);
+  text-transform: uppercase;
+  margin: 50px 0;
 }
 
-
-
-
-
-
+.arabic .HomeTitle {
+  font-family: "Noto Kufi Arabic", sans-serif !important;
+}
 
 .Services {
-    display: flex;
-    margin-bottom: 90px;
-    width: 100%;
-    /* height: 450px; */
-    justify-content: space-evenly;
-    padding: 10px;
-    align-items: center;
+  display: flex;
+  margin-bottom: 90px;
+  width: 100%;
+  /* height: 450px; */
+  justify-content: space-evenly;
+  padding: 10px;
+  align-items: center;
 }
 
 .Services .SCard {
-    background: linear-gradient(var(--bg) 50%, var(--text) 50%);
-    background-size: 100% 200%;
-    background-position: 0 2.5%;
-    padding: 10px;
-    width: 200px;
-    /* height: 50%; */
-    text-align: center;
-    border-radius: 20px;
-    /* border-radius: 94% 6% 93% 7% / 4% 95% 5% 96%; */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    cursor: pointer;
-    transition: 0.5s ease all;
+  background: linear-gradient(var(--bg) 50%, var(--text) 50%);
+  background-size: 100% 200%;
+  background-position: 0 2.5%;
+  padding: 10px;
+  width: 200px;
+  /* height: 50%; */
+  text-align: center;
+  border-radius: 20px;
+  /* border-radius: 94% 6% 93% 7% / 4% 95% 5% 96%; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
+  transition: 0.5s ease all;
 }
 
 .Services .SIcon {
-    background-color: var(--text);
-    position: relative;
-    margin: auto;
-    padding: 10px;
-    font-size: 1em;
-    height: 2.5em;
-    width: 2.5em;
-    color: var(--bg);
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    transition: 0.5s;
-
+  background-color: var(--text);
+  position: relative;
+  margin: auto;
+  padding: 10px;
+  font-size: 1em;
+  height: 2.5em;
+  width: 2.5em;
+  color: var(--bg);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: 0.5s;
 }
 
 .Services .STitle {
-    color: var(--text);
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: 1.3em;
-    transition: 0.5s ease all;
-    letter-spacing: 1px
+  color: var(--text);
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1.3em;
+  transition: 0.5s ease all;
+  letter-spacing: 1px;
 }
 
 .Services .SCardText hr {
-    width: 70%;
-    border: 1px dashed var(--theme);
-    margin: 10px auto 0 auto
+  width: 70%;
+  border: 1px dashed var(--theme);
+  margin: 10px auto 0 auto;
 }
 
 .Services .SDescription {
-    color: var(--theme);
-    padding: 5px;
-    /* background: var(--bg); */
-    width: 100%;
-    margin: auto;
-    border-radius: 10px;
+  color: var(--theme);
+  padding: 5px;
+  /* background: var(--bg); */
+  width: 100%;
+  margin: auto;
+  border-radius: 10px;
 }
-
 
 .Services:hover .SCard {
-    filter: blur(5px);
+  filter: blur(5px);
 }
 
-
 .Services:hover .SCard:hover {
-    filter: blur(0);
+  filter: blur(0);
 }
 
 .Services .SCard:hover {
-    background-position: 0 100%;
+  background-position: 0 100%;
 }
 
 .Services .SCard:hover .SIcon {
-    transform: translateY(4px);
-    background: none;
-    color: var(--text);
-    background: var(--bg);
-    box-shadow: none;
+  transform: translateY(4px);
+  background: none;
+  color: var(--text);
+  background: var(--bg);
+  box-shadow: none;
 }
 
 .Services .SCard:hover .STitle {
-    letter-spacing: 2px;
-    color: var(--bg);
+  letter-spacing: 2px;
+  color: var(--bg);
 }
 
 .Services .SCard:hover .SDescription {
-    color: var(--bg);
-
+  color: var(--bg);
 }
 
-
-
-
-
-
-
-
-
 .Banners {
-    /* width: 100%; */
-    /* padding: 70px 60px; */
-    /* background: red; */
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  /* width: 100%; */
+  /* padding: 70px 60px; */
+  /* background: red; */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .Banners .Banner1 {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 
-    /* flex-wrap: wrap; */
-    font-family: "Mukta", sans-serif;
-    text-shadow: 2px 3px 0px rgba(255, 255, 255, 0.15);
+  /* flex-wrap: wrap; */
+  font-family: "Mukta", sans-serif;
+  text-shadow: 2px 3px 0px rgba(255, 255, 255, 0.15);
 }
 
 .Banners .Banner1 .banner-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.7),
-            rgba(0, 0, 0, 0.7)), url("../../images/BG1.jpg");
-    min-width: 800px;
-    /* width: 50%; */
-    height: 50vh;
-    background-size: cover;
-    background-position: center;
-    padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../../images/BG1.jpg");
+  min-width: 800px;
+  /* width: 50%; */
+  height: 50vh;
+  background-size: cover;
+  background-position: center;
+  padding: 30px;
 }
 
 .Banners .Banner1 .banner-box2 {
-    background: linear-gradient(rgba(0, 0, 0, 0.7),
-            rgba(0, 0, 0, 0.7)), url("../../images/BG2.jpg");
-    background-size: cover;
-    background-position: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../../images/BG2.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
 .Banners .Banner1 h4 {
-    color: #f0f0f0;
-    font-size: 20px;
+  color: #f0f0f0;
+  font-size: 20px;
 }
 
 .Banners .Banner1 h2 {
-    color: #f0f0f0;
-    font-size: 90px;
-    font-weight: 800;
-    text-transform: uppercase;
+  color: #f0f0f0;
+  font-size: 90px;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .Banners .Banner2 {
-    display: flex;
-    justify-content: space-between;
-    /* flex-wrap: wrap; */
-    /* padding: 0 80px; */
+  display: flex;
+  justify-content: space-between;
+  /* flex-wrap: wrap; */
+  /* padding: 0 80px; */
 }
 
 .Banners .Banner2 .banner-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.7),
-            rgba(0, 0, 0, 0.7)), url("../../images/BG5.jpg");
-    min-width: 30%;
-    height: 30vh;
-    background-size: cover;
-    background-position: center;
-    padding: 20px;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../../images/BG5.jpg");
+  min-width: 30%;
+  height: 30vh;
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 .Banners .Banner2 .banner-box2 {
-    background: linear-gradient(rgba(0, 0, 0, 0.7),
-            rgba(0, 0, 0, 0.7)), url("../../images/BG4.jpg");
-    background-size: cover;
-    background-position: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../../images/BG4.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
 .Banners .Banner2 .banner-box3 {
-    background: linear-gradient(rgba(0, 0, 0, 0.7),
-            rgba(0, 0, 0, 0.7)), url("../../images/BG3.jpg");
-    background-size: cover;
-    background-position: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../../images/BG3.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
 .Banners .Banner2 h2 {
-    color: white;
-    font-weight: 900;
-    font-size: 25px;
-    font-family: "Mukta", sans-serif;
-    text-shadow: 2px 3px 0px rgba(255, 255, 255, 0.15);
-    text-transform: uppercase;
+  color: white;
+  font-weight: 900;
+  font-size: 25px;
+  font-family: "Mukta", sans-serif;
+  text-shadow: 2px 3px 0px rgba(255, 255, 255, 0.15);
+  text-transform: uppercase;
 }
 
 .Banners .Banner2 h4 {
-    color: rgb(255, 255, 255);
-    font-weight: 800;
-    font-size: 13px;
-    padding-bottom: 2px;
-    text-shadow: 2px 3px 0px rgba(255, 255, 255, 0.15);
-    font-family: "Mukta", sans-serif;
+  color: rgb(255, 255, 255);
+  font-weight: 800;
+  font-size: 13px;
+  padding-bottom: 2px;
+  text-shadow: 2px 3px 0px rgba(255, 255, 255, 0.15);
+  font-family: "Mukta", sans-serif;
 }
 
 .arabic .Banners .Banner2 h2 {
-    font-family: 'Noto Kufi Arabic', sans-serif !important;
-
+  font-family: "Noto Kufi Arabic", sans-serif !important;
 }
 
 .arabic .Banners .Banner2 h4 {
-    font-family: 'Noto Kufi Arabic', sans-serif !important;
-
+  font-family: "Noto Kufi Arabic", sans-serif !important;
 }
-
-
-
 
 /* EmailUs */
 
-
 .EmailUs {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: center;
-    /* background: linear-gradient(rgba(0, 0, 0, 0.4),
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  /* background: linear-gradient(rgba(0, 0, 0, 0.4),
             rgba(0, 0, 0, 0.4)), url("../img/Home/newsletter.jpg"); */
-    background-repeat: no-repeat;
-    background-position: 20% 75%;
-    background-color: var(--text);
-    width: 50%;
-    padding: 40px;
-    margin: 20px;
-    border-radius: 20px;
+  background-repeat: no-repeat;
+  background-position: 20% 75%;
+  background-color: var(--text);
+  width: 50%;
+  padding: 40px;
+  margin: 20px;
+  border-radius: 20px;
 }
 
 .EmailUs h4 {
-    font-size: 2em;
-    font-family: "Mukta", sans-serif;
-    /* letter-spacing: 5px; */
-    font-weight: 700;
-    text-transform: uppercase;
-    color: white;
+  font-size: 2em;
+  font-family: "Mukta", sans-serif;
+  /* letter-spacing: 5px; */
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
 }
 
-.arabic .EmailUs h4, .arabic .EmailUs p {
-    font-family: 'Noto Kufi Arabic', sans-serif;
-
+.arabic .EmailUs h4,
+.arabic .EmailUs p {
+  font-family: "Noto Kufi Arabic", sans-serif;
 }
 
 .EmailUs p {
-    font-size: 1em;
-    font-family: "Mukta", sans-serif;
-    font-weight: 600;
-    color: #aaaaaa;
+  font-size: 1em;
+  font-family: "Mukta", sans-serif;
+  font-weight: 600;
+  color: #aaaaaa;
 }
 
-
 .EmailUs .normal {
-    font-size: 1.2em;
-    font-weight: 600;
-    padding: 15px 30px;
-    cursor: pointer;
-    outline: none;
+  font-size: 1.2em;
+  font-weight: 600;
+  padding: 15px 30px;
+  cursor: pointer;
+  outline: none;
 }
 
 .EmailUs button {
-    background: var(--theme);
-    border: none;
-    color: #fff;
-    white-space: nowrap;
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    transition: 0.5s ease-in-out all;
+  background: var(--theme);
+  border: none;
+  color: #fff;
+  white-space: nowrap;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  transition: 0.5s ease-in-out all;
 }
-
 
 .EmailUs button:hover {
-    background: var(--bg);
-    color: var(--theme);
-    transform: translateY(3px);
-    box-shadow: none;
-
+  background: var(--bg);
+  color: var(--theme);
+  transform: translateY(3px);
+  box-shadow: none;
 }
 
+@media screen and (max-width: 1500px) {
+  .Home .Hero {
+    flex-direction: column;
+    justify-content: center;
+    gap: 3vw;
+  }
 
+  .Home .Hero .HeroText {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
 
+  .Home .Hero .HeroText h3 {
+    margin: 0 auto;
+  }
 
+  .Home .Hero .HeroText h1 {
+    font-size: 5em;
+    margin: 0 auto;
+    text-align: center;
+  }
 
+  .Home .Hero .HeroText .HeroButton {
+    margin: 0 auto;
+  }
 
+  .Home .HeroImg img {
+    width: 80%;
+    margin: auto;
+  }
 
+  .Banners {
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+    /* background: red */
+  }
 
+  .Banners .Banner1 {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
 
+  .Banners .Banner1 .banner-box {
+    min-width: 610px;
+  }
 
+  .Banners .Banner1 h4 {
+    font-size: 15px;
+  }
 
+  .Banners .Banner1 h2 {
+    font-size: 70px;
+  }
 
+  .Banners .Banner2 {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+  }
 
+  .Banners .Banner2 h2 {
+    font-size: 20px;
+  }
 
-
-
-@media screen and (max-width:1500px) {
-    .Home .Hero {
-        flex-direction: column;
-        justify-content: center;
-        gap: 3vw;
-    }
-
-
-    .Home .Hero .HeroText {
-        display: flex;
-        flex-direction: column;
-        margin: 0;
-    }
-
-
-    .Home .Hero .HeroText h3 {
-        margin: 0 auto;
-    }
-
-    .Home .Hero .HeroText h1 {
-        font-size: 5em;
-        margin: 0 auto;
-        text-align: center;
-    }
-
-    .Home .Hero .HeroText .HeroButton {
-        margin: 0 auto;
-    }
-
-
-    .Home .HeroImg img {
-        width: 80%;
-        margin: auto;
-    }
-
-
-
-
-
-
-
-
-
-    .Banners {
-        width: 90%;
-        justify-content: center;
-        align-items: center;
-        /* background: red */
-    }
-
-    .Banners .Banner1 {
-        display: flex;
-        justify-content: space-evenly;
-        gap: 10px;
-        flex-wrap: wrap;
-        width: 100%;
-    }
-
-    .Banners .Banner1 .banner-box {
-
-        min-width: 610px;
-    }
-
-    .Banners .Banner1 h4 {
-        font-size: 15px;
-    }
-
-    .Banners .Banner1 h2 {
-        font-size: 70px;
-    }
-
-    .Banners .Banner2 {
-        display: flex;
-        width: 100%;
-        justify-content: space-evenly;
-    }
-
-    .Banners .Banner2 h2 {
-        font-size: 20px;
-    }
-
-    .Banners .Banner2 h4 {
-        font-size: 10px;
-    }
-
-
-
+  .Banners .Banner2 h4 {
+    font-size: 10px;
+  }
 }
 
+@media screen and (max-width: 700px) {
+  .Home .Hero {
+    height: 700px;
+  }
 
+  .Home .Hero .HeroText {
+    gap: 10px;
+  }
 
+  .Home .Hero .HeroText h1 {
+    font-size: 2.5em;
+    margin: 0 auto;
+    text-align: center;
+  }
 
+  .Home .Hero .HeroText .HeroButton {
+    margin: 0 auto;
+  }
 
+  .Home .HeroImg img {
+    width: 80%;
+    margin: auto;
+  }
 
+  .HomeTitle {
+    font-size: 2em;
+  }
 
+  .Services {
+    display: flex;
+    margin-bottom: 30px;
+    width: 100%;
+    flex-direction: column;
+    gap: 50px;
+    padding: 10px;
+    align-items: center;
+  }
 
+  .Banners {
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
 
-@media screen and (max-width:700px) {
+  .Banners .Banner1 {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 50%;
+  }
 
-    .Home .Hero {
-        height: 700px;
-    }
+  .Banners .Banner1 .banner-box {
+    min-width: 100%;
+    height: 30vh;
+  }
 
-    .Home .Hero .HeroText {
-        gap: 10px;
-    }
+  .Banners .Banner1 h4 {
+    font-size: 0.7em;
+  }
 
-    .Home .Hero .HeroText h1 {
-        font-size: 2.5em;
-        margin: 0 auto;
-        text-align: center;
-    }
+  .Banners .Banner1 h2 {
+    font-size: 2.4em;
+  }
 
-    .Home .Hero .HeroText .HeroButton {
-        margin: 0 auto;
-    }
+  .Banners .Banner2 {
+    display: flex;
+    flex-direction: column;
+  }
 
+  .Banners .Banner2 h4 {
+    font-size: 0.7em;
+    text-align: start;
+  }
 
-    .Home .HeroImg img {
-        width: 80%;
-        margin: auto;
-    }
+  .Banners .Banner2 h2 {
+    font-size: 2em;
+    text-align: start;
+  }
 
-    .HomeTitle {
-        font-size: 2em;
-    }
+  .EmailUs {
+    width: 90%;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+  }
 
+  .EmailUs h4 {
+    font-size: 1.5em;
+    margin: 5px auto;
+    width: 100%;
+  }
 
+  .EmailUs p {
+    font-size: 0.9em;
+    margin: 5px 0 10px 0;
+    text-align: center;
+  }
 
-
-    .Services {
-        display: flex;
-        margin-bottom: 30px;
-        width: 100%;
-        flex-direction: column;
-        gap: 50px;
-        padding: 10px;
-        align-items: center;
-    }
-
-
-
-
-
-
-
-
-
-    .Banners {
-        width: 90%;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .Banners .Banner1 {
-        display: flex;
-        justify-content: space-evenly;
-        gap: 10px;
-        flex-wrap: wrap;
-        width: 100%;
-        height: 50%;
-    }
-
-
-    .Banners .Banner1 .banner-box {
-
-        min-width: 100%;
-        height: 30vh;
-
-    }
-
-    .Banners .Banner1 h4 {
-        font-size: 0.7em;
-    }
-
-    .Banners .Banner1 h2 {
-        font-size: 2.4em;
-    }
-
-    .Banners .Banner2 {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .Banners .Banner2 h4 {
-        font-size: 0.7em;
-        text-align: start;
-    }
-
-    .Banners .Banner2 h2 {
-        font-size: 2em;
-        text-align: start;
-    }
-
-
-
-
-
-
-
-
-
-    .EmailUs {
-        width: 90%;
-        gap: 20px;
-        display: flex;
-        flex-direction: column;
-    }
-
-
-    .EmailUs h4 {
-        font-size: 1.5em;
-        margin: 5px auto;
-        width: 100%;
-
-    }
-
-    .EmailUs p {
-        font-size: 0.9em;
-        margin: 5px 0 10px 0;
-        text-align: center;
-
-    }
-
-
-    .EmailUs .normal {
-        font-size: 0.8em;
-        margin: auto;
-    }
+  .EmailUs .normal {
+    font-size: 0.8em;
+    margin: auto;
+  }
 }

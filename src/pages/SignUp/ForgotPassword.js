@@ -34,7 +34,7 @@ const ForgotPassword = ({ api }) => {
             {isLoading ? (
                 <div className="Loader">
                     <Loader />
-                    <p className="LoaderText">"Sending"</p>
+                    <p className="LoaderText">Sending</p>
                 </div>
             ) : (
                 <div className="SignForm">

@@ -40,8 +40,8 @@ function App() {
   const [fetchAgain, setFetchAgain] = useState(false);
   const [loggedUser, setLoggedUser] = useState();
   const { user } = useAuthContext()
-  const api = process.env.REACT_APP_API_KEY;
-  // const api = "http://localhost:4000";
+  // const api = process.env.REACT_APP_API_KEY;
+  const api = "http://localhost:4000";
 
 
   const { isRTL, language } = useLanguage();

@@ -196,7 +196,7 @@ const Purchased = ({ languageText, api }) => {
         let totalPriceValue = 0;
         soldFilter.forEach(transaction => {
             const product = products.find(productOne => transaction.productID === productOne._id);
-            if (product) {
+            if (product && product.pPrice) {
                 totalPriceValue += product.pPrice;
             }
         });
