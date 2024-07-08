@@ -13,6 +13,20 @@
   overflow: hidden;
 }
 
+.Terms {
+  font-family: "Poppins", sans-serif;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 50px;
+  text-align: justify;
+}
+.Terms h2 {
+  margin-top: 90px;
+}
+.Terms h3 {
+  margin: 30px 0;
+  font-size: 1.4em;
+}
 .arabic .Home {
   font-family: "Noto Kufi Arabic", sans-serif !important;
 }

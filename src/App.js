@@ -33,6 +33,7 @@ import EditProfile from './pages/Profile/EditProfile';
 import EditProduct from './pages/Products/EditProduct';
 import CheckoutSuccess from './pages/Payment/CheckoutSuccess';
 import Report from './pages/Details/Report';
+import Terms from './pages/Home/Terms';
 
 
 
@@ -106,6 +107,12 @@ function App() {
           <Route path="/editProduct/:id" element={user ? <NavBar api={api}><Footer><EditProduct api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} />
           {/* <Route path="/browse" element={user ? <NavBar api={api}><Footer><Browse api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
           {/* <Route path="/product/:id" element={user ? <NavBar api={api}><Footer><Product api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
+
+          <Route path="/terms" element={
+
+            <NavBar api={api}><Footer><Terms api={api} languageText={languageText} /></Footer></NavBar>
+
+          } />
 
           <Route path="/browse" element={
             !user ? (<Navigate to='/SignIn' />
