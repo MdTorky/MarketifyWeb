@@ -109,9 +109,12 @@ function App() {
           {/* <Route path="/product/:id" element={user ? <NavBar api={api}><Footer><Product api={api} languageText={languageText} /></Footer></NavBar> : <Navigate to='/SignIn' />} /> */}
 
           <Route path="/terms" element={
-
-            <NavBar api={api}><Footer><Terms api={api} languageText={languageText} /></Footer></NavBar>
-
+            !user ? (<Navigate to='/SignIn' />
+            ) : user.userStatus === "Pending" || user.userStatus === "Waiting" || user.userStatus === "Inactive" || user.userStatus === "Inactive" ? (
+              <Navigate to='/profile' />
+            ) : (
+              <NavBar api={api}><Footer><Terms api={api} languageText={languageText} /></Footer></NavBar>
+            )
           } />
 
           <Route path="/browse" element={

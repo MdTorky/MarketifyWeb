@@ -177,11 +177,11 @@ const SignUp = ({ api, languageText }) => {
                                 </p>
                             </div>}
                         </div>
-                        <div className="TermsContainer">
+                        {/* <div className="TermsContainer">
                             <label className="CheckboxLabel">
                                 <input type="checkbox" className="CheckBox" required />
                                 Agree to Terms and Conditions</label>
-                        </div>
+                        </div> */}
                         <button disabled={loading}>Sign Up</button>
 
                         <div className="SignIn">
