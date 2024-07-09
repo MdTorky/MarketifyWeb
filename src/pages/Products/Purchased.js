@@ -5,7 +5,7 @@ import profile from '../../images/Profile.jpg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCommentDots, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 import ReviewPopup from '../../components/Review/Review';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Chat from '../../components/Chat/Chat';
 import { useChatState } from "../../context/ChatContext";
 import { useChat } from '../../hooks/useChat';
@@ -26,6 +26,7 @@ const Purchased = ({ languageText, api }) => {
     const { user } = useAuthContext()
     const { accessChat, chatError } = useChat(api, toast);
     const [isChatOpen, setChatOpen] = useState(false);
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false)
     const [updating, setUpdating] = useState(false)
@@ -277,6 +278,7 @@ const Purchased = ({ languageText, api }) => {
                 });
             }
             setUpdating(false);
+            navigate("/");
 
 
         } catch (error) {
@@ -303,15 +305,15 @@ const Purchased = ({ languageText, api }) => {
     //         });
     // };
 
-    const handleImgChange = (e) => {
-        console.log("HELLO2")
-        const file = e.target.files[0];
+    // const handleImgChange = (e) => {
+    //     console.log("HELLO2")
+    //     const file = e.target.files[0];
 
-        if (file) {
-            setProofImg(file);
-            console.log("Hello")
-        }
-    };
+    //     if (file) {
+    //         setProofImg(file);
+    //         console.log("Hello")
+    //     }
+    // };
 
 
 

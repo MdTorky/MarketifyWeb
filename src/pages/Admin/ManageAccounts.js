@@ -157,7 +157,7 @@ const ManageAccounts = ({ api, languageText }) => {
                 });
             }
             setUpdating(false);
-
+            window.location.reload();
 
         } catch (error) {
             console.error('An error occurred while updating form status:', error);
@@ -216,7 +216,7 @@ const ManageAccounts = ({ api, languageText }) => {
                 });
             }
             setUpdating(false);
-
+            window.location.reload();
 
         } catch (error) {
             console.error('An error occurred while updating form status:', error);
