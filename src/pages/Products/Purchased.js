@@ -544,7 +544,7 @@ const Purchased = ({ languageText, api }) => {
                             {languageText.Unpaid}
                         </button>
                         <button
-                            className={`FilterButton ${activeFilter === 'pending' ? 'active' : ''}`}
+                            className={`FilterButton ${activeSoldFilter === 'pending' ? 'active' : ''}`}
                             onClick={() => handleSoldFilterClick('pending')}
                         >
                             {languageText.Pending}
